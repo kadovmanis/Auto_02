@@ -77,14 +77,31 @@ LDLIBSOPTIONS=
 # fixDeps replaces a bunch of sed/cat/printf statements that slow down the build
 FIXDEPS=fixDeps
 
+# The following macros may be used in the pre and post step lines
+Device=PIC24FJ128GB206
+ProjectDir=/home/pele/src/Auto_02
+ConfName=default
+ImagePath=dist/default/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+ImageDir=dist/default/${IMAGE_TYPE}
+ImageName=Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+IsDebug="true"
+else
+IsDebug="false"
+endif
+
 .build-conf:  ${BUILD_SUBPROJECTS}
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
 	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	@echo "--------------------------------------"
+	@echo "User defined post-build step: [xc32-objcopy -I ihex -O binary dist/default/production/Auto_02.production.hex Auto_02.bin]"
+	@xc32-objcopy -I ihex -O binary dist/default/production/Auto_02.production.hex Auto_02.bin
+	@echo "--------------------------------------"
 
 MP_PROCESSOR_OPTION=24FJ128GB206
-MP_LINKER_FILE_OPTION=,--script=p24FJ128GB206.gld
+MP_LINKER_FILE_OPTION=,--script="lnk/p24FJ128GB206_boot.gld"
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
@@ -400,12 +417,12 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    lnk/p24FJ128GB206_boot.gld
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
 	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      -mcpu=$(MP_PROCESSOR_OPTION)        -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src"  -mreserve=data@0x800:0x81B -mreserve=data@0x81C:0x81D -mreserve=data@0x81E:0x81F -mreserve=data@0x820:0x821 -mreserve=data@0x822:0x823 -mreserve=data@0x824:0x827 -mreserve=data@0x82A:0x84F   -Wl,--local-stack,,--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem,--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml$(MP_EXTRA_LD_POST) 
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   lnk/p24FJ128GB206_boot.gld
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
 	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      -mcpu=$(MP_PROCESSOR_OPTION)        -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -Wl,--local-stack,,--defsym=__MPLAB_BUILD=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem,--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml$(MP_EXTRA_LD_POST) 
 	${MP_CC_DIR}/xc16-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} -a  -omf=elf  

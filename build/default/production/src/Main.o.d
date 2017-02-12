@@ -13,4 +13,17 @@ h/Gps.h  \
 h/Gsm.h  \
 h/Tcp.h  \
 h/Tcp_Type.h  \
-h/Adc.h 
+h/Adc.h  \
+Usb/system.h  \
+ Usb/inc/usb.h  \
+Usb/usb_config.h  \
+Usb/inc/usb_ch9.h  \
+Usb/inc/usb_common.h  \
+ Usb/inc/usb_ch9.h  \
+Usb/inc/usb_device.h  \
+Usb/inc/usb_hal.h  \
+ Usb/inc/usb_hal_pic24f.h  \
+Usb/inc/usb_hal.h  \
+Usb/inc/usb_device_hid.h  \
+ Usb/usb_config.h  \
+h/Wifi.h 
