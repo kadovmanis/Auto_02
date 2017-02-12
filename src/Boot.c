@@ -24,8 +24,7 @@
 	#define	NO_LOAD_END			BOOT_LOADER_END
 #endif
 //#define		BOOT_FNC_SIZE		0x0014
-//#define		BALANCE_ADDR		0x000A8C	// w/o optimisation
-#define		BALANCE_ADDR		0x000ABA		// optimisation enabled
+#define		BALANCE_ADDR		0x000A86		// XC16
 #define		BALANCE_SIZE		((BOOT_LOADER_END - BALANCE_ADDR) / 2)
 // * BootLoader data transfer Protocol *************************
 //	 x		len(0)	   1		2,3,4,5		 6...		n

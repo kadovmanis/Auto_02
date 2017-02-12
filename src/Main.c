@@ -13,12 +13,12 @@
 #ifdef		ETH_W5100
 	#include		"W5100.h"
 #endif
-//#ifdef		USB_PORT
-//	#include	"system.h"
-//#endif
-//#ifdef		UART4_WIFI
-//	#include	"Wifi.h"
-//#endif
+#ifdef		USB_PORT
+	#include	"system.h"
+#endif
+#ifdef		UART4_WIFI
+	#include	"Wifi.h"
+#endif
 #if			(LCD != LCD_NO)
 	#include	"Lcd.h"
 #endif
@@ -43,7 +43,7 @@ char	time[30];
 int main (void)
 {
 	InitPorts();
-//	OSCconfig(Osc_32_MHz);
+	OSCconfig(Osc_32_MHz);
 	PPSconfig(pps_system);
 
 	#if	(LCD != LCD_NO)
@@ -56,46 +56,46 @@ int main (void)
 		LcdString(0, 48, DEVICE, font_ss16);
 	#endif
 
-//	AdcInit();
-//	MemInit();
+	AdcInit();
+	MemInit();
 //	InputInit();
-//	#ifdef		USB_PORT
-//		Usb_Init();
-//	#endif
+	#ifdef		USB_PORT
+		Usb_Init();
+	#endif
 	#if	((TEST != GSM_TEST) && (TEST != WIFI_TEST))
 //		Gsm_On();
 	#endif
 	#if	(TEST != GPS_TEST)
 //		Gps_On();
 	#endif
-//	#ifdef UART4_WIFI
-////		#if (TEST != WIFI_TEST)
-//			Wifi_On();
-////		#endif
-//	#endif
+	#ifdef UART4_WIFI
+		#if (TEST != WIFI_TEST)
+			Wifi_On();
+		#endif
+	#endif
 
-//	#ifdef		USB_PORT
-//		Usb_SendText("Start");
-//	#endif
+	#ifdef		USB_PORT
+		Usb_SendText("Start");
+	#endif
 	while(true)
 	{
-//		#ifdef		USB_PORT
-//			Usb_RegularFunctions();
-//		#endif
-//		#if	(TEST == WIFI_TEST)
-////			Wifi_Test();
-//		#endif
+		#ifdef		USB_PORT
+			Usb_RegularFunctions();
+		#endif
+		#if	(TEST == WIFI_TEST)
+			Wifi_Test();
+		#endif
 
-//		if (FL_BOOT_TCP)	{	Tcp_BootLoaderProcess();	continue;	}
-//		if (FL_TCP_RESEND)		Tcp_PacketResend();
-//        if (FL_POWER_OFF)       PowerOff();
-////		if (FL_POWER_CHANGES)	Tcp_AdcPacket();
+		if (FL_BOOT_TCP)	{	Tcp_BootLoaderProcess();	continue;	}
+		if (FL_TCP_RESEND)		Tcp_PacketResend();
+        if (FL_POWER_OFF)       PowerOff();
+//		if (FL_POWER_CHANGES)	Tcp_AdcPacket();
 
-//		static U8 lastSec = 0;
-//		if (lastSec != SysTime.sec)
-//		{
-//			lastSec = SysTime.sec;
-//		}
+		static U8 lastSec = 0;
+		if (lastSec != SysTime.sec)
+		{
+			lastSec = SysTime.sec;
+		}
 	}
 	return 0;
 }
