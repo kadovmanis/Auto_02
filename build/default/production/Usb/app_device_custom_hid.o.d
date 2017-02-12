@@ -1,0 +1,24 @@
+build/default/production/Usb/app_device_custom_hid.o:  \
+ Usb/app_device_custom_hid.c  \
+Usb/inc/usb.h  \
+Usb/usb_config.h  \
+ Usb/inc/usb_ch9.h  \
+Usb/inc/usb_common.h  \
+Usb/inc/usb_ch9.h  \
+ Usb/inc/usb_device.h  \
+Usb/inc/usb_hal.h  \
+Usb/inc/usb_hal_pic24f.h  \
+ Usb/inc/usb_hal.h  \
+Usb/inc/usb_device_hid.h  \
+Usb/system.h  \
+h/Typedef.h  \
+ h/Define.h  \
+Usb/usb_config.h  \
+h/Timers.h  \
+h/Typedef.h  \
+h/Memory.h  \
+h/Gsm.h  \
+ h/Gps.h  \
+h/Wifi.h  \
+h/Uart1.h  \
+h/Uart4.h 

@@ -1,0 +1,20 @@
+build/default/production/Usb/system.o:  \
+Usb/system.c  \
+h/Timers.h  \
+ h/Typedef.h  \
+h/Define.h  \
+Usb/system.h  \
+h/Typedef.h  \
+Usb/inc/usb.h  \
+ Usb/usb_config.h  \
+Usb/inc/usb_ch9.h  \
+Usb/inc/usb_common.h  \
+ Usb/inc/usb_ch9.h  \
+Usb/inc/usb_device.h  \
+Usb/inc/usb_hal.h  \
+ Usb/inc/usb_hal_pic24f.h  \
+Usb/inc/usb_hal.h  \
+Usb/inc/usb_device_hid.h  \
+ Usb/usb_config.h  \
+Usb/inc/usb_device.h  \
+Usb/app_device_custom_hid.h 
