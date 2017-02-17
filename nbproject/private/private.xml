@@ -4,10 +4,6 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/pele/src/Auto_02/src/Main.c</file>
-            <file>file:/home/pele/src/Auto_02/Usb/inc/usb_device_hid.h</file>
-            <file>file:/home/pele/src/Auto_02/Usb/app_device_custom_hid.h</file>
-            <file>file:/home/pele/src/Auto_02/Usb/system.h</file>
-            <file>file:/home/pele/src/Auto_02/Usb/system.c</file>
         </group>
     </open-files>
 </project-private>
