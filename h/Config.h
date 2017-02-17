@@ -6,7 +6,7 @@
 
 // CONFIG1
 #ifdef	BOOT_LOADER
-// CONFIG1
+// CONFIG1	3E7F
 	// CONFIG1( JTAGEN_OFF		& GCP_OFF			& GWRP_OFF		& ICS_PGx2			& FWDTEN_OFF	& WINDIS_OFF	& FWPSA_PR128	& WDTPS_PS32768	)
 	#pragma	config WDTPS	= PS32768	// Watchdog Timer Postscaler (1:32,768)
 	#pragma	config FWPSA	= PR128		// WDT Prescaler (Prescaler ratio of 1:128)
@@ -17,7 +17,7 @@
 	#pragma	config GCP		= OFF		// General Segment Code Protect (Code protection is disabled)
 	#pragma	config JTAGEN	= OFF		// JTAG Port Enable (JTAG port is disabled)
 #else
-// CONFIG1
+// CONFIG1	1E7F
 	// _CONFIG1( JTAGEN_OFF		& GCP_ON			& GWRP_OFF		& ICS_PGx2			& FWDTEN_OFF	& WINDIS_OFF	& FWPSA_PR128	& WDTPS_PS32768	)
 	#pragma	config WDTPS	= PS32768	// Watchdog Timer Postscaler (1:32,768)
 	#pragma	config FWPSA	= PR128		// WDT Prescaler (Prescaler ratio of 1:128)
@@ -28,7 +28,7 @@
 	#pragma	config GCP		= ON		// General Segment Code Protect (Code protection is enabled)
 	#pragma	config JTAGEN	= OFF		// JTAG Port Enable (JTAG port is disabled)
 #endif
-// CONFIG2
+// CONFIG2	804F
 // _CONFIG2( IESO_ON			& PLLDIV_NODIV		& PLL96MHZ_OFF	& FNOSC_FRC			& FCKSM_CSECMD	& OSCIOFNC_ON	& IOL1WAY_OFF	& POSCMOD_NONE	)
 #pragma	config POSCMOD		= NONE		// Primary Oscillator Select (Primary oscillator is disabled)
 #pragma	config IOL1WAY		= OFF		// IOLOCK One-Way Set Enable (The IOLOCK bit can be set and cleared as needed, provided the unlock sequence has been completed)
@@ -39,7 +39,7 @@
 #pragma	config PLLDIV		= NODIV		// 96 MHz PLL Prescaler Select (Oscillator input is used directly (4 MHz input))
 #pragma	config IESO			= ON		// Internal External Switchover (IESO mode (Two-Speed Start-up) is enabled)
 
-// CONFIG3
+// CONFIG3	F4FF
 // _CONFIG3( WPEND_WPENDMEM	& WPCFG_WPCFGDIS	& WPDIS_WPDIS	& ALTPMP_ALPMPDIS	& WUTSEL_FST	& SOSCSEL_EC	& WPFP_WPFP255					)
 #pragma	config WPFP			= WPFP255	// Write Protection Flash Page Segment Boundary (Highest Page (same as page 85))
 #pragma	config SOSCSEL		= EC		// Secondary Oscillator Power Mode Select (External clock (SCLKI) or Digital I/O mode()

@@ -17,5 +17,7 @@
 *.hex
 *.elf
 *.map
-
+private.*
 /dist/default/
+Makefile-genesis.properties
+Makefile-variables.mk
