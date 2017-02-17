@@ -36,10 +36,11 @@
 UNI32	testVal __attribute__ ((noload));		// for tests
 U8		testBuf[20] __attribute__ ((noload));	// for tests
 extern volatile	U8	SysHour, SysMin, SysSec;
-extern void Usb_SendText (char* str);
 
 char	time[30];
 */
+extern void Usb_SendText (char* str);
+
 int main (void)
 {
 	InitPorts();
