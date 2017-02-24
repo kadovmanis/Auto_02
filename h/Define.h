@@ -1,6 +1,12 @@
 #ifndef		__DEFINE__
 #define		__DEFINE__
 
+//	Vecomamma	67394376	Mâjas tâlrunis PAMATA
+//	Audi		28637972	M2M 1
+//	Bmw Leo		26141841	M2M 1
+//	Blue_1		25747292	M2M 1
+//	Blue_2		25767845	M2M 1
+
 #ifndef __PIC24FJ128GB206__
 	#define	__PIC24FJ128GB206__
 #endif
