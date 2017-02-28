@@ -116,7 +116,7 @@ SECTIONS
   .reset :
   {
         SHORT(ABSOLUTE(__reset));
-        SHORT(0x04);
+        SHORT(0x00FE);
         SHORT((ABSOLUTE(__reset) >> 16) & 0x7F);
         SHORT(0);
   } >reset
@@ -164,9 +164,13 @@ SECTIONS
   **           *(usercode);
   **         } >program
   */
-  .bootLoader :
+	BOOT_START	= 0x0400;
+	BOOT_LEN	= 0x800;
+  bootCode BOOT_START :
   {
-  }
+	*(.bootLoader);
+	. = BOOT_LEN;	/* advance dot to the maximum length */
+  } >bootLoader
 
   usercode :
   {
