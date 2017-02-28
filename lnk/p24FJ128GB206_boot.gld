@@ -166,11 +166,11 @@ SECTIONS
   */
 	BOOT_START	= 0x0400;
 	BOOT_LEN	= 0x800;
-  .bootLoader BOOT_START :
+  bootCode BOOT_START :
   {
 	*(.bootLoader);
 	. = BOOT_LEN;	/* advance dot to the maximum length */
-  } >program
+  } >bootLoader
 
   usercode :
   {
