@@ -1,6 +1,11 @@
 #ifndef		__DEFINE__
 #define		__DEFINE__
 
+#ifndef __PIC24FJ128GB206__
+	#define	__PIC24FJ128GB206__
+#endif
+#include <xc.h>
+
 #define		HW_AUTO				1
 #define		HW_SEE				2
 #define		HW_HOME				3

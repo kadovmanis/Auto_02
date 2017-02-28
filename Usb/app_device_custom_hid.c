@@ -1,8 +1,9 @@
 #include "usb.h"
 #include "usb_device_hid.h"
 #include "system.h"
-#include "Timers.h"
-#include "Memory.h"
+#include	"Ports.h"
+#include	"Timers.h"
+#include	"Memory.h"
 #include	"Gsm.h"
 #include	"Gps.h"
 #include	"Wifi.h"
@@ -31,6 +32,13 @@ extern U8	BootFlashNew	(void);
 #define	USB_COM_MEM_BOOT_ADDR	0x1A
 #define	USB_COM_MEM_FEEL		0x1E
 #define	USB_COM_MEM_STATUS		0x1F
+
+#define	USB_COM_ENABLE_GSM		0xE0
+#define	USB_COM_ENABLE_GPS		0xE1
+#define	USB_COM_ENABLE_PWM		0xE2
+#define	USB_COM_ENABLE_WIFI		0xE3
+#define	USB_COM_ENABLE_ADC		0xEA
+//#define	USB_ERROR			0xEE
 
 #define	USB_COM_TEXT			0xFC
 #define	USB_COM_DEV_INFO		0xFD
@@ -155,6 +163,11 @@ void UsbMemBulkErase		(void);		// Command 0x16
 void UsbMemSetBootAddress	(void);		// Command 0x1A
 void UsbMemFeel				(void);		// Command 0x1E
 void UsbMemStatus			(void);		// Command 0x1F
+void UsbFunctEnableGsm		(void);		// Command 0xE0
+void UsbFunctEnableGps		(void);		// Command 0xE1
+void UsbFunctEnablePwm		(void);		// Command 0xE2
+void UsbFunctEnableWifi		(void);		// Command 0xE3
+void UsbFunctEnableAdc		(void);		// Command 0xEA
 void UsbDeviceText			(void);		// Command 0xFC
 void UsbDeviceInfo			(void);		// Command 0xFD
 void UsbDeviceStatus		(void);		// Command 0xFE
@@ -388,21 +401,21 @@ void (*UsbFunct[256])(void) =
 	UsbFunctNone,			// 0xDD
 	UsbFunctNone,			// 0xDE
 	UsbFunctNone,			// 0xDF
-	UsbFunctNone,			// 0xE0
-	UsbFunctNone,			// 0xE1
-	UsbFunctNone,			// 0xE2
-	UsbFunctNone,			// 0xE3
+	UsbFunctEnableGsm,		// 0xE0     USB_COM_ENABLE_GSM
+	UsbFunctEnableGps,		// 0xE1     USB_COM_ENABLE_GPS
+	UsbFunctEnablePwm,		// 0xE2     USB_COM_ENABLE_PWM
+	UsbFunctEnableWifi,		// 0xE3     USB_COM_ENABLE_WIFI
 	UsbFunctNone,			// 0xE4
 	UsbFunctNone,			// 0xE5
 	UsbFunctNone,			// 0xE6
 	UsbFunctNone,			// 0xE7
 	UsbFunctNone,			// 0xE8
 	UsbFunctNone,			// 0xE9
-	UsbFunctNone,			// 0xEA
+	UsbFunctEnableAdc,		// 0xEA     USB_COM_ENABLE_ADC
 	UsbFunctNone,			// 0xEB
 	UsbFunctNone,			// 0xEC
 	UsbFunctNone,			// 0xED
-	UsbFunctNone,			// 0xEE
+	UsbFunctNone,			// 0xEE     USB_ERROR
 	UsbFunctNone,			// 0xEF
 	UsbFunctNone,			// 0xF0
 	UsbFunctNone,			// 0xF1
@@ -795,6 +808,64 @@ void UsbMemStatus			(void)
 	SWITCH_OUT_BUF();
 	OUT_COMMAND			= USB_COM_MEM_STATUS;
 	OUT_COM				= MemStatus();
+	USB_SEND_PACKET();
+}
+
+void UsbFunctEnableGsm		(void)
+{
+	if (In.com < 2)
+	{
+		if (In.com)		Gsm_On();
+		else			Gsm_Off();
+	}
+
+	SWITCH_OUT_BUF();
+	OUT_COMMAND		= USB_COM_TEXT;
+	OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Gsm %s", (GSM_IE)?	"Enabled" : "Disabled");
+	USB_SEND_PACKET();
+}
+
+void UsbFunctEnableGps		(void)
+{
+	if (In.com < 2)
+		GPS_IE = (In.com)?	1 : 0;
+
+	SWITCH_OUT_BUF();
+	OUT_COMMAND		= USB_COM_TEXT;
+	OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Gps %s", (GPS_IE)?	"Enabled" : "Disabled");
+	USB_SEND_PACKET();
+}
+
+void UsbFunctEnablePwm		(void)
+{
+	SWITCH_OUT_BUF();
+	OUT_COMMAND		= USB_COM_TEXT;
+	OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Command not implemented jet");
+	USB_SEND_PACKET();
+}
+
+void UsbFunctEnableWifi		(void)
+{
+	SWITCH_OUT_BUF();
+	OUT_COMMAND		= USB_COM_TEXT;
+#ifdef	WIFI_EN
+	if (In.com < 2)
+	{
+		if (In.com)		Wifi_On();
+		else			Wifi_Off();
+	}
+	OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Wifi %s", (WIFI_EN)?	"Enabled" : "Disabled");
+#else
+	OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Device have not Wifi");
+#endif
+	USB_SEND_PACKET();
+}
+
+void UsbFunctEnableAdc		(void)
+{
+	SWITCH_OUT_BUF();
+	OUT_COMMAND		= USB_COM_TEXT;
+	OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Command not implemented jet");
 	USB_SEND_PACKET();
 }
 

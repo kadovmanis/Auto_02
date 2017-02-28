@@ -7,6 +7,7 @@
 //#define	GSM_IE			_SI2C1IE
 
 void Gsm_On			(void);
+void Gsm_Off		(void);
 void Gsm_PwrOn		(void);
 void Gsm_PwrKey		(void);
 void Gsm_AT			(void);
