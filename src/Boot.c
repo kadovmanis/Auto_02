@@ -99,7 +99,7 @@ __prog__ char		BOOT_SECTOR_DAT		Msg_B_Time[]	= "\r\nBuild Time:   ";
 __prog__ char		BOOT_SECTOR_DAT		Msg_Vers[]		= BOOT_VERSION;
 __prog__ char		BOOT_SECTOR_DAT		Msg_Date[]		= __DATE__;
 __prog__ char		BOOT_SECTOR_DAT		Msg_Time[]		= __TIME__;
-__prog__ int		BOOT_SECTOR_BALANCE	Balance[BALANCE_SIZE];
+//__prog__ int		BOOT_SECTOR_BALANCE	Balance[BALANCE_SIZE];
 
 static union
 {
