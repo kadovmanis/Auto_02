@@ -10,8 +10,7 @@ sudo java -jar /opt/microchip/mplabx/v3.55/mplab_ipe/ipecmd.jar -?
 # check tool (pickit)
 sudo java -jar /opt/microchip/mplabx/v3.55/mplab_ipe/ipecmd.jar -T
 
-# erase
-sudo java -jar /opt/microchip/mplabx/v3.55/mplab_ipe/ipecmd.jar -P24FJ128GB206 -TPPK3 -E
+
 
 # blank check
 sudo java -jar /opt/microchip/mplabx/v3.55/mplab_ipe/ipecmd.jar -P24FJ128GB206 -TPPK3 -C
@@ -25,6 +24,9 @@ sudo java -jar /opt/microchip/mplabx/v3.55/mplab_ipe/ipecmd.jar -P24FJ128GB206 -
 # Verify Device... tipa
 sudo java -jar /opt/microchip/mplabx/v3.55/mplab_ipe/ipecmd.jar -P24FJ128GB206 -TPPK3 -Y -F"/home/pele/src/Auto_02/dist/default/production/Auto_02.production.hex"
 
+
+# erase
+sudo java -jar /opt/microchip/mplabx/v3.55/mplab_ipe/ipecmd.jar -P24FJ128GB206 -TPPK3 -E
 
 # Programm, release Reset... tipa
 sudo java -jar /opt/microchip/mplabx/v3.55/mplab_ipe/ipecmd.jar -P24FJ128GB206 -TPPK3 -M -F"/home/pele/src/Auto_02/dist/default/production/Auto_02.production.hex" -OL
