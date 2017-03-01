@@ -21,3 +21,4 @@ private.*
 /dist/default/
 Makefile-genesis.properties
 Makefile-variables.mk
+Makefile-default.mk
