@@ -116,17 +116,17 @@ void Gps_On(void)
 		if (GPS_POWER)
 		{
 			DebugPrint("Enable GPS Power, Uart1, GpsIrq");
-			GPS_LED = LED_STATUS_1;
+			LED_GPS = LED_STATUS_1;
 		}
 		else
 		{
 			GPS_IE = 0;		// disable GPS extend IRQ
 			DebugPrint("Disable GPS Power");
-			GPS_LED = LED_STATUS_OFF;
+			LED_GPS = LED_STATUS_OFF;
 		}
 	#else
 		GPS_POW_ON();
-		GPS_LED	= LED_STATUS_1;
+		LED_GPS	= LED_STATUS_1;
 	#endif
 }
 
@@ -356,13 +356,13 @@ inline void	Ubx_NavStatus	(NAV_STATUS*	rxData)
 		GpsFlags.changes_gps = 1;
 		switch (GpsFix)
 		{
-			case 0:		GPS_LED	= LED_STATUS_1;		break;	// 0x00 = no fix	GPSfix Type
-			case 1:		GPS_LED	= LED_STATUS_2;		break;	// 0x01 = dead reckoning only
-			case 2:		GPS_LED	= LED_STATUS_3;		break;	// 0x02 = 2D-fix
-			case 3:		GPS_LED	= LED_STATUS_ON;	break;	// 0x03 = 3D-fix
-			case 4:		GPS_LED	= LED_STATUS_2;		break;	// 0x04 = GPS + dead reckoning combined
-			case 5:		GPS_LED	= LED_STATUS_2;		break;	// 0x05 = Time only fix
-			default:	GPS_LED	= LED_STATUS_ERROR;	break;	// 0x06..0xff = reserved
+			case 0:		LED_GPS	= LED_STATUS_1;		break;	// 0x00 = no fix	GPSfix Type
+			case 1:		LED_GPS	= LED_STATUS_2;		break;	// 0x01 = dead reckoning only
+			case 2:		LED_GPS	= LED_STATUS_3;		break;	// 0x02 = 2D-fix
+			case 3:		LED_GPS	= LED_STATUS_ON;	break;	// 0x03 = 3D-fix
+			case 4:		LED_GPS	= LED_STATUS_2;		break;	// 0x04 = GPS + dead reckoning combined
+			case 5:		LED_GPS	= LED_STATUS_2;		break;	// 0x05 = Time only fix
+			default:	LED_GPS	= LED_STATUS_ERROR;	break;	// 0x06..0xff = reserved
 		}
 	}
 //	DebugSprintf(tmp, "Fix:%d, FistFix: %ld sec, Reset: %ld", rxData->gpsFix, rxData->ttff, rxData->msss);

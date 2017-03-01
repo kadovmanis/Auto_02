@@ -72,6 +72,7 @@
 #if		(HARDWARE == HW_HOME)
 	#define		DEVICE						"Home"
 	#define		DEVICE_ID					0x0001
+	#define		LED_COUNT					4
 	#define		LCD							LCD_RGB
 //	#define		LCD_BLUE
 //	#define		LCD_REVERSE
@@ -86,6 +87,7 @@
 #elif	(HARDWARE == HW_AUTO)
 	#define		DEVICE						"Auto_01"
 	#define		DEVICE_ID					0x0100
+	#define		LED_COUNT					4
 	#define		LCD							LCD_NO
 	#define		UART4_WIFI
 	#define		WIFI_WAKE_UP_S				300				// check Wifi every 5min
@@ -102,6 +104,7 @@
 #elif	(HARDWARE == HW_SEE)
 	#define		DEVICE						"See_01"
 	#define		DEVICE_ID					0x1000
+	#define		LED_COUNT					2
 	#define		LCD							LCD_NO
 	#define		GPRS						ON_LINE
 	#define		BOOT_LOADER
@@ -124,10 +127,11 @@
 
 // ______________________________ Specific HW Defines ___________________________
 #include	"p24Fxxxx.h"				// C:\Program Files\Microchip\MPLAB C30\support\PIC24F\h
-#define	GSM_LED			LedStatus1
-#define	GPS_LED			LedStatus2
-#define	LED_USB			LedStatus3
-#define	LED_HID			LedStatus4
+#define	LED_TIM			LedStatus1
+#define	LED_USB			LedStatus1
+#define	LED_GSM			LedStatus2
+#define	LED_HID			LedStatus3		// for tests
+#define	LED_GPS			LedStatus4
 
 //#include	"p24Fxxxx.h"				// C:\Program Files\Microchip\MPLAB C30\support\PIC24F\h
 #define	GPS_INTERRUPT	__attribute__((interrupt, no_auto_psv)) _PMPInterrupt

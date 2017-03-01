@@ -3,6 +3,14 @@
 #include	"usb_device.h"
 #include	"app_device_custom_hid.h"
 
+#ifdef LED_TIM
+	#define	LED_USB_ON	LED_STATUS_1_I
+	#define	LED_USB_OFF	LED_STATUS_1
+#else
+	#define	LED_USB_ON	LED_STATUS_ON
+	#define	LED_USB_OFF	LED_STATUS_OFF
+#endif
+
 void SYSTEM_Initialize( SYSTEM_STATE state )
 {
 }
@@ -39,9 +47,9 @@ void APP_LEDUpdateUSBStatus(void)
 //	}
 	switch(USBGetDeviceState())
 	{
-	case DETACHED_STATE:		LED_USB = LED_STATUS_OFF;			break;
-	case CONFIGURED_STATE:		LED_USB = LED_STATUS_ON;			break;
-	default:					LED_USB = LED_STATUS_ERROR;			break;
+	case DETACHED_STATE:		LED_USB = LED_USB_OFF;			break;
+	case CONFIGURED_STATE:		LED_USB = LED_USB_ON;			break;
+	default:					LED_USB = LED_STATUS_ERROR;		break;
 	}
 }
 
@@ -57,7 +65,7 @@ bool USER_USB_CALLBACK_EVENT_HANDLER(int event, void *pdata, uint16_t size)
 			break;
 
 		case EVENT_SUSPEND:			// Update the LED status for the suspend event.
-			LED_USB = LED_STATUS_OFF;	//LED_STATUS_1;
+			LED_USB = LED_USB_OFF;	//LED_STATUS_1;
 			break;
 
 		case EVENT_RESUME:			// Update the LED status for the resume event.

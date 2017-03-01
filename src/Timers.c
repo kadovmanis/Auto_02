@@ -218,6 +218,8 @@ void TimersInit(void)
 //	_IC3IP	= 5;			//	Set		IC3 interrupt priority
 //	_IC3IF	= 0;			//	Clear	IC3 interrupt flag
 //	_IC3IE	= 1;			//	Enable	IC3 interrupt
+
+	LED_TIM	= LED_STATUS_1;
 }
 
 // **********************************************************************
@@ -289,49 +291,46 @@ inline	void SysTimeIrq	(void)
 inline void LedStatusUpdate(void)
 {
 	static	U8	ledTimer = 0;
-	static	U8	oneLedCnt = 0;
 
 	if (ledTimer)
 		ledTimer--;
 	else	if (LedBit)
-//	if ((!ledTimer) && (LedBit))
 	{
+#if	(LED_COUNT == 2)
+		static	U8	oneLedCnt = 0;
 		switch (oneLedCnt)
 		{
-		case 0:		LED1 = (LedStatus1 & LedBit)? 1:0;
-					LED2 = (LedBit & 0xF000)? 1:0;		break;
-		case 1:		LED1 = (LedStatus2 & LedBit)? 1:0;
-					LED2 = (LedBit & 0x8000)? 1:0;		break;
-		case 2:		LED1 = (LedStatus3 & LedBit)? 1:0;
-					LED2 = (LedBit & 0x8000)? 1:0;		break;
-//		case 3:		LED1 = (LedStatus4 & LedBit)? 1:0;	break;
-		default:	LED1 = 0;
-					LED2 = (LedBit & 0x8000)? 1:0;		break;
+		case 0:	LED1 = (LedBit & 0xF000)?		1:0;
+				LED2 = (LedBit & LedStatus1)?	1:0;	break;
+		case 1:	LED1 = (LedBit & 0x8000)?		1:0;
+				LED2 = (LedBit & LedStatus2)?	1:0;	break;
+		case 2:	LED1 = (LedBit & 0x8000)?		1:0;
+				LED2 = (LedBit & LedStatus3)?	1:0;	break;
+		case 3:
+		default:LED1 = (LedBit & 0x8000)?		1:0;
+				LED2 = (LedBit & LedStatus4)?	1:0;	break;
 		}
-/*		#ifdef LED1
-			LED1 = (LedStatus1 & LedBit)? 1:0;
-		#endif
-		#ifdef LED2
-			LED2 = (LedStatus2 & LedBit)? 1:0;
-		#endif
-		#ifdef LED3
-			LED3 = (LedStatus3 & LedBit)? 1:0;
-		#endif
-		#ifdef LED4
-			LED4 = (LedStatus4 & LedBit)? 1:0;
-		#endif
-
-		LedBit >>= 1;
-*/		if (!(LedBit >>= 1))
-		{
-			if (++oneLedCnt > 3)
-				oneLedCnt = 0;
-		}
-		else
+#else
+ #ifdef	LED1
+		LED1 = (LedStatus1 & LedBit)? 1:0;
+ #endif
+ #ifdef	LED2
+		LED2 = (LedStatus2 & LedBit)? 1:0;
+ #endif
+ #ifdef	LED3
+		LED3 = (LedStatus3 & LedBit)? 1:0;
+ #endif
+ #ifdef LED4
+		LED4 = (LedStatus4 & LedBit)? 1:0;
+ #endif
+#endif
+		if (LedBit >>= 1)
 			ledTimer = 62;						// 1000hz / 16bit = 62.5
+#if	(LED_COUNT == 2)
+		else if (++oneLedCnt > 3)
+			oneLedCnt = 0;
+#endif
 	}
-//	else
-//		ledTimer--;
 }
 
 // **********************************************************************

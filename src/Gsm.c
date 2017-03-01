@@ -43,7 +43,7 @@ void Gsm_On	(void)
 		if (GSM_IE)
 		{
 			GSM_IE	= 0;	DebugPrint("Turn GSM Interrupt Off");
-			GSM_LED	= LED_STATUS_OFF;
+			LED_GSM	= LED_STATUS_OFF;
 			return;
 		}
 	#endif
@@ -61,13 +61,13 @@ void Gsm_Off	(void)
 	GSM_RTS_OFF();
 	GsmFlags	= 0;
 	GsmState	= GsmState_Idle;
-	GSM_LED		= LED_STATUS_ERROR;
+	LED_GSM		= LED_STATUS_ERROR;
 	while (GSM_STATUS)
 	{
 		GSM_PK_ON();
 	}
 	GSM_DTR_OFF();
-	GSM_LED		= LED_STATUS_OFF;
+	LED_GSM		= LED_STATUS_OFF;
 }
 
 void Gsm_PwrOn	(void)
@@ -212,7 +212,7 @@ void GSM_INTERRUPT(void)
 		IdleSeconds++;
 		OkSeconds++;
 	}
-	GSM_LED		= ledStatus;
+	LED_GSM		= ledStatus;
 	
 	if (PacketRec)
 	{
@@ -616,7 +616,7 @@ void GSM_INTERRUPT(void)
 		{
 //			GsmState = GsmState_Idle;			// temporary
 			DebugPrint("Gsm CPIN Error");
-			GSM_LED		= LED_STATUS_ERROR;		// Indicate ERROR
+			LED_GSM		= LED_STATUS_ERROR;		// Indicate ERROR
 			GSM_POWER	= 1;					// Module Power Off
 			GSM_IE		= 0;					// Gsm Irq Off
 			GsmFlags	= 0;					// Gsm flags = 0
@@ -685,7 +685,7 @@ void GSM_INTERRUPT(void)
 			#endif
 			if (InitBaudRate == BaudRate_none)
 			{										// All baudrates already tested
-				GSM_LED		= LED_STATUS_ERROR;		// Indicate ERROR
+				LED_GSM		= LED_STATUS_ERROR;		// Indicate ERROR
 				GSM_POWER	= 1;					// Module Power Off
 //				GSM_IE		= 0;					// Gsm Irq Off
 				GsmFlags	= 0;					// Gsm flags = 0
