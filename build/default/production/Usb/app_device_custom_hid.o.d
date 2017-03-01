@@ -14,11 +14,14 @@ Usb/system.h  \
 h/Typedef.h  \
  h/Define.h  \
 Usb/usb_config.h  \
-h/Timers.h  \
+h/Ports.h  \
 h/Typedef.h  \
+h/Timers.h  \
+ h/Ports_Auto01.h  \
+h/Timers.h  \
 h/Memory.h  \
 h/Gsm.h  \
- h/Gps.h  \
+h/Gps.h  \
 h/Wifi.h  \
-h/Uart1.h  \
+ h/Uart1.h  \
 h/Uart4.h 

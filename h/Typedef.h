@@ -1,6 +1,11 @@
 #ifndef	_typedef_h_
 #define	_typedef_h_
 
+/***************************
+ * view bin file command line:
+ xxd -c 8 Auto_02.bin
+***************************/
+
 #include	"Define.h"
 #include	<stdbool.h>
 #include	<stdint.h>
