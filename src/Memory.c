@@ -5,7 +5,7 @@
 #include	"Ports.h"
 #include	<string.h>
 #include	<stdio.h>
-#if	(TEST == MEMORY_TEST)
+#if	(TEST == TEST_MEMORY)
 	#include	"Debug.h"
 #else
 	#define	DebugPrint(X)
@@ -116,7 +116,7 @@ inline void SpiMemTimer 	(void)	// 100Hz			TODO...!!!!!!!!!!!!!!!!!!
 		MEM_WRITE_IE = 1;
 	}
 /*
-#if	(TEST == MEMORY_TEST)
+#if	(TEST == TEST_MEMORY)
 	static U16 testTimer = 3000;
 	if (!--testTimer)
 	{
@@ -284,7 +284,7 @@ void Mem_SetWriteAddress	(U32 addr)
 	CurrentWriteAddress.u32	= addr;
 	if (CurrentWriteAddress.u16h >= ServiceSector)
 		CurrentWriteAddress.u32	= 0;
-	#if	(TEST == MEMORY_TEST)
+	#if	(TEST == TEST_MEMORY)
 		char tmp[60];
 		sprintf(tmp, "New Write Addr: 0x%X%04X", CurrentWriteAddress.u16h, CurrentWriteAddress.u16l);
 		DebugPrint(tmp);
@@ -306,7 +306,7 @@ void Mem_SetReadAddress		(U32 addr)
 		}
 		CurrentReadAddress.u32	= addr;
 	}
-	#if	(TEST == MEMORY_TEST)
+	#if	(TEST == TEST_MEMORY)
 		char tmp[60];
 		sprintf(tmp, "New Read Addr: 0x%X%04X", CurrentReadAddress.u16h, CurrentReadAddress.u16l);
 		DebugPrint(tmp);

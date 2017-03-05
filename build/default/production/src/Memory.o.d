@@ -8,6 +8,4 @@ h/Spi_i2c.h  \
 h/Timers.h  \
 h/Ports.h  \
  h/Timers.h  \
-h/Ports_Auto01.h  \
-h/Debug.h  \
-h/Wifi.h 
+h/Ports_Auto01.h 

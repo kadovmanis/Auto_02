@@ -20,7 +20,7 @@ static		UNI16			OutPacketLen;
 static		U8				OkPacket[8];
 static		UNI16			Rssi;
 
-#if	(TEST == WIFI_TEST)
+#if	(TEST == TEST_WIFI)
   #include		"Debug.h"
   static char	tmp[80];
 #else
@@ -35,12 +35,12 @@ inline	void Wifi_CheckWisibleSsid	(void);
 
 void Wifi_On		(void)
 {
-	#if	(TEST == WIFI_TEST)
+	#if	(TEST == TEST_WIFI)
 		if (WIFI_EN)
 		{
 			Wifi_Off();
 			DebugPrint("Turn Wifi module Off");
-			WIFI_LED = LED_STATUS_1;
+			LED_WIFI = LED_STATUS_1;
 			return;
 		}
 	#endif
@@ -57,7 +57,7 @@ void Wifi_Off		(void)
 	WIFI_EN		= 0;				// Wifi Power	Off
 	WIFI_IE		= 0;				// Interrupt	Off
 	WifiState	= WifiState_PowerOn;
-	WIFI_LED	= LED_STATUS_1;
+	LED_WIFI	= LED_STATUS_1;
 }
 
 U8	 Wifi_Connected	(void)
@@ -68,7 +68,7 @@ U8	 Wifi_Connected	(void)
 void Wifi_Reset		(void)
 {
 	WIFI_RST = !WIFI_RST;
-	#if	(TEST == WIFI_TEST)
+	#if	(TEST == TEST_WIFI)
 		if (WIFI_RST)		DebugPrint("RUN Wifi module");
 		else				DebugPrint("RESET Wifi module");
 	#endif
@@ -77,14 +77,14 @@ void Wifi_Reset		(void)
 U16 Wifi_AUTO		(void)
 {
 	FL_TEST_MANUAL = !FL_TEST_MANUAL;
-	#if	(TEST == WIFI_TEST)
+	#if	(TEST == TEST_WIFI)
 		if (FL_TEST_MANUAL)	DebugPrint("Wifi Manual Mode");
 		else				DebugPrint("Wifi Automatic Mode");
 	#endif
 	return	Flags.word;
 }
 
-#if	(TEST == WIFI_TEST)
+#if	(TEST == TEST_WIFI)
 	void Wifi_Test		(void)
 	{
 		if (Uart4_StringReceived())
@@ -129,12 +129,12 @@ void WIFI_INTERRUPT(void)
 	if (lastStatus != Flags.Status)
 	{
 		lastStatus = Flags.Status;													// pow, com, ap, ip, conected
-		if		(!Flags.pow)							WIFI_LED = LED_STATUS_1;	//  0    0    0    0    0
-		else if (Flags.Status == WIFI_STATUS_POWER)		WIFI_LED = LED_STATUS_2;	//  1    0    0    0    0
-		else if (Flags.Status == WIFI_STATUS_COM)		WIFI_LED = LED_STATUS_2;	//  1    1    0    0    0
-		else if (Flags.Status == WIFI_STATUS_AP)		WIFI_LED = LED_STATUS_3;	//  1    1    1    0    0
-		else if (Flags.Status == WIFI_STATUS_IP_OK)		WIFI_LED = LED_STATUS_3;	//  1    1    1    1    0
-		else if (Flags.Status == WIFI_STATUS_CONNECTED)	WIFI_LED = LED_STATUS_SLOW;	//  1    1    1    1    1
+		if		(!Flags.pow)							LED_WIFI = LED_STATUS_1;	//  0    0    0    0    0
+		else if (Flags.Status == WIFI_STATUS_POWER)		LED_WIFI = LED_STATUS_2;	//  1    0    0    0    0
+		else if (Flags.Status == WIFI_STATUS_COM)		LED_WIFI = LED_STATUS_2;	//  1    1    0    0    0
+		else if (Flags.Status == WIFI_STATUS_AP)		LED_WIFI = LED_STATUS_3;	//  1    1    1    0    0
+		else if (Flags.Status == WIFI_STATUS_IP_OK)		LED_WIFI = LED_STATUS_3;	//  1    1    1    1    0
+		else if (Flags.Status == WIFI_STATUS_CONNECTED)	LED_WIFI = LED_STATUS_SLOW;	//  1    1    1    1    1
 	}
 
 	if (PacketRec)
@@ -171,7 +171,7 @@ void WIFI_INTERRUPT(void)
 	}
 	else if (!++stateTimeout)
 	{
-		#if	(TEST == WIFI_TEST)
+		#if	(TEST == TEST_WIFI)
 			if (!FL_TEST_MANUAL)
 		#endif
 		{
@@ -188,7 +188,7 @@ void WIFI_INTERRUPT(void)
 	switch (WifiState)
 	{
 	case WifiState_Idle:		{
-		#if	(TEST == WIFI_TEST)
+		#if	(TEST == TEST_WIFI)
 			if (FL_TEST_MANUAL)
 			{
 				stateTimeout = 0;				// debug mode
@@ -228,7 +228,7 @@ void WIFI_INTERRUPT(void)
 				OutPacketLen.u16  += TCP_PACKET_HEDER;			//		LEN_CHANGES
 				WifiState = WifiState_SendPacket;
 				WifiSec = 0;
-				#if	(TEST == WIFI_TEST)
+				#if	(TEST == TEST_WIFI)
 					switch (OutPacket->type)
 					{
 					case TYPE_OK_WIFI:	DebugPrint("Send OK_Wifi Packet");	break;
@@ -468,7 +468,7 @@ inline	void Wifi_ResponseAction	(void)
 		if (!WifiBuf[0])						// if received string is empty
 		{	WifiBuf[0] = d;	continue;	}		// restore previous value of buffer ("" = '\0')
 
-		#if	(TEST == WIFI_TEST)
+		#if	(TEST == TEST_WIFI)
 			if (FL_TEST_MANUAL)
 			{
 				DebugPrint(WifiBuf);

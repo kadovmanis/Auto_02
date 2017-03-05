@@ -10,4 +10,6 @@ h/Ports.h  \
 h/Timers.h  \
  h/Ports_Auto01.h  \
 h/Memory.h  \
-h/Timers.h 
+h/Timers.h  \
+h/Debug.h  \
+h/Wifi.h 

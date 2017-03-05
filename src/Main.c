@@ -63,14 +63,14 @@ int main (void)
 	#ifdef		USB_PORT
 		Usb_Init();
 	#endif
-	#if	((TEST != GSM_TEST) && (TEST != WIFI_TEST))
-//		Gsm_On();
+	#if	((TEST != TEST_GSM) && (TEST != TEST_WIFI))
+		Gsm_On();
 	#endif
-	#if	(TEST != GPS_TEST)
-//		Gps_On();
+	#if	(TEST != TEST_GPS)
+		Gps_On();
 	#endif
 	#ifdef UART4_WIFI
-		#if (TEST != WIFI_TEST)
+		#if (TEST != TEST_WIFI)
 			Wifi_On();
 		#endif
 	#endif
@@ -83,7 +83,7 @@ int main (void)
 		#ifdef		USB_PORT
 			Usb_RegularFunctions();
 		#endif
-		#if	(TEST == WIFI_TEST)
+		#if	(TEST == TEST_WIFI)
 			Wifi_Test();
 		#endif
 

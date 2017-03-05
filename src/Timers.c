@@ -357,7 +357,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _T3Interrupt(void)
 	SpiMemTimer();
 	#ifdef UART4_WIFI
 		WIFI_IF = 1;
-		#if	(TEST != WIFI_TEST)
+		#if	(TEST != TEST_WIFI)
 			if ((!WIFI_IE) && (WifiSec >= WIFI_WAKE_UP_S))
 				WIFI_IE = 1;
 		#endif

@@ -51,7 +51,6 @@ AT+CIUPDATE							Firmware Upgrade (from Cloud)	1. +CIPUPDATE:1 found server
 #define		AP_CHECK_SEC			0x0000001F	// 31 sec
 #define		WIFI_OK_TIMEOUT_S		120			// 2 min
 #define		MAX_VISIBLE_AP			20
-#define		WIFI_LED				LedStatus3
 #define		WIFI_MODE_CLIENT		1
 #define		WIFI_MODE_ACC_P			2
 #define		WIFI_MODE_BOTH			3

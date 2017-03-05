@@ -8,7 +8,7 @@ void Wifi_Off		(void);
 U8	 Wifi_Connected	(void);
 void Wifi_Reset		(void);
 U16	 Wifi_AUTO		(void);
-#if	(TEST == WIFI_TEST)
+#if	(TEST == TEST_WIFI)
 	void Wifi_Test				(void);
 	void Wifi_SendCommand		(char* str);
 	void Wifi_BaudrateChange	(void);

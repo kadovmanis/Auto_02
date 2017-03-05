@@ -6,7 +6,7 @@
 #include		<stdio.h>
 #include		<stdlib.h>
 
-#if	(TEST == GSM_TEST)
+#if	(TEST == TEST_GSM)
   #include		"Debug.h"
   static char	tmp[80];
 #else
@@ -39,7 +39,7 @@ static	U16			SendDataLen = 0, OkSeconds = 0, IdleSeconds = 0, CsqTime;
 // Public Functions ---------------------------------------------------------------------------------
 void Gsm_On	(void)
 {
-	#if	(TEST == GSM_TEST)
+	#if	(TEST == TEST_GSM)
 		if (GSM_IE)
 		{
 			GSM_IE	= 0;	DebugPrint("Turn GSM Interrupt Off");
@@ -73,7 +73,7 @@ void Gsm_Off	(void)
 void Gsm_PwrOn	(void)
 {
 	GSM_POWER = !GSM_POWER;
-	#if	(TEST == GSM_TEST)
+	#if	(TEST == TEST_GSM)
 		if (GSM_POWER)		DebugPrint("GSM Power Off");
 		else				DebugPrint("GSM Power On");
 	#endif
@@ -82,7 +82,7 @@ void Gsm_PwrOn	(void)
 void Gsm_PwrKey	(void)
 {
 	GSM_P_KEY = !GSM_P_KEY;
-	#if	(TEST == GSM_TEST)
+	#if	(TEST == TEST_GSM)
 		if (GSM_P_KEY)
 		{
 			GSM_RTS_ON();	DebugPrint("GSM Power key Off");
@@ -112,7 +112,7 @@ void Gsm_AtCommand	(char* str)
 void Gsm_DTR		(void)
 {
 	GSM_DTR = !GSM_DTR;
-	#if	(TEST == GSM_TEST)
+	#if	(TEST == TEST_GSM)
 		if (GSM_DTR)		DebugPrint("GSM GSM_DTR signal High");
 		else				DebugPrint("GSM GSM_DTR signal Low");
 	#endif
@@ -121,7 +121,7 @@ void Gsm_DTR		(void)
 U16 Gsm_AUTO		(void)
 {
 	FL_TEST_MANUAL = !FL_TEST_MANUAL;
-	#if	(TEST == GSM_TEST)
+	#if	(TEST == TEST_GSM)
 		if (FL_TEST_MANUAL)	DebugPrint("GSM Manual Mode");
 		else				DebugPrint("GSM Automatic Mode");
 	#endif
@@ -131,7 +131,7 @@ U16 Gsm_AUTO		(void)
 void Gsm_OnLine		(void)
 {
 	FL_GPRS_OFFLINE = !FL_GPRS_OFFLINE;
-	#if	(TEST == GSM_TEST)
+	#if	(TEST == TEST_GSM)
 		if (FL_GPRS_OFFLINE)	Usb_SendText("GSM Offline Mode");
 		else					Usb_SendText("GSM Online  Mode");
 	#endif
@@ -150,7 +150,7 @@ inline	void Gsm_ResponseAction	(void)
 		if (!irqBuf[0])							// if received string is empty
 		{	irqBuf[0] = d;	continue;	}		// restore previous value of buffer ("" = '\0')
 		
-		#if	(TEST == GSM_TEST)
+		#if	(TEST == TEST_GSM)
 			if (FL_TEST_MANUAL)
 			{
 				DebugPrint(irqBuf);
@@ -252,7 +252,7 @@ void GSM_INTERRUPT(void)
 	}
 	else if (!++stateTimeout)
 	{
-		#if	(TEST == GSM_TEST)
+		#if	(TEST == TEST_GSM)
 			if (!FL_TEST_MANUAL)
 		#endif
 		{
@@ -268,7 +268,7 @@ void GSM_INTERRUPT(void)
 	switch (GsmState)
 	{
 	case GsmState_Idle:			{
-		#if	(TEST == GSM_TEST)
+		#if	(TEST == TEST_GSM)
 			if (FL_TEST_MANUAL)			break;
 		#endif
 		if (*recSmsNr)							// SMS received
@@ -288,7 +288,7 @@ void GSM_INTERRUPT(void)
 		}
 		else if (Flags.Status == STATUS_TCP_ACTIVE)
 		{
-		#if	(TEST == GSM_TEST) || (!defined UART4_WIFI)
+		#if	(TEST == TEST_GSM) || (!defined UART4_WIFI)
 			if (FL_TCP_READY)
 		#else
 			if ((FL_TCP_READY) && (FL_WIFI_OFFLINE))
@@ -672,7 +672,7 @@ void GSM_INTERRUPT(void)
 		else if (stateTimeout > 240)
 		{
 			static	BAUDRATE	InitBaudRate	= BaudRate_9600;
-			#if	(TEST == GSM_TEST)
+			#if	(TEST == TEST_GSM)
 				switch (InitBaudRate)
 				{
 				case BaudRate_9600:		DebugPrint("Gsm BaudRate changed to 9600");		break;

@@ -86,9 +86,10 @@
 	#define		ROM_DATA_SIZE				(_FLASH_PAGE*2)	// (_FLASH_PAGE*2)
 #elif	(HARDWARE == HW_AUTO)
 	#define		DEVICE						"Auto_01"
-	#define		DEVICE_ID					0x0100
+	#define		DEVICE_ID					0x0101
 	#define		LED_COUNT					4
 	#define		LCD							LCD_NO
+	#define		UART1_GPS
 	#define		UART4_WIFI
 	#define		WIFI_WAKE_UP_S				300				// check Wifi every 5min
 	#define		GPRS						ON_LINE
@@ -119,6 +120,7 @@
 #endif
 
 #define		TEST							TEST_NO 		// Send USB debug strings to test specific software modules
+#define		DEVICE_NAME						DEVICE
 
 #define		USB_DESCRIPTOR_MANUFACTURER			MICROCHIP_STRING
 #define		USB_DESCRIPTOR_MANUFACTURER_SIZE	MICROCHIP_SIZE
@@ -130,6 +132,7 @@
 #define	LED_TIM			LedStatus1
 #define	LED_USB			LedStatus1
 #define	LED_GSM			LedStatus2
+#define	LED_WIFI		LedStatus3
 #define	LED_HID			LedStatus3		// for tests
 #define	LED_GPS			LedStatus4
 

@@ -583,11 +583,11 @@ void UsbCommandService_f	(void)
 
 void UsbCommandService_1	(void)
 {
-	#if		(TEST == GSM_TEST)
+	#if		(TEST == TEST_GSM)
 		Gsm_On();
-	#elif	(TEST == GPS_TEST)
+	#elif	(TEST == TEST_GPS)
 		GPS_IE = !GPS_IE;
-	#elif	(TEST == WIFI_TEST)
+	#elif	(TEST == TEST_WIFI)
 		Wifi_On();
 	#endif
 	OUT_DATA_LEN	= 1;
@@ -596,11 +596,11 @@ void UsbCommandService_1	(void)
 
 void UsbCommandService_2	(void)
 {
-	#if		(TEST == GSM_TEST)
+	#if		(TEST == TEST_GSM)
 		Gsm_PwrOn();
-	#elif	(TEST == GPS_TEST)
+	#elif	(TEST == TEST_GPS)
 		Gps_On();
-	#elif	(TEST == WIFI_TEST)
+	#elif	(TEST == TEST_WIFI)
 		Wifi_Reset();
 	#endif
 	OUT_DATA_LEN	= 1;
@@ -609,9 +609,9 @@ void UsbCommandService_2	(void)
 
 void UsbCommandService_3	(void)
 {
-	#if		(TEST == GSM_TEST)
+	#if		(TEST == TEST_GSM)
 		Gsm_PwrKey();
-	#elif	(TEST == WIFI_TEST)
+	#elif	(TEST == TEST_WIFI)
 		Wifi_BaudrateChange();
 	#endif
 	OUT_DATA_LEN	= 1;
@@ -620,7 +620,7 @@ void UsbCommandService_3	(void)
 
 void UsbCommandService_4	(void)
 {
-	#if		(TEST == GSM_TEST)
+	#if		(TEST == TEST_GSM)
 		Gsm_AT();
 	#endif
 	OUT_DATA_LEN	= 1;
@@ -629,11 +629,11 @@ void UsbCommandService_4	(void)
 
 void UsbCommandService_5	(void)
 {
-	#if		(TEST == GSM_TEST)
+	#if		(TEST == TEST_GSM)
 		Gsm_AtCommand((char*)In.Data);
-	#elif	(TEST == GPS_TEST)
+	#elif	(TEST == TEST_GPS)
 		Uart1_SendData((char*)In.Data, In.PackedDateLen);
-	#elif	(TEST == WIFI_TEST)
+	#elif	(TEST == TEST_WIFI)
 		Wifi_SendCommand((char*)In.Data);
 	#endif
 	OUT_DATA_LEN	= 1;
@@ -642,7 +642,7 @@ void UsbCommandService_5	(void)
 
 void UsbCommandService_6	(void)
 {
-	#if		(TEST == GSM_TEST)
+	#if		(TEST == TEST_GSM)
 		Gsm_DTR();
 	#endif
 	OUT_DATA_LEN	= 1;
@@ -652,9 +652,9 @@ void UsbCommandService_6	(void)
 void UsbCommandService_7	(void)
 {
 	OUT_DATA_LEN	= 2;
-	#if		(TEST == GSM_TEST)
+	#if		(TEST == TEST_GSM)
 		*(U16*)&OUT_DATA[0] = Gsm_AUTO();
-	#elif	(TEST == WIFI_TEST)
+	#elif	(TEST == TEST_WIFI)
 		*(U16*)&OUT_DATA[0] = Wifi_AUTO();
 	#endif
 }
@@ -705,7 +705,7 @@ void UsbMemRead				(void)
 	register U16 size	= In.PageSize;
 	Mem_SetReadAddress(In.Address);
 
-	#if	(TEST == MEMORY_TEST)
+	#if	(TEST == TEST_MEMORY)
 		char tmp[64];
 		sprintf(tmp, "Addr = 0x%X%04X; Size = %u ", (U16)(In.Address >> 16), (U16)(In.Address & 0xFFFF), size);
 		Usb_SendText(tmp);

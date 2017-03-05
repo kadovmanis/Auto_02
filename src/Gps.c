@@ -14,7 +14,7 @@
 	#define	PACKET_MIN_REMAIN	6
 #endif
 
-#if	(TEST == GPS_TEST)
+#if	(TEST == TEST_GPS)
   #include	"Debug.h"
   static char	tmp[80];
 #else
@@ -84,9 +84,9 @@ static GPS_OFFSET_2		Offset;
 static			U8		GpsFix = 0xFF, GpsDataType = 0;
 static			UNI32	latDiff, lonDiff, SpeedDiff;
 static			U16		GpsSec = 0, DegDiff; //, DistanceCm = 0;
-//static GPS_MSG*			pMsg;
 #ifdef	UART1_GPS
   static U8				RxBuff[RX_BUFF_COUNT][RX_BUFF_SIZE];
+  static GPS_MSG*		pMsg;
 #endif
 static enum
 {
@@ -111,7 +111,7 @@ void Gps_On(void)
 	Uart1_Init(BaudRate_9600);
 	GPS_IF = 0;		// clear interrupt flag and
 	GPS_IE = 1;		// enable GPS extend IRQ
-	#if	(TEST == GPS_TEST)
+	#if	(TEST == TEST_GPS)
 		GPS_POWER = !GPS_POWER;
 		if (GPS_POWER)
 		{
@@ -214,7 +214,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt( void )
 					GPS_IF = 1;
 					pMsg = (GPS_MSG*)RxBuff[buffIdx];
 				}
-			#if	(TEST == GPS_TEST)
+			#if	(TEST == TEST_GPS)
 				else if (GPS_IE)
 				{
 					DebugSprintf(tmp,"Cl:%02X, Id:%02X, Len:%2u, Idx:%2d, ck_a:%02X_%02X, ck_b:%02X_%02X",

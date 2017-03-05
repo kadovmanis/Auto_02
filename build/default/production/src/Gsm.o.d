@@ -10,6 +10,4 @@ h/Ports.h  \
 h/Timers.h  \
  h/Ports_Auto01.h  \
 h/Tcp.h  \
-h/Tcp_Type.h  \
-h/Debug.h  \
-h/Wifi.h 
+h/Tcp_Type.h 

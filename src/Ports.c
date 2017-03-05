@@ -86,12 +86,12 @@ void PPSconfig(enum ppsConfig ppsSwitch)
 	switch (ppsSwitch)
 	{
 	case pps_system:
-		#ifdef UART1_GPS
+		#if ((defined GPS_RX) && (defined GPS_TX))
 			_U1RXR	= GPS_RX;		// RB9	< Rx_GPS
 			GPS_TX	= IO_U1TX;		// RB8	< Tx_GPS
 		#endif
 
-		#ifdef UART2_GSM
+		#if ((defined GSM_RX) && (defined GSM_TX))
 			_U2RXR	= GSM_RX;		// RD2	< Rx_GSM
 			GSM_TX	= IO_U2TX;		// RD1	< Tx_GSM
 		#endif
