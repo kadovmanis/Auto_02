@@ -459,7 +459,11 @@ void Tcp_BootLoaderProcess	(void)
 	}
 	if (outPack)
 	{
+	DebugSprintf(tmp,"Prepare packet");
+	DebugPrint(tmp);
 		Tcp_PreparePacket(outPack, 0);
+	DebugSprintf(tmp,"Packet READY");
+	DebugPrint(tmp);
 		FL_TCP_READY = 1;
 	}
 }
