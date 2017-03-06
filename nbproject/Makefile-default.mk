@@ -79,7 +79,7 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC24FJ128GB206
-ProjectDir=/home/pele/src/Auto_02
+ProjectDir=/home/kaspars/tttt/src/16bit/Auto_02
 ConfName=default
 ImagePath=dist/default/${IMAGE_TYPE}/Auto_02.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 ImageDir=dist/default/${IMAGE_TYPE}

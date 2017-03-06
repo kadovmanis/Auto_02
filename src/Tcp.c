@@ -6,6 +6,8 @@
 #include	"Timers.h"
 #include	<string.h>
 #include	<stdio.h>
+  #include		"Debug.h"
+    char tmp[64];
 
 #define	OUT_PACKET_COUNT	8
 #define	MEMORY_EMPTY_CHAR	0xFF	// for tests - change to 0xFF in future
@@ -240,6 +242,9 @@ inline void Tcp_PacketReceived	(TCP_PACKET* PacketRec)
 {
 	register TCP_PACKET* outPack = NULL;
 
+	DebugSprintf(tmp,"Packet received: %02X", PacketRec->type);
+	DebugPrint(tmp);
+
 	switch (PacketRec->type)
 	{
 	case TYPE_GPS_DATA:		{
@@ -332,15 +337,23 @@ extern void BootFlashInit	(void);
 void Tcp_BootLoaderProcess	(void)
 {
     static U16 waitCon = 0;
+
 	if ((!Wifi_Connected()) &&	(!GprsConnected()))
 		return;
+
+	DebugSprintf(tmp,"BootLoaderProcess -TcpBootState = %d", TcpBootState);
+	DebugPrint(tmp);
 
 	register TCP_PACKET* outPack = NULL;
 
 	switch (TcpBootState)
 	{
 	case State_Idle:												{
+	DebugSprintf(tmp,"State_Idle");
+	DebugPrint(tmp);
 		outPack = Tcp_GetOutPacketBuffer();
+	DebugSprintf(tmp,"outPack");
+	DebugPrint(tmp);
 		sprintf((char*)outPack->data, "%s %s %s %s \r", DEVICE, VERSION, Build_Date, Build_Time);
 		outPack->len = 0;										//		LEN_CHANGES
 		outPack->type = TYPE_DEV_SW_INFO;
@@ -348,6 +361,8 @@ void Tcp_BootLoaderProcess	(void)
 		while (*ptr++ != '\r')
 			outPack->len++;
 		FL_BOOT_TCP = 0;
+	DebugSprintf(tmp,"pack created");
+	DebugPrint(tmp);
 		break;														}
 	case State_BootFlash:											{
 		BootFlashInit();
@@ -366,13 +381,19 @@ void Tcp_BootLoaderProcess	(void)
 		FL_BOOT_TCP		= 0;
 		break;														}
 	case State_MemBootAddr:											{
+	DebugSprintf(tmp,"State_MemBootAddr");
+	DebugPrint(tmp);
 		#ifdef GPS_IE			// if defined GPS interrupt
 			GPS_IE = 0;			// switch it off to avoid memory write
 		#endif
 //		FL_BOOT = 1;			// Boot process should stop all other processes
 		_AD1IE	= 0;			// Disable ADC1 Interrupt
+	DebugSprintf(tmp,"Mem_SetWriteAddress");
+	DebugPrint(tmp);
 
 		Mem_SetWriteAddress(0);
+	DebugSprintf(tmp,"Send response");
+	DebugPrint(tmp);
 		outPack			= Tcp_GetOutPacketBuffer();
 		outPack->type	= TYPE_MEM_BOOT_ADDR;
 		*(U32*)&outPack->data[0] = Mem_GetWriteAddress();
