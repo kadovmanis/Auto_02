@@ -242,8 +242,8 @@ inline void Tcp_PacketReceived	(TCP_PACKET* PacketRec)
 {
 	register TCP_PACKET* outPack = NULL;
 
-	DebugSprintf(tmp,"Packet received: %02X", PacketRec->type);
-	DebugPrint(tmp);
+//	DebugSprintf(tmp,"Packet received: %02X", PacketRec->type);
+//	DebugPrint(tmp);
 
 	switch (PacketRec->type)
 	{
