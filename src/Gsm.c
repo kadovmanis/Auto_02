@@ -196,23 +196,36 @@ void GSM_INTERRUPT(void)
 	GSM_IF = 0;
 	
 	static U16			tcpTest = 0, tcpCnt = 0;
-	
 	if (FL_TCP_READY)
 	{
+		static U16 flags = 0;
+		U16 print = 0;
 		if (!tcpTest)
 		{
 			tcpTest	= 1;
 			tcpCnt	= 0;
-			Usb_SendText("packet to send");
+			print++;
 		}
 		else
 			tcpCnt++;
+		if (flags != Flags.word)
+		{
+			flags = Flags.word;
+			print++;
+		}
+		if (print)
+		{
+			Usb_SendText("packet to send");
+			char t[32];
+			sprintf(t, "packet to send, flags:%04X, cnt: %u", flags, tcpCnt);
+			Usb_SendText(t);
+		}
 	}
 	else if (tcpTest)
 	{
 		tcpTest = 0;
 		char t[32];
-		sprintf(t, "packet    SENT, cnt: %u", tcpCnt);
+		sprintf(t, "packet    SENT, flags:%04X, cnt: %u", Flags.word, tcpCnt);
 		Usb_SendText(t);
 	}
 
@@ -563,8 +576,8 @@ void GSM_INTERRUPT(void)
 		break;					}
 	case GsmState_Connected:	{
 		DebugPrint("Gsm GsmState_Connected...");
-		GsmState	= (Flags.transp)?	GsmState_Idle : GsmState_AT;
-//		GsmState		= GsmState_Idle;
+//		GsmState	= (Flags.transp)?	GsmState_Idle : GsmState_AT;
+		GsmState		= GsmState_Idle;
 		break;					}
 	case GsmState_DisConnected:	{
 		GSM_DTR_ON();
