@@ -256,9 +256,6 @@ void GSM_INTERRUPT(void)
 		CsqTime = (Flags.home && Flags.csq)?	30 : 10;
 	}
 
-	if (print)
-		Usb_SendText("print 1");
-
 	if (FL_GSM_SEC)
 	{
 		FL_GSM_SEC = 0;
@@ -267,9 +264,6 @@ void GSM_INTERRUPT(void)
 	}
 	LED_GSM		= ledStatus;
 
-	if (print)
-		Usb_SendText("print 2");
-
 	if (PacketRec)
 	{
 		DebugSprintf(tmp,"Tcp Packet - Type: %02X, ID: %04X, Len: %d", PacketRec->type, PacketRec->id, PacketRec->len);
@@ -277,9 +271,6 @@ void GSM_INTERRUPT(void)
 		Tcp_PacketReceived(PacketRec);
 		PacketRec = NULL;
 	}
-
-	if (print)
-		Usb_SendText("print 3");
 
 	if (PackRecTimeout)
 	{
@@ -292,22 +283,13 @@ void GSM_INTERRUPT(void)
 		return;
 	}
 
-	if (print)
-		Usb_SendText("print 4");
-
 	Gsm_ResponseAction();
 	
-	if (print)
-		Usb_SendText("print 5");
-
 	if (TimeOut)
 	{
 		TimeOut--;
 		return;
 	}
-
-	if (print)
-		Usb_SendText("print 6");
 
 	if (lastGsmState != GsmState)		// GSM state changed
 	{
@@ -334,7 +316,11 @@ void GSM_INTERRUPT(void)
 	}
 
 	if (print)
-		Usb_SendText("print 7");
+	{
+		char t[32];
+		sprintf(t, "packet to send, flags:%04X, state: %u", Flags.word, GsmState);
+		Usb_SendText(t);
+	}
 
 	switch (GsmState)
 	{
