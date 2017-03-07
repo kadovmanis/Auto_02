@@ -322,11 +322,11 @@ void GSM_INTERRUPT(void)
 		}
 		else if (Flags.Status == STATUS_TCP_ACTIVE)
 		{
-		#if	(TEST == TEST_GSM) || (!defined UART4_WIFI)
+//		#if	(TEST == TEST_GSM) || (!defined UART4_WIFI)
 			if (FL_TCP_READY)
-		#else
-			if ((FL_TCP_READY) && (FL_WIFI_OFFLINE))
-		#endif
+//		#else
+//			if ((FL_TCP_READY) && (FL_WIFI_OFFLINE))
+//		#endif
 			{
 				register TCP_PACKET* packet = Tcp_GetUnsent();
 				if (packet)
