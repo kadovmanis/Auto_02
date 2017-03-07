@@ -251,6 +251,7 @@ void WIFI_INTERRUPT(void)
 			Uart4_Init(WifiBaudrate);
 		}
 		TimeOut_10mS = 150;						// Timeout 1.5 sec
+		FL_WIFI_OFFLINE	= 1;
 		break;					}
 	case WifiState_ComOn:		{
 		if (!stateTimeout)
