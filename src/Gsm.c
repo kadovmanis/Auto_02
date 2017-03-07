@@ -201,14 +201,13 @@ void GSM_INTERRUPT(void)
 	{
 		static U16 flags = 0;
 		U16 print = 0;
+
 		if (!tcpTest)
 		{
 			tcpTest	= 1;
 			tcpCnt	= 0;
 			print++;
 		}
-		else
-			tcpCnt++;
 		if (flags != Flags.word)
 		{
 			flags = Flags.word;
@@ -220,6 +219,7 @@ void GSM_INTERRUPT(void)
 			sprintf(t, "packet to send, flags:%04X, cnt: %u", flags, tcpCnt);
 			Usb_SendText(t);
 		}
+		tcpCnt++;
 	}
 	else if (tcpTest)
 	{
