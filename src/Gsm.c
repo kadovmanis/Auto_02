@@ -212,7 +212,7 @@ void GSM_INTERRUPT(void)
 	{
 		tcpTest = 0;
 		char t[32];
-		sprintf(t, "packet    SENT, cnt: %d", tcpCnt);
+		sprintf(t, "packet    SENT, cnt: %u", tcpCnt);
 		Usb_SendText(t);
 	}
 
@@ -563,7 +563,8 @@ void GSM_INTERRUPT(void)
 		break;					}
 	case GsmState_Connected:	{
 		DebugPrint("Gsm GsmState_Connected...");
-		GsmState		= GsmState_Idle;
+		GsmState	= (Flags.transp)?	GsmState_Idle : GsmState_AT;
+//		GsmState		= GsmState_Idle;
 		break;					}
 	case GsmState_DisConnected:	{
 		GSM_DTR_ON();
