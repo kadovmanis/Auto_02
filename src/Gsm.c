@@ -195,23 +195,7 @@ void GSM_INTERRUPT(void)
 	static	char		recSmsNr[4] = "";
 	GSM_IF = 0;
 
-	static U16			tcpTest = 0;	//, tcpCnt = 0;
-	U16	print = 0;
-	if (FL_TCP_READY)
-	{
-		if (!tcpTest)
-		{
-			tcpTest = 1;
-			print++;
-		}
-	}
-	else if (tcpTest)
-	{
-		tcpTest = 0;
-		Usb_SendText("tcp SENT");
-	}
 
-/*
 	static U16			tcpTest = 0, tcpCnt = 0;
 	if (FL_TCP_READY)
 	{
@@ -244,7 +228,7 @@ void GSM_INTERRUPT(void)
 		sprintf(t, "packet    SENT, flags:%04X, cnt: %u", Flags.word, tcpCnt);
 		Usb_SendText(t);
 	}
-*/
+
 	if (lastStatus != Flags.Status)
 	{
 		lastStatus = Flags.Status;
@@ -313,13 +297,6 @@ void GSM_INTERRUPT(void)
 //			GsmState = GsmState_PowerOn;	// restart !!!
 			GsmState = GsmState_PowerKeyOn;	// restart !!!
 		}
-	}
-
-	if (print)
-	{
-		char t[32];
-		sprintf(t, "packet to send, flags:%04X, state: %u", Flags.word, GsmState);
-		Usb_SendText(t);
 	}
 
 	switch (GsmState)
