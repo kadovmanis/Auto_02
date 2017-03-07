@@ -194,7 +194,7 @@ void GSM_INTERRUPT(void)
 	static	U16			ledStatus;
 	static	char		recSmsNr[4] = "";
 	GSM_IF = 0;
-	
+/*
 	static U16			tcpTest = 0, tcpCnt = 0;
 	if (FL_TCP_READY)
 	{
@@ -215,7 +215,6 @@ void GSM_INTERRUPT(void)
 		}
 		if (print)
 		{
-			Usb_SendText("packet to send");
 			char t[32];
 			sprintf(t, "packet to send, flags:%04X, cnt: %u", flags, tcpCnt);
 			Usb_SendText(t);
@@ -228,7 +227,7 @@ void GSM_INTERRUPT(void)
 		sprintf(t, "packet    SENT, flags:%04X, cnt: %u", Flags.word, tcpCnt);
 		Usb_SendText(t);
 	}
-
+*/
 	if (lastStatus != Flags.Status)
 	{
 		lastStatus = Flags.Status;
