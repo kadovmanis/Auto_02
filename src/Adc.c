@@ -10,6 +10,7 @@ int test = 0, test1 = 0, test2 = 0;
 volatile	POWER_STATE		PowerState = power_NoPower;
 volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
 volatile	U16				Power = 0, Battery = 0;
+volatile	S16				Cnt = 255;
 
 #define		DC_LEVEL_3_80	567
 //const		U16		DcDcReductionSteps[15] = {DC_LEVEL_3_80, 586, 607, 629, 651, 673, 697, 721, 747, 773, 800, 828, 857, 887, 0};
@@ -89,6 +90,7 @@ inline	void ADC_Test			(void);
 void __attribute__((interrupt, no_auto_psv)) _ADC1Interrupt(void)	//	*
 {																	//	*
 	_AD1IF	= 0;				// Clear the ADC1 Interrupt Flag		*
+	if (--Cnt < 0)		Cnt = 1632;
 
 	ADC_Dc_Update();
 	ADC_BatteryLevel();
@@ -138,31 +140,41 @@ inline void ADC_Dc_Update(void)
 
 inline void ADC_BatteryLevel(void)
 {
-	static	 U16	val_sum = 0;
-	static	 U16	valMax, valMin, cnt = 1;
+//	static	 U16	val_sum = 0;
+	static	 U16	prev;
+	static	 U16	valMax, valMin;
+	static	 S8		drift = 128;
 	register U16	val = AN_BAT;
 	
 	if (valMax < val)		valMax = val;
 	if (valMin > val)		valMin = val;
-	if (!--cnt)
+	if (!Cnt)
 	{
-//		val = valMax + valMin;
+		val = valMax + valMin;
+		if		(val > prev)	drift++;
+		else if	(val < prev) 	drift--;
+		prev = val;
 
-		val_sum += (!val_sum)?	(val << 6) : valMin;
-		val = val_sum >> 6;
-		val_sum -= val;
-		Battery = (val < 82)?	0 : ((val - 81) << 3);
+		if ((drift > 2) || (drift < -2))
+		{
+			drift = 0;
+			val >>= 1;
+			Battery = (val < 82)?	0 : ((val - 81) << 3);
+		}
+//		val_sum += (!val_sum)?	(val << 6) : valMin;
+//		val = val_sum >> 6;
+//		val_sum -= val;
+//		Battery = (val < 82)?	0 : ((val - 81) << 3);
 
 		//		test++;
-		if (test1 != valMax)
-		{
+//		if (test1 != valMax)
+//		{
 			test1 = valMax;
-		}
-		if (test2 != valMin)
-		{
+//		}
+//		if (test2 != valMin)
+//		{
 			test2 = valMin;
-		}
-		cnt		= 1632;
+//		}
 		valMax	= 0;
 		valMin	= 0xFFFF;
 		test = Battery;
