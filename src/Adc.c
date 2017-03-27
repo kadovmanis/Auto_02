@@ -241,16 +241,16 @@ inline void ADC_PowerLevel (void)
 		if (drift > 2)
 		{
 			drift -= 2;
-			U32 a = val + 19;	// 9.6 x2
+			register U32 a = val + 19;	// 9.6 x2
 			a *= 189;
-			Power = a >> 3;
+			Power = SHIFT_DIVIDE____8(a);
 		}
 		else if (drift < -2)
 		{
 			drift += 2;
-			U32 a = val + 19;	// 9.6 x2
+			register U32 a = val + 19;	// 9.6 x2
 			a *= 189;
-			Power = a >> 3;
+			Power = SHIFT_DIVIDE____8(a);
 		}
 		test = Power;
 //		test1 = valMax;

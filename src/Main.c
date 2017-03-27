@@ -100,8 +100,8 @@ int main (void)
 			char txt[48];
 			int val = Adc_TestVal();
 			int	max = Adc_TestVal1();
-			int	min = Adc_TestVal2();
-			sprintf(txt, "Adc_test: %u, max: %u, min: %u ", val, max, min);
+//			int	min = Adc_TestVal2();
+			sprintf(txt, "Adc_test: Power: %u, bat: %u ", val, max);
 			Usb_SendText(txt);
 		}
 	#endif
