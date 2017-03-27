@@ -146,10 +146,11 @@ inline void ADC_BatteryLevel(void)
 	if (valMin > val)		valMin = val;
 	if (!--cnt)
 	{
-		val = valMax + valMin;
-		val_sum += (!val_sum)?	(val << 5) : val;
+//		val = valMax + valMin;
+
+		val_sum += (!val_sum)?	(val << 6) : valMin;
 		val = val_sum >> 6;
-		val_sum -= (val << 1);
+		val_sum -= val;
 		Battery = (val < 82)?	0 : ((val - 81) << 3);
 
 		//		test++;
