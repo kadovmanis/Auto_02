@@ -17,7 +17,7 @@ static		U16				VisibleApCount;
 static		TCP_PACKET*		PacketRec		= NULL;
 static		TCP_PACKET*		OutPacket		= NULL;
 static		UNI16			OutPacketLen;
-static		U8				OkPacket[8];
+static		U8				OkPacket[16];
 static		UNI16			Rssi;
 
 #if	(TEST == TEST_WIFI)

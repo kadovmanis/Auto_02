@@ -18,7 +18,7 @@
 static	char		gsmBuff[256];
 static	char		irqBuf[256];
 static	char		callTxt[20], callNr[20];
-static	char		OkPacket[TCP_PACKET_HEDER];
+static	char		OkPacket[16];
 static	char*		recGsmData = NULL;
 static	GSM_STATE	GsmState;
 static	U16			TimeOut;			// 0.01 sec
@@ -358,7 +358,7 @@ void GSM_INTERRUPT(void)
 			else if (OkSeconds >= GPRS_OK_TIMEOUT_S)
 			{
 				DebugPrint("Gsm -> TCP OK send");
-				GsmUart_SendData(OkPacket, TCP_PACKET_HEDER);			// TODO: feel OkPackets statuss (.nr)
+				GsmUart_SendData(OkPacket, (TCP_PACKET_HEDER + 4));			// TODO: feel OkPackets statuss (.nr)
 //				GsmUart_SendText("Ok\r\n");
 				TimeOut		= 2;				// Timeout 0.02 sec
 				OkSeconds	= 0;
