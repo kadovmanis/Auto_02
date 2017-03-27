@@ -138,6 +138,7 @@ inline void ADC_Dc_Update(void)
 
 inline void ADC_BatteryLevel(void)
 {
+	static	 U16	val_sum = 0;
 	static	 U16	valMax, valMin, cnt = 1;
 	register U16	val = AN_BAT;
 	
@@ -145,30 +146,36 @@ inline void ADC_BatteryLevel(void)
 	if (valMin > val)		valMin = val;
 	if (!--cnt)
 	{
-//		test++;
+		val = valMax + valMin;
+		val_sum += (!val_sum)?	(val << 5) : val;
+		val = val_sum >> 6;
+		val_sum -= (val << 1);
+		Battery = (val < 82)?	0 : ((val - 81) << 3);
+
+		//		test++;
 		if (test1 != valMax)
 		{
 			test1 = valMax;
 		}
 		if (test2 != valMin)
 		{
-			test++;
 			test2 = valMin;
 		}
 		cnt		= 1632;
 		valMax	= 0;
 		valMin	= 0xFFFF;
+		test = Battery;
 	}
 
-	static	U16 val_sum = 0;
+//	static	U16 val_sum = 0;
 //	static  S16 cnt     = 0;
 //	register U16 val = AN_BAT;
 
-	val_sum += (!val_sum)?	(val << 6) : val;
-	val = val_sum >> 6;
-	val_sum -= val;
-
-	Battery = (val < 82)?	0 : ((val - 81) << 3);
+//	val_sum += (!val_sum)?	(val << 6) : val;
+//	val = val_sum >> 6;
+//	val_sum -= val;
+//
+//	Battery = (val < 82)?	0 : ((val - 81) << 3);
 }
 
 /* Power
