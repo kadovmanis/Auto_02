@@ -393,7 +393,8 @@ void WIFI_INTERRUPT(void)
 			WifiState = WifiState_Idle;
 			WifiSec	= WIFI_OK_TIMEOUT_S;
 			DebugPrint("Wifi Connect Ok -> wait connection 90sec");
-			TimeOut_10mS = 9000;			// Timeout 90 sec
+//			TimeOut_10mS = 9000;			// Timeout 90 sec
+			TimeOut_10mS = 50;				// Timeout 0.5 sec
 		}
 		else if (stateTimeout > 200)
 		{
