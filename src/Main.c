@@ -92,11 +92,17 @@ int main (void)
         if (FL_POWER_OFF)       PowerOff();
 //		if (FL_POWER_CHANGES)	Tcp_AdcPacket();
 
+	#if	(TEST != TEST_NO)
 		static U8 lastSec = 0;
 		if (lastSec != SysTime.sec)
 		{
 			lastSec = SysTime.sec;
+			char txt[48];
+			int val = Adc_TestVal();
+			sprintf(txt, "Adc_test: %u ", val);
+			Usb_SendText(txt);
 		}
+	#endif
 	}
 	return 0;
 }

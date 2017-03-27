@@ -5,6 +5,8 @@
 #include	<string.h>
 #include	<stdio.h>
 
+int test = 0;
+
 volatile	POWER_STATE		PowerState = power_NoPower;
 volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
 volatile	U16				Power = 0, Battery = 0;
@@ -139,6 +141,7 @@ inline void ADC_BatteryLevel(void)
 	static	U16 val_sum = 0;
 //	static  S16 cnt     = 0;
 	register U16 val = AN_BAT;
+	test++;
 
 	val_sum += (!val_sum)?	(val << 6) : val;
 	val = val_sum >> 6;
@@ -349,4 +352,11 @@ void	Tcp_AdcPacket	(void)
 	sprintf(str, "Bat: %d, Pow: %d", Battery, Power);
 	Tcp_SendText(str);
 	FL_POWER_CHANGES = 0;
+}
+
+int	Adc_TestVal		(void)
+{
+	int ret = test;
+	test = 0;
+	return ret;
 }
