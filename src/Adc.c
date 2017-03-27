@@ -252,12 +252,12 @@ inline void ADC_PowerLevel (void)
 			Power = val;
 //			Power = (val < 82)?	0 : ((val - 81) << 3);
 		}
-		valMax	= 0;
-		valMin	= 0xFFFF;
-
 		test = Power;
 		test1 = valMax;
 		test2 = valMin;
+
+		valMax	= 0;
+		valMin	= 0xFFFF;
 	}
 
 
