@@ -155,9 +155,15 @@ inline void ADC_BatteryLevel(void)
 		else if	(val < prev) 	drift--;
 		prev = val;
 
-		if ((drift > 2) || (drift < -2))
+		if (drift > 2)
 		{
-			drift = 0;
+			drift -= 2;
+			val >>= 1;
+			Battery = (val < 82)?	0 : ((val - 81) << 3);
+		}
+		else if (drift < -2)
+		{
+			drift += 2;
 			val >>= 1;
 			Battery = (val < 82)?	0 : ((val - 81) << 3);
 		}
