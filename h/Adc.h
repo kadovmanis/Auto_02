@@ -32,6 +32,8 @@ void	AdcInit			(void);
 void	Tcp_AdcPacket	(void);
 
 int		Adc_TestVal		(void);
+int		Adc_TestVal1	(void);
+int		Adc_TestVal2	(void);
 
 #endif
 

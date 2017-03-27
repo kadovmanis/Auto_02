@@ -99,7 +99,9 @@ int main (void)
 			lastSec = SysTime.sec;
 			char txt[48];
 			int val = Adc_TestVal();
-			sprintf(txt, "Adc_test: %u ", val);
+			int	max = Adc_TestVal1();
+			int	min = Adc_TestVal2();
+			sprintf(txt, "Adc_test: %u, max: %u, min: %u ", val, max, min);
 			Usb_SendText(txt);
 		}
 	#endif
