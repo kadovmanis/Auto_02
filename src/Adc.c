@@ -242,7 +242,7 @@ inline void ADC_PowerLevel (void)
 		{
 			drift -= 2;
 			U32 a = val >> 1;
-			a += 10;
+			a += 9;
 			a *= 189;
 			Power = a >> 2;
 //			Power = (val < 82)?	0 : ((val - 81) << 3);
@@ -251,7 +251,7 @@ inline void ADC_PowerLevel (void)
 		{
 			drift += 2;
 			U32 a = val >> 1;
-			a += 10;
+			a += 9;
 			a *= 189;
 			Power = a >> 2;
 //			Power = (val < 82)?	0 : ((val - 81) << 3);
