@@ -148,10 +148,13 @@ inline void ADC_BatteryLevel(void)
 //		test++;
 		if (test1 != valMax)
 		{
-			test++;
 			test1 = valMax;
 		}
-		test2 = valMin;
+		if (test2 != valMin)
+		{
+			test++;
+			test2 = valMin;
+		}
 		cnt		= 1632;
 		valMax	= 0;
 		valMin	= 0xFFFF;
