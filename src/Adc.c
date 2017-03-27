@@ -5,7 +5,7 @@
 #include	<string.h>
 #include	<stdio.h>
 
-int test = 0, test1, test2;
+int test = 0, test1 = 0, test2 = 0;
 
 volatile	POWER_STATE		PowerState = power_NoPower;
 volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
@@ -145,8 +145,12 @@ inline void ADC_BatteryLevel(void)
 	if (valMin > val)		valMin = val;
 	if (!--cnt)
 	{
-		test++;
-		test1 = valMax;
+//		test++;
+		if (test1 != valMax)
+		{
+			test++;
+			test1 = valMax;
+		}
 		test2 = valMin;
 		cnt		= 1632;
 		valMax	= 0;
