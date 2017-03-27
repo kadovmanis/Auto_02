@@ -177,7 +177,7 @@ inline void ADC_BatteryLevel(void)
 
 		valMax	= 0;
 		valMin	= 0xFFFF;
-//		test = Battery;
+		test1 = Battery;
 	}
 
 //	static	U16 val_sum = 0;
@@ -241,24 +241,20 @@ inline void ADC_PowerLevel (void)
 		if (drift > 2)
 		{
 			drift -= 2;
-			U32 a = val >> 1;
-			a += 9;
+			U32 a = val + 19;	// 9.6 x2
 			a *= 189;
-			Power = a >> 2;
-//			Power = (val < 82)?	0 : ((val - 81) << 3);
+			Power = a >> 3;
 		}
 		else if (drift < -2)
 		{
 			drift += 2;
-			U32 a = val >> 1;
-			a += 9;
+			U32 a = val + 19;	// 9.6 x2
 			a *= 189;
-			Power = a >> 2;
-//			Power = (val < 82)?	0 : ((val - 81) << 3);
+			Power = a >> 3;
 		}
 		test = Power;
-		test1 = valMax;
-		test2 = valMin;
+//		test1 = valMax;
+//		test2 = valMin;
 
 		valMax	= 0;
 		valMin	= 0xFFFF;
