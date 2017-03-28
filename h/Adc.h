@@ -15,13 +15,15 @@ typedef struct
 typedef enum
 {
 	power_NoPower = 0,
-	power_BatteryLow,
-	power_BatteryOk,
-	power_BatteryMiss,
-	power_External
+	power_BatteryLow,		// Battery power < 3.3V don't run gsm module
+	power_BatteryOk,		// Run on Battery
+	power_BatteryError,		// Battery power < inadequate > (too hight)
+	power_ExternalCharge,	// Ext Power presented, Battery power too small
+	power_External,			// Ext Power presented, Battery Ok
+	power_BatteryMiss		// Ext Power presented, Battery power < inadequate > (too hight)
 } POWER_STATE;
 
-extern	volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
+//extern	volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
 extern	volatile	POWER_STATE		PowerState;
 extern	volatile	U16				Power, Battery;
 

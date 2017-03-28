@@ -2,15 +2,18 @@
 #include	"Ports.h"
 #include	"Timers.h"
 #include	"Tcp.h"
+#include	"Gsm.h"
+#include	"Gps.h"
 #include	<string.h>
 #include	<stdio.h>
 
 int test = 0, test1 = 0, test2 = 0;
 
 volatile	POWER_STATE		PowerState = power_NoPower;
-volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
+//volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
 volatile	U16				Power = 0, Battery = 0;
 volatile	S16				Cnt = 255;
+static		S16				CalibrationBat, CalibrationPow;
 
 #define		DC_LEVEL_3_80	567
 //const		U16		DcDcReductionSteps[15] = {DC_LEVEL_3_80, 586, 607, 629, 651, 673, 697, 721, 747, 773, 800, 828, 857, 887, 0};
@@ -18,6 +21,8 @@ const		U16		DcDcReductionSteps[15] = {DC_LEVEL_3_80, 586, 604, 623, 643, 664, 68
 //													17	 18	  19   20	21	 22	  23   24	25	 26	  27   28	29
 void AdcInit(void)
 {
+	CalibrationBat	= DataFromFlash.CalibreBat;
+	CalibrationPow	= DataFromFlash.CalibrePow;
 	//AD1CON1 Register
 	AD1CON1 = 0b0000000011100100;	// AD1CON1 Register
 			//	|||||||||||||||+	-- DONE: A/D Conversion Status bit
@@ -90,12 +95,15 @@ inline	void ADC_Test			(void);
 void __attribute__((interrupt, no_auto_psv)) _ADC1Interrupt(void)	//	*
 {																	//	*
 	_AD1IF	= 0;				// Clear the ADC1 Interrupt Flag		*
-	if (--Cnt < 0)		Cnt = 1632;
 
 	ADC_Dc_Update();
 	ADC_BatteryLevel();
 	ADC_PowerLevel();
-	ADC_PowerControll();
+	if (--Cnt < 0)
+	{
+		Cnt = 1632;
+		ADC_PowerControll();
+	}
 //	ADC_Test();
 }																	//	*
 
@@ -131,16 +139,15 @@ inline void ADC_Dc_Update(void)
 	}
 */
 }
-
+/*
 // 3.59V    535
 // 4.01		585
 // 4.05		590
 // 4.15		605
 // 4.20		612
-
+*/
 inline void ADC_BatteryLevel(void)
 {
-//	static	 U16	val_sum = 0;
 	static	 U16	prev;
 	static	 U16	valMax, valMin;
 	static	 S8		drift = 128;
@@ -158,30 +165,26 @@ inline void ADC_BatteryLevel(void)
 		if (drift > 2)
 		{
 			drift -= 2;
-			val >>= 1;
-			Battery = (val < 82)?	0 : ((val - 81) << 3);
+//			val >>= 1;
+//			Battery = (val < 82)?	0 : ((val - 81) << 3);
+			Battery = (val < 163)?	0 : (((val - 162) << 2) + CalibrationBat); 
 		}
 		else if (drift < -2)
 		{
 			drift += 2;
-			val >>= 1;
-			Battery = (val < 82)?	0 : ((val - 81) << 3);
+//			val >>= 1;
+//			Battery = (val < 82)?	0 : ((val - 81) << 3);
+			Battery = (val < 163)?	0 : (((val - 162) << 2) + CalibrationBat); 
 		}
-//		val_sum += (!val_sum)?	(val << 6) : valMin;
-//		val = val_sum >> 6;
-//		val_sum -= val;
-//		Battery = (val < 82)?	0 : ((val - 81) << 3);
-
 	#if (TEST == TEST_ADC)
-		test1 = Battery;
+//		test1 = Battery;
 //		test1 = valMax;
 //		test2 = valMin;
 	#endif
-
 		valMax	= 0;
 		valMin	= 0xFFFF;
 	}
-
+/*
 //	static	U16 val_sum = 0;
 //	static  S16 cnt     = 0;
 //	register U16 val = AN_BAT;
@@ -191,6 +194,7 @@ inline void ADC_BatteryLevel(void)
 //	val_sum -= val;
 //
 //	Battery = (val < 82)?	0 : ((val - 81) << 3);
+*/
 }
 
 /* Power
@@ -226,8 +230,7 @@ inline void ADC_BatteryLevel(void)
 */
 inline void ADC_PowerLevel (void)
 {
-	static	 U16	prev;
-	static	 U16	valMax, valMin;
+	static	 U16	prev, valMax, valMin;
 	static	 S8		drift = 128;
 	register U16	val = AN_POW;
 	
@@ -245,24 +248,23 @@ inline void ADC_PowerLevel (void)
 			drift -= 2;
 			register U32 a = val + 19;	// 9.6 x2
 			a *= 189;
-			Power = SHIFT_DIVIDE____8(a);
+			Power = ((SHIFT_DIVIDE____8(a)) + CalibrationPow);
 		}
 		else if (drift < -2)
 		{
 			drift += 2;
 			register U32 a = val + 19;	// 9.6 x2
 			a *= 189;
-			Power = SHIFT_DIVIDE____8(a);
+			Power = ((SHIFT_DIVIDE____8(a)) + CalibrationPow);
 		}
 	#if (TEST == TEST_ADC)
-		test = Power;
+//		test = Power;
 //		test1 = valMax;
 //		test2 = valMin;
 	#endif
 		valMax	= 0;
 		valMin	= 0xFFFF;
 	}
-
 
 /*
 	static	 U16 val_sum = 0, cnt = 0;
@@ -280,8 +282,8 @@ inline void ADC_PowerLevel (void)
 		Power = val;
 		cnt = 0;
 	}
-*/
-/*	if (val < Power)
+*
+*	if (val < Power)
 	{
 		if (cnt > 0)
 			cnt = 0;
@@ -350,9 +352,9 @@ inline void ADC_PowerLevel (void)
 	Power = val_2 >> 8;
 	val_1 -= Power;
 	val_2 -= Power;
-*/
+*
 
-/*	
+*	
 	static		U16 adcSum = 0, pow = 0;
 	register	U16	val		= AN_POW;				// value from ADC buff
 
@@ -379,17 +381,42 @@ inline void ADC_PowerControll (void)
 {
 	register POWER_STATE	newState = power_NoPower;
 
+	if		(Power		>  4800)		newState = power_External;	
+	else								newState = power_BatteryOk;
+	if		(Battery	>  4200)		newState++;
+	else if	(Battery	<  2900)		newState = power_NoPower;
+	else if	(Battery	<  3400)		newState--;
+/*	
 	if		(AdcPower.level		> 45)	newState = power_External;	// External power	> 4.5V
 	else if (AdcBattery.level	> 100)	newState = power_BatteryMiss;	// Battery level	> 100% (>4.2V)		0% = 2.6V, 1% step = 16mV, 
 	else if (AdcBattery.level	> 50)	newState = power_BatteryOk;	// Battery level	> 43% (~3.3V)		0% = 2.6V, 1% step = 16mV, 
 	else if (AdcBattery.level	> 13)	newState = power_BatteryLow;	// Battery level	> 13% (~2.8V)
 //	else								newState = power_NoPower;
-
+*/
 	if	(PowerState != newState)				// Power situation changed
 	{
 		PowerState = newState;
 		switch (newState)
 		{
+		case power_BatteryLow:
+		case power_ExternalCharge:
+			if (GSM_IE)							Gsm_Off();
+			if (!GPS_POWER)						Gps_On();
+			break;
+		case power_BatteryOk:
+		case power_BatteryError:
+		case power_External:
+		case power_BatteryMiss:
+//			if ((!GSM_IE) && (FLASH_FLAG_GSM))	Gsm_On();
+			if (!GSM_IE)						Gsm_On();
+			if (!GPS_POWER)						Gps_On();
+			break;
+		case power_NoPower:
+		default:
+			Gsm_Off();
+			GPS_POW_OFF();
+			break;						// TODO: Switch off device
+/*
 		case power_External:
 		case power_BatteryMiss:
 		case power_BatteryOk:
@@ -402,8 +429,14 @@ inline void ADC_PowerControll (void)
 //			Gsm_Off();
 //			GPS_POW_OFF();
 			break;								// TODO: Switch off device
+*/
 		}
 	}
+	#if (TEST == TEST_ADC)
+		test = PowerState;
+		test1 = Battery;
+		test2 = Power;
+	#endif
 }
 
 inline	void ADC_Test			(void)

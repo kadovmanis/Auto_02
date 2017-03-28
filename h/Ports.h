@@ -21,6 +21,8 @@
 		U16			StackOwerReset;
 		U8			StackUnderReset;
 		U8			Watchdog;
+		S16			CalibrePow;
+		S16			CalibreBat;
 		U16			data1;
 		U16			data2;
 	} FLASH_DATA_STRUCT;
