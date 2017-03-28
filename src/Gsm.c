@@ -358,6 +358,9 @@ void GSM_INTERRUPT(void)
 			else if (OkSeconds >= GPRS_OK_TIMEOUT_S)
 			{
 				DebugPrint("Gsm -> TCP OK send");
+				OkPacket[6] = Csq;	// packet nr as Csq value
+//				OkPacket[7] = 0;	// packet nr as Csq value
+				Tcp_PreparePacket((TCP_PACKET*)OkPacket, TYPE_OK_GPRS);
 				GsmUart_SendData(OkPacket, (TCP_PACKET_HEDER + 4));			// TODO: feel OkPackets statuss (.nr)
 //				GsmUart_SendText("Ok\r\n");
 				TimeOut		= 2;				// Timeout 0.02 sec
@@ -447,9 +450,9 @@ void GSM_INTERRUPT(void)
 			if (LastCsq != Csq)
 			{
 				LastCsq = Csq;
-				OkPacket[6] = Csq;	// packet nr as Csq value
-//				OkPacket[7] = 0;	// packet nr as Csq value
-				Tcp_PreparePacket((TCP_PACKET*)OkPacket, TYPE_OK_GPRS);
+//				OkPacket[6] = Csq;	// packet nr as Csq value
+////			OkPacket[7] = 0;	// packet nr as Csq value
+//				Tcp_PreparePacket((TCP_PACKET*)OkPacket, TYPE_OK_GPRS);
 				DebugSprintf(gsmBuff, "CSQ = %u, Flags: 0x%04X", Csq, Flags.word);
 				DebugPrint(gsmBuff);
 			}

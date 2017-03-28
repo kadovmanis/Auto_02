@@ -165,15 +165,11 @@ inline void ADC_BatteryLevel(void)
 		if (drift > 2)
 		{
 			drift -= 2;
-//			val >>= 1;
-//			Battery = (val < 82)?	0 : ((val - 81) << 3);
 			Battery = (val < 163)?	0 : (((val - 162) << 2) + CalibrationBat); 
 		}
 		else if (drift < -2)
 		{
 			drift += 2;
-//			val >>= 1;
-//			Battery = (val < 82)?	0 : ((val - 81) << 3);
 			Battery = (val < 163)?	0 : (((val - 162) << 2) + CalibrationBat); 
 		}
 	#if (TEST == TEST_ADC)
@@ -431,6 +427,7 @@ inline void ADC_PowerControll (void)
 			break;								// TODO: Switch off device
 */
 		}
+		FL_POWER_CHANGES = 1;
 	}
 	#if (TEST == TEST_ADC)
 		test = PowerState;
