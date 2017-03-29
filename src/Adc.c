@@ -6,6 +6,12 @@
 #include	"Gps.h"
 #include	<string.h>
 #include	<stdio.h>
+#ifdef		UART4_WIFI
+ #include	"Wifi.h"
+#else
+ #define	Wifi_Off()
+ #define	WIFI_EN		0
+#endif
 
 int test = 0, test1 = 0, test2 = 0;
 
@@ -423,6 +429,7 @@ inline void ADC_PowerControll (void)
 		case power_ExternalCharge:
 			if (GSM_IE)							Gsm_Off();
 			if (!GPS_POWER)						Gps_On();
+			if (WIFI_EN)						Wifi_Off();
 			break;
 		case power_BatteryOk:
 		case power_BatteryError:
@@ -435,6 +442,7 @@ inline void ADC_PowerControll (void)
 		case power_NoPower:
 		default:
 			Gsm_Off();
+			Wifi_Off();
 			GPS_POW_OFF();
 			break;						// TODO: Switch off device
 /*
