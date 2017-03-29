@@ -119,7 +119,7 @@
 	#define		ROM_DATA_SIZE				(_FLASH_PAGE*2)	// (_FLASH_PAGE*2)
 #endif
 
-#define		TEST							TEST_NO 		// Send USB debug strings to test specific software modules
+#define		TEST							TEST_ADC 		// Send USB debug strings to test specific software modules
 #define		DEVICE_NAME						DEVICE
 
 #define		USB_DESCRIPTOR_MANUFACTURER			MICROCHIP_STRING

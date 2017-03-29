@@ -12,6 +12,7 @@ int test = 0, test1 = 0, test2 = 0;
 volatile	POWER_STATE		PowerState = power_NoPower;
 //volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
 volatile	U16				Power = 0, Battery = 0;
+volatile	U16				Ext1 = 0, Ext2 = 0, Ext3;
 volatile	S16				Cnt = 255;
 static		S16				CalibrationBat, CalibrationPow;
 
@@ -87,6 +88,7 @@ void AdcInit(void)
 inline	void ADC_Dc_Update		(void);
 inline	void ADC_BatteryLevel	(void);
 inline	void ADC_PowerLevel		(void);
+inline	void ADC_ExternLevel	(void);
 inline	void ADC_PowerControll	(void);
 inline	void ADC_Test			(void);
 //	*********************************************************************
@@ -99,6 +101,9 @@ void __attribute__((interrupt, no_auto_psv)) _ADC1Interrupt(void)	//	*
 	ADC_Dc_Update();
 	ADC_BatteryLevel();
 	ADC_PowerLevel();
+#if (TEST == TEST_ADC)
+	ADC_ExternLevel();
+#endif
 	if (--Cnt < 0)
 	{
 		Cnt = 1632;
@@ -224,6 +229,26 @@ inline void ADC_BatteryLevel(void)
 // 120	 5	104		5.29	103	21	| 205
 // 99	 4	83						| 164
 */
+inline	void ADC_ExternLevel	(void)
+{
+	static	 U16	valMax1, valMax2, valMax3;
+	register U16	val = AN_EXT1;
+	if (valMax1 < val)		valMax1 = val;
+	val = AN_EXT2;
+	if (valMax2 < val)		valMax2 = val;
+	val = AN_EXT3;
+	if (valMax3 < val)		valMax3 = val;
+	if (!Cnt)
+	{
+		Ext1	= valMax1;
+		Ext2	= valMax2;
+		Ext3	= valMax3;
+		valMax1	= 0;
+		valMax2	= 0;
+		valMax3	= 0;
+	}
+}
+
 inline void ADC_PowerLevel (void)
 {
 	static	 U16	prev, valMax, valMin;
@@ -430,9 +455,9 @@ inline void ADC_PowerControll (void)
 		FL_POWER_CHANGES = 1;
 	}
 	#if (TEST == TEST_ADC)
-		test = PowerState;
-		test1 = Battery;
-		test2 = Power;
+		test	= Ext1;
+		test1	= Ext2;
+		test2	= Ext3;
 	#endif
 }
 

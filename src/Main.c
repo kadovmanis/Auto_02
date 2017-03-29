@@ -64,10 +64,10 @@ int main (void)
 		Usb_Init();
 	#endif
 	#if	((TEST != TEST_GSM) && (TEST != TEST_WIFI))
-		Gsm_On();
+//		Gsm_On();
 	#endif
 	#if	(TEST != TEST_GPS)
-		Gps_On();
+//		Gps_On();
 	#endif
 	#ifdef UART4_WIFI
 		#if (TEST != TEST_WIFI)
