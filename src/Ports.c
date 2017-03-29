@@ -3,6 +3,11 @@
 char	__attribute__((space(auto_psv)))	Build_Date[] =	__DATE__;
 char	__attribute__((space(auto_psv)))	Build_Time[] =	__TIME__;
 
+const U8	MAC_ADDRESS[6]	=	{0xFF, 0xDD, 0xFF, 0xFF, 0xFF, 0xFF};
+const U8	MY_IP[4]		=	{192, 168, 2, 50};
+const U8	SUBNET_MASK[4]	=	{255, 255, 255, 0};
+const U8	GATEWAY[4]		=	{192, 168, 2, 1};
+
 #ifdef	ROM_DATA_ADDR	//_____________ Flash read/write functions ____________________________________
 	#include	"libpic30.h"
 	#include	<string.h>
@@ -30,8 +35,8 @@ char	__attribute__((space(auto_psv)))	Build_Time[] =	__TIME__;
 		_init_prog_address(pFlash, FlashData);								// get address in program space
 		_memcpy_p2d16(&DataFromFlash, pFlash, sizeof(FLASH_DATA_STRUCT));	// copy data from program space
 
-		if ((memcmp(DataFromFlash.BuildTime, Build_Date, sizeof(Build_Date)) == 0)	&&
-			(memcmp(DataFromFlash.BuildDate, Build_Time, sizeof(Build_Time)) == 0)		)
+		if ((memcmp(DataFromFlash.BuildDate, Build_Date, sizeof(Build_Date)) == 0)	&&
+			(memcmp(DataFromFlash.BuildTime, Build_Time, sizeof(Build_Time)) == 0)		)
 			return;
 
 		if (ROM_DATA_CLEARED)												// Flash data not initialized jet
@@ -39,13 +44,17 @@ char	__attribute__((space(auto_psv)))	Build_Time[] =	__TIME__;
 			memset((char*)(&DataFromFlash), NULL, sizeof(FLASH_DATA_STRUCT));
 			DataFromFlash.flags.word		=	0x0000;
 			DataFromFlash.DeviceId			=	DEVICE_ID;
-			#if (TEST != NO_TEST)
+//			#if (TEST != NO_TEST)
 				sprintf(DataFromFlash.Name,		DEVICE_NAME);
-			#endif
+//			#endif
 			sprintf(DataFromFlash.GsmSmsNumber,	"+37129279661");
+			memcpy(DataFromFlash.MyIp,		MY_IP,		sizeof(MY_IP));
+			memcpy(DataFromFlash.GatewayIp,	GATEWAY,	sizeof(GATEWAY));
+			memcpy(DataFromFlash.SubnetMask,SUBNET_MASK,sizeof(SUBNET_MASK));
+			memcpy(DataFromFlash.MacAddress,MAC_ADDRESS,sizeof(MAC_ADDRESS));
 		}
-		memcpy(DataFromFlash.BuildTime, Build_Date, sizeof(Build_Date));
-		memcpy(DataFromFlash.BuildDate, Build_Time, sizeof(Build_Time));
+		memcpy(DataFromFlash.BuildDate, Build_Date, sizeof(Build_Date));
+		memcpy(DataFromFlash.BuildTime, Build_Time, sizeof(Build_Time));
 		FL_BOOT_TCP = 1;
 		FlashDataBurn();
 	}
@@ -109,6 +118,12 @@ void PPSconfig(enum ppsConfig ppsSwitch)
 		#if     (LCD != LCD_NO)
 			LCD_SCK	= IO_SCK1OUT;	// RD11	< SCK1 (LCD)
 			LCD_SDA	= IO_SDO1;		// RD0	< SDO1 (LCD)
+		#endif
+		
+		#ifdef ETH_W5100
+			_SDI3R	= W51_SI;		// RD2	< SDI3 (ETH)
+			W51_SCK	= IO_SCK3OUT;	// RD3	< SCK3 (ETH)
+			W51_SO	= IO_SDO3;		// RD1	< SDO3 (ETH)
 		#endif
 
 		#if		(MEMORY1_PORT == SPI_1)
