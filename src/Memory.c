@@ -30,17 +30,29 @@
 #define	MEM_CS_ON()				MEM_CS = 0; DELAY_2uS()
 #define	MEM_CS_OFF()			DELAY_2uS(); MEM_CS	= 1
 #define	MEM_CS_IS_ON()			(!MEM_CS)
-#define	MEM_SPI_INIT			Spi1_Init
-#define	MEM_IRQ					IRQ_SPI_1
-#define	MEM_WRITE_IE			_SPI1IE
-#define	MEM_WRITE_IF			_SPI1IF
-#define	MEM_WRITE_ACTIVE		_SPI1IE				// if Interrupt enabled -> MemWrite = active
-#define	MEM_SPI_BUF_REG			SPI1BUF
-#define	MEM_SPI_RX_FIFO_EMPTY	SPI1_RX_FIFO_EMPTY
-#define	MEM_SPI_CLEAR			Spi1Clear
-#define	MEM_SPI_BYTE			Spi1Byte
-#define	MEM_SPI_TX_FULL			SPI1_TX_FULL
-
+#if		(MEMORY1_PORT == SPI_1)
+	#define	MEM_SPI_INIT			Spi1_Init
+	#define	MEM_IRQ					IRQ_SPI_1
+	#define	MEM_WRITE_IE			_SPI1IE
+	#define	MEM_WRITE_IF			_SPI1IF
+	#define	MEM_WRITE_ACTIVE		_SPI1IE				// if Interrupt enabled -> MemWrite = active
+	#define	MEM_SPI_BUF_REG			SPI1BUF
+	#define	MEM_SPI_RX_FIFO_EMPTY	SPI1_RX_FIFO_EMPTY
+	#define	MEM_SPI_CLEAR			Spi1Clear
+	#define	MEM_SPI_BYTE			Spi1Byte
+	#define	MEM_SPI_TX_FULL			SPI1_TX_FULL
+#elif	(MEMORY1_PORT == SPI_2)
+	#define	MEM_SPI_INIT			Spi2_Init
+	#define	MEM_IRQ					IRQ_SPI_2
+	#define	MEM_WRITE_IE			_SPI2IE
+	#define	MEM_WRITE_IF			_SPI2IF
+	#define	MEM_WRITE_ACTIVE		_SPI2IE				// if Interrupt enabled -> MemWrite = active
+	#define	MEM_SPI_BUF_REG			SPI2BUF
+	#define	MEM_SPI_RX_FIFO_EMPTY	SPI2_RX_FIFO_EMPTY
+	#define	MEM_SPI_CLEAR			Spi2Clear
+	#define	MEM_SPI_BYTE			Spi2Byte
+	#define	MEM_SPI_TX_FULL			SPI2_TX_FULL
+#endif
 #define	CurrentWriteAddress		ServiceStruct.WriteAddr
 #define	ServiceSector			ServiceAddress.u16h
 #define	MEM_FLAGS				MemFlags.word

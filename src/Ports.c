@@ -141,3 +141,9 @@ void PowerOff (void)
 	FL_POWER_OFF = 0;
 	__asm__ ("RESET");	while(1);
 }
+
+void Reset      (void)
+{
+    __asm__ ("RESET");	while(1);
+}
+

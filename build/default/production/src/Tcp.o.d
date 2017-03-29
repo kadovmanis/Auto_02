@@ -4,6 +4,7 @@ h/Tcp.h  \
 h/Typedef.h  \
  h/Define.h  \
 h/Tcp_Type.h  \
+h/Adc.h  \
 h/Gsm.h  \
 h/Wifi.h  \
 h/Ports.h  \

@@ -80,6 +80,7 @@
 	#define		BOOT_LOADER
 	#define		BOOT_UART					UART_3			// Define			Uart3 used for bootloader
 	#define		MEMORY1_PORT				SPI_2
+	#define		USB_PORT
 	#define		USB_DESCRIPTOR_PRODUCT		HOME_STRING
 	#define		USB_DESCRIPTOR_PRODUCT_SIZE	HOME_SIZE
 	#define		ROM_DATA_ADDR				0x000C00		// Non volatile data struct in programm ROM

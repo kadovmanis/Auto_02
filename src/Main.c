@@ -49,6 +49,9 @@ int main (void)
 
 	#if	(LCD != LCD_NO)
 		LcdInit();
+	  #if (LCD == LCD_RGB)
+		LcdSetColor(GREY);
+	  #endif
 	#endif
 	#ifdef	ROM_DATA_ADDR
 		FlashDataInit();
@@ -78,6 +81,7 @@ int main (void)
 	#ifdef		USB_PORT
 		Usb_SendText("Start");
 	#endif
+
 	while(true)
 	{
 		#ifdef		USB_PORT
@@ -105,6 +109,16 @@ int main (void)
 			Usb_SendText(txt);
 		}
 	#endif
+	#ifdef	ETH_W5100
+		W51_Run();
+		#if (TEST == TEST_W5100)
+			W51_Test();
+		#endif
+	#endif
+	#if (LCD == LCD_RGB)
+		LcdRgbTest();
+	#endif
+
 	}
 	return 0;
 }

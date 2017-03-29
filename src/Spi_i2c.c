@@ -7,7 +7,8 @@
 #define	I2C_READ				0x01
 
 #define	SPI1STAT_VAL			0b0000000000010100	// SPI1STAT Register
-#define	SPI2STAT_VAL			0b0000000000001000;	// SPI2STAT Register
+#define	SPI2STAT_VAL			0b0000000000010100	// SPI2STAT Register
+//#define SPI2STAT_VAL			0b0000000000001000;	// SPI2STAT Register
 #define	SPI3STAT_VAL			0b0000000000010100	// SPI3STAT Register
 							//	  |||||||||||||||+	-- SPIRBF: SPIx Receive Buffer Full Status
 							//	  ||||||||||||||+-	-- SPITBF: SPIx Transmit Buffer Full Status bit
@@ -22,7 +23,12 @@
 							//	  |+--------------	-- Unimplemented
 							//	  +---------------	-- SPIEN: SPIx Enable
 
-#define	SPI1CON1_VAL			0b0000000001111111	// SPI1CON1 Register
+#if	(LCD > LCD_NO)
+	#define	SPI1CON1_VAL		0b0000001001111011;	// SPI1CON1 Register
+#else
+	#define	SPI1CON1_VAL		0b0000000001111111	// SPI1CON1 Register
+#endif
+#define	SPI2CON1_VAL			0b0000000001111111	// SPI2CON1 Register
 #define	SPI2CON1_VAL_CLK_HI		0b0000100001011111	// SPI2CON1 Register if SCK Idle state - high level
 #define	SPI2CON1_VAL_CLK_LO		0b0000100000011111	// SPI2CON1 Register if SCK Idle state - low level
 #define	SPI3CON1_VAL			0b0000000001111111;	// SPI3CON1 Register
@@ -49,15 +55,36 @@
 							//	  |+--------------	-- SPIFSD: Frame Sync Pulse Direction Control on SSx Pin
 							//	  +---------------	-- FRMEN: Framed SPIx Support
 
+#if	(LCD > LCD_NO)
+	#define	SPI1_IP				4
+#else
+	#define	SPI1_IP				3
+#endif
+
+
 void Spi1_Init(void)
 {
 	SPI1STAT = SPI1STAT_VAL;
 	SPI1CON1 = SPI1CON1_VAL;
 	SPI1CON2 = SPI1CON2_VAL;
-	_SPI1IP		= 3;				// SPI1 Interrupt priority level=3
+	_SPI1IP		= SPI1_IP;			// SPI1 Interrupt priority level
 	_SPI1IF		= 1;				// Clear SPI1 Interrupt Flag
 	_SPI1IE		= 0;				// Clear SPI1 Interrupt
 	SPI1STATbits.SPIEN	= 1;		// Enable SPI1
+}
+
+void Spi2_Init(void)
+{
+	SPI2STAT = SPI2STAT_VAL;
+//	SPI2CON1 = (FLAG_IDLE_PR_CLK)?	SPI2CON1_VAL_CLK_HI : SPI2CON1_VAL_CLK_LO;
+//	SPI2CON1 = SPI2CON1_VAL_CLK_HI;
+	SPI2CON1 = SPI2CON1_VAL;
+	SPI2CON2 = SPI2CON2_VAL;
+//	_SPI2IP		= 5;				// SPI1 Interrupt priority level=5
+	_SPI2IP		= 3;				// SPI1 Interrupt priority level=5
+	_SPI2IF		= 0;				// Clear SPI2 Interrupt Flag
+	_SPI2IE		= 1;				// Clear SPI2 Interrupt
+	SPI2STATbits.SPIEN	= 1;		// Enable SPI2
 }
 
 void Spi3_Init(void)
@@ -69,18 +96,6 @@ void Spi3_Init(void)
 	_SPI3IF		= 0;				// Clear SPI3 Interrupt Flag
 	_SPI3IE		= 0;				// Clear SPI3 Interrupt
 	SPI3STATbits.SPIEN	= 1;		// Enable SPI3
-}
-
-void Spi2_Init(void)
-{
-	SPI2STAT = SPI2STAT_VAL;
-//	SPI2CON1 = (FLAG_IDLE_PR_CLK)?	SPI2CON1_VAL_CLK_HI : SPI2CON1_VAL_CLK_LO;
-	SPI2CON1 = SPI2CON1_VAL_CLK_HI;
-	SPI2CON2 = SPI2CON2_VAL;
-	_SPI2IP		= 5;				// SPI1 Interrupt priority level=5
-	_SPI2IF		= 0;				// Clear SPI2 Interrupt Flag
-	_SPI2IE		= 1;				// Clear SPI2 Interrupt
-	SPI2STATbits.SPIEN	= 1;		// Enable SPI2
 }
 
 //	*********************************************************************
@@ -97,13 +112,14 @@ void __attribute__((interrupt, no_auto_psv)) _SPI1Interrupt(void)
 //	*********************************************************************
 //	*							SPI2 INTERRUPT							*
 //	*********************************************************************
+/*
 void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void)
 {
 	_SPI2IF	= 0;				// Clear SPI2 Interrupt Flag
 	SPI2STATbits.SPIROV = 0;	// Clear Receive Overflow Flag
 //	Printer_SPI_IRQ();
 }
-
+*/
 //	*********************************************************************
 //	*							SPI3 INTERRUPT							*
 //	*********************************************************************

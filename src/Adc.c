@@ -427,9 +427,11 @@ inline void ADC_PowerControll (void)
 		{
 		case power_BatteryLow:
 		case power_ExternalCharge:
+		#if	(HARDWARE != HW_HOME)
 			if (GSM_IE)							Gsm_Off();
 			if (!GPS_POWER)						Gps_On();
 			if (WIFI_EN)						Wifi_Off();
+		#endif
 			break;
 		case power_BatteryOk:
 		case power_BatteryError:
