@@ -177,11 +177,13 @@ inline void ADC_BatteryLevel(void)
 		{
 			drift -= 2;
 			Battery = (val < 163)?	0 : (((val - 162) << 2) + CalibrationBat); 
+			FL_POWER_CHANGES = 1;
 		}
 		else if (drift < -2)
 		{
 			drift += 2;
 			Battery = (val < 163)?	0 : (((val - 162) << 2) + CalibrationBat); 
+			FL_POWER_CHANGES = 1;
 		}
 	#if (TEST == TEST_ADC)
 //		test1 = Battery;
@@ -276,6 +278,7 @@ inline void ADC_PowerLevel (void)
 			register U32 a = val + 19;	// 9.6 x2
 			a *= 189;
 			Power = ((SHIFT_DIVIDE____8(a)) + CalibrationPow);
+			FL_POWER_CHANGES = 1;
 		}
 		else if (drift < -2)
 		{
@@ -283,6 +286,7 @@ inline void ADC_PowerLevel (void)
 			register U32 a = val + 19;	// 9.6 x2
 			a *= 189;
 			Power = ((SHIFT_DIVIDE____8(a)) + CalibrationPow);
+			FL_POWER_CHANGES = 1;
 		}
 	#if (TEST == TEST_ADC)
 //		test = Power;

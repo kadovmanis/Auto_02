@@ -207,7 +207,7 @@ void WIFI_INTERRUPT(void)
 		else if (Flags.Status == WIFI_STATUS_CONNECTED)
 		{
 			FL_WIFI_OFFLINE = 0;
-			if (WifiSec >= WIFI_OK_TIMEOUT_S)
+			if ((WifiSec >= WIFI_OK_TIMEOUT_S) || (FL_POWER_CHANGES))
 			{
 				OkPacket[6] = Rssi.u8l;
 				OkPacket[7] = Rssi.u8h;

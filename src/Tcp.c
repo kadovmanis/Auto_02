@@ -211,7 +211,8 @@ void Tcp_PreparePacket	(TCP_PACKET* pack, U8 type)
 	case TYPE_OK_GPRS:
 	case TYPE_OK_WIFI:		pack->dat_16[0] = Power;
 							pack->dat_16[1] = Battery;
-							pack->len = 4;				break;	//		LEN_CHANGES
+							pack->len = 4;						//		LEN_CHANGES
+							FL_POWER_CHANGES = 0;		break;
 	default:			if (pack->len > TCP_DATA_LEN)			//		LEN_CHANGES
 							pack->len = TCP_DATA_LEN;	break;	// 		LEN_CHANGES
 	}

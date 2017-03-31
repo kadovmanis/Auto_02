@@ -355,7 +355,8 @@ void GSM_INTERRUPT(void)
 				TimeOut		= 50;				// Timeout 0.5 sec
 				OkSeconds	= 0;
 			}
-			else if (OkSeconds >= GPRS_OK_TIMEOUT_S)
+//			else if (OkSeconds >= GPRS_OK_TIMEOUT_S)	// TODO: jaskatàs, cik bie¾i viñ¹ ¹ito sþtïs...
+			else if ((OkSeconds >= GPRS_OK_TIMEOUT_S) || (FL_POWER_CHANGES))
 			{
 				DebugPrint("Gsm -> TCP OK send");
 				OkPacket[6] = Csq;	// packet nr as Csq value
