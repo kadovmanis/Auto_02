@@ -177,13 +177,11 @@ inline void ADC_BatteryLevel(void)
 		{
 			drift -= 2;
 			Battery = (val < 163)?	0 : (((val - 162) << 2) + CalibrationBat); 
-			FL_POWER_CHANGES = 1;
 		}
 		else if (drift < -2)
 		{
 			drift += 2;
 			Battery = (val < 163)?	0 : (((val - 162) << 2) + CalibrationBat); 
-			FL_POWER_CHANGES = 1;
 		}
 	#if (TEST == TEST_ADC)
 //		test1 = Battery;
@@ -278,7 +276,6 @@ inline void ADC_PowerLevel (void)
 			register U32 a = val + 19;	// 9.6 x2
 			a *= 189;
 			Power = ((SHIFT_DIVIDE____8(a)) + CalibrationPow);
-			FL_POWER_CHANGES = 1;
 		}
 		else if (drift < -2)
 		{
@@ -286,7 +283,6 @@ inline void ADC_PowerLevel (void)
 			register U32 a = val + 19;	// 9.6 x2
 			a *= 189;
 			Power = ((SHIFT_DIVIDE____8(a)) + CalibrationPow);
-			FL_POWER_CHANGES = 1;
 		}
 	#if (TEST == TEST_ADC)
 //		test = Power;
@@ -411,6 +407,33 @@ inline void ADC_PowerLevel (void)
 inline void ADC_PowerControll (void)
 {
 	register POWER_STATE	newState = power_NoPower;
+	static	U16				pow = 0, bat = 0;
+	
+	#if (TEST == TEST_ADC)
+		test	= Ext1;
+		test1	= Ext2;
+		test2	= Ext3;
+	#endif
+
+	register S16 diff = Battery - bat;
+	if ((diff > 300) || (diff < -300))
+	{
+		bat = Battery;
+		pow = Power;
+		FL_POWER_CHANGES = 1;
+	}
+	else
+	{
+		diff = Power - pow;
+		if ((diff > 300) || (diff < -300))
+		{
+			pow = Power;
+			FL_POWER_CHANGES = 1;
+			diff = 0;
+		}
+		else
+			return;
+	}
 
 	if		(Power		>  4800)		newState = power_External;	
 	else								newState = power_BatteryOk;
@@ -466,13 +489,7 @@ inline void ADC_PowerControll (void)
 			break;								// TODO: Switch off device
 */
 		}
-		FL_POWER_CHANGES = 1;
 	}
-	#if (TEST == TEST_ADC)
-		test	= Ext1;
-		test1	= Ext2;
-		test2	= Ext3;
-	#endif
 }
 
 inline	void ADC_Test			(void)
