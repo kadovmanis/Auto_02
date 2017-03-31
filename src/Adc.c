@@ -415,38 +415,31 @@ inline void ADC_PowerControll (void)
 		test2	= Ext3;
 	#endif
 
-	register S16 diff = Battery - bat;
-	if ((diff > 300) || (diff < -300))
-	{
-		bat = Battery;
+	register U16 diff = (Power > pow)?	(Power - pow)	: (pow - Power);
+	if (diff > 300)						// Power	+/- 0.3V ?
+	{									// send changes & test changes
 		pow = Power;
+		bat = Battery;
 		FL_POWER_CHANGES = 1;
 	}
 	else
 	{
-		diff = Power - pow;
-		if ((diff > 300) || (diff < -300))
-		{
-			pow = Power;
-			FL_POWER_CHANGES = 1;
-			diff = 0;
-		}
-		else
+		diff = (Battery	> bat)?	(Battery - bat) : (bat - Battery);
+		if (diff < 100)
 			return;
+		else if (diff > 300)			// Battery	+/- 0.3V ?
+		{
+			bat = (bat + Battery) >> 1;
+			FL_POWER_CHANGES = 1;		// send changes & test changes
+		}
 	}
 
-	if		(Power		>  4800)		newState = power_External;	
+	if		(Power		>  4800)		newState = power_External;
 	else								newState = power_BatteryOk;
 	if		(Battery	>  4200)		newState++;
 	else if	(Battery	<  2900)		newState = power_NoPower;
 	else if	(Battery	<  3400)		newState--;
-/*	
-	if		(AdcPower.level		> 45)	newState = power_External;	// External power	> 4.5V
-	else if (AdcBattery.level	> 100)	newState = power_BatteryMiss;	// Battery level	> 100% (>4.2V)		0% = 2.6V, 1% step = 16mV, 
-	else if (AdcBattery.level	> 50)	newState = power_BatteryOk;	// Battery level	> 43% (~3.3V)		0% = 2.6V, 1% step = 16mV, 
-	else if (AdcBattery.level	> 13)	newState = power_BatteryLow;	// Battery level	> 13% (~2.8V)
-//	else								newState = power_NoPower;
-*/
+
 	if	(PowerState != newState)				// Power situation changed
 	{
 		PowerState = newState;
