@@ -49,20 +49,22 @@ int main (void)
 
 	#if	(LCD != LCD_NO)
 		LcdInit();
-	  #if (LCD == LCD_RGB)
-		LcdSetColor(GREY);
-	  #endif
 	#endif
 	#ifdef	ROM_DATA_ADDR
 		FlashDataInit();
+	#endif
+	#if (LCD == LCD_RGB)
+		LcdSetColor(GREY);
 	#endif
 	#if	(LCD > LCD_NO)
 		LcdString(0, 48, DEVICE, font_ss16);
 	#endif
 
+	#if (LCD != LCD_RGB)
 	AdcInit();
 	MemInit();
 //	InputInit();
+	#endif
 	#ifdef		USB_PORT
 		Usb_Init();
 	#endif
