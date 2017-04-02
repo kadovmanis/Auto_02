@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/Adc.c src/Boot.c src/Gps.c src/Gsm.c src/Main.c src/Memory.c src/Ports.c src/Spi_i2c.c src/Tcp.c src/Timers.c src/Uart1.c src/Uart2.c src/Uart3.c src/Uart4.c src/Wifi.c Usb/app_device_custom_hid.c Usb/app_led_usb_status.c Usb/system.c Usb/usb_descriptors.c Usb/src/usb_device.c Usb/src/usb_device_hid.c
+SOURCEFILES_QUOTED_IF_SPACED=src/Adc.c src/Boot.c src/Gps.c src/Gsm.c src/Main.c src/Memory.c src/Ports.c src/Spi_i2c.c src/Tcp.c src/Timers.c src/Uart1.c src/Uart2.c src/Uart3.c src/Uart4.c src/Wifi.c Usb/app_device_custom_hid.c Usb/app_led_usb_status.c Usb/system.c Usb/usb_descriptors.c Usb/src/usb_device.c Usb/src/usb_device_hid.c src/Font_7x5.c src/Font_SansSerif_16.c src/Font_segoe_24.c src/Lcd.c src/Lcd_Fonts.c src/Lcd_rgb.c src/W5100.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/Adc.o ${OBJECTDIR}/src/Boot.o ${OBJECTDIR}/src/Gps.o ${OBJECTDIR}/src/Gsm.o ${OBJECTDIR}/src/Main.o ${OBJECTDIR}/src/Memory.o ${OBJECTDIR}/src/Ports.o ${OBJECTDIR}/src/Spi_i2c.o ${OBJECTDIR}/src/Tcp.o ${OBJECTDIR}/src/Timers.o ${OBJECTDIR}/src/Uart1.o ${OBJECTDIR}/src/Uart2.o ${OBJECTDIR}/src/Uart3.o ${OBJECTDIR}/src/Uart4.o ${OBJECTDIR}/src/Wifi.o ${OBJECTDIR}/Usb/app_device_custom_hid.o ${OBJECTDIR}/Usb/app_led_usb_status.o ${OBJECTDIR}/Usb/system.o ${OBJECTDIR}/Usb/usb_descriptors.o ${OBJECTDIR}/Usb/src/usb_device.o ${OBJECTDIR}/Usb/src/usb_device_hid.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/Adc.o.d ${OBJECTDIR}/src/Boot.o.d ${OBJECTDIR}/src/Gps.o.d ${OBJECTDIR}/src/Gsm.o.d ${OBJECTDIR}/src/Main.o.d ${OBJECTDIR}/src/Memory.o.d ${OBJECTDIR}/src/Ports.o.d ${OBJECTDIR}/src/Spi_i2c.o.d ${OBJECTDIR}/src/Tcp.o.d ${OBJECTDIR}/src/Timers.o.d ${OBJECTDIR}/src/Uart1.o.d ${OBJECTDIR}/src/Uart2.o.d ${OBJECTDIR}/src/Uart3.o.d ${OBJECTDIR}/src/Uart4.o.d ${OBJECTDIR}/src/Wifi.o.d ${OBJECTDIR}/Usb/app_device_custom_hid.o.d ${OBJECTDIR}/Usb/app_led_usb_status.o.d ${OBJECTDIR}/Usb/system.o.d ${OBJECTDIR}/Usb/usb_descriptors.o.d ${OBJECTDIR}/Usb/src/usb_device.o.d ${OBJECTDIR}/Usb/src/usb_device_hid.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/Adc.o ${OBJECTDIR}/src/Boot.o ${OBJECTDIR}/src/Gps.o ${OBJECTDIR}/src/Gsm.o ${OBJECTDIR}/src/Main.o ${OBJECTDIR}/src/Memory.o ${OBJECTDIR}/src/Ports.o ${OBJECTDIR}/src/Spi_i2c.o ${OBJECTDIR}/src/Tcp.o ${OBJECTDIR}/src/Timers.o ${OBJECTDIR}/src/Uart1.o ${OBJECTDIR}/src/Uart2.o ${OBJECTDIR}/src/Uart3.o ${OBJECTDIR}/src/Uart4.o ${OBJECTDIR}/src/Wifi.o ${OBJECTDIR}/Usb/app_device_custom_hid.o ${OBJECTDIR}/Usb/app_led_usb_status.o ${OBJECTDIR}/Usb/system.o ${OBJECTDIR}/Usb/usb_descriptors.o ${OBJECTDIR}/Usb/src/usb_device.o ${OBJECTDIR}/Usb/src/usb_device_hid.o ${OBJECTDIR}/src/Font_7x5.o ${OBJECTDIR}/src/Font_SansSerif_16.o ${OBJECTDIR}/src/Font_segoe_24.o ${OBJECTDIR}/src/Lcd.o ${OBJECTDIR}/src/Lcd_Fonts.o ${OBJECTDIR}/src/Lcd_rgb.o ${OBJECTDIR}/src/W5100.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/Adc.o.d ${OBJECTDIR}/src/Boot.o.d ${OBJECTDIR}/src/Gps.o.d ${OBJECTDIR}/src/Gsm.o.d ${OBJECTDIR}/src/Main.o.d ${OBJECTDIR}/src/Memory.o.d ${OBJECTDIR}/src/Ports.o.d ${OBJECTDIR}/src/Spi_i2c.o.d ${OBJECTDIR}/src/Tcp.o.d ${OBJECTDIR}/src/Timers.o.d ${OBJECTDIR}/src/Uart1.o.d ${OBJECTDIR}/src/Uart2.o.d ${OBJECTDIR}/src/Uart3.o.d ${OBJECTDIR}/src/Uart4.o.d ${OBJECTDIR}/src/Wifi.o.d ${OBJECTDIR}/Usb/app_device_custom_hid.o.d ${OBJECTDIR}/Usb/app_led_usb_status.o.d ${OBJECTDIR}/Usb/system.o.d ${OBJECTDIR}/Usb/usb_descriptors.o.d ${OBJECTDIR}/Usb/src/usb_device.o.d ${OBJECTDIR}/Usb/src/usb_device_hid.o.d ${OBJECTDIR}/src/Font_7x5.o.d ${OBJECTDIR}/src/Font_SansSerif_16.o.d ${OBJECTDIR}/src/Font_segoe_24.o.d ${OBJECTDIR}/src/Lcd.o.d ${OBJECTDIR}/src/Lcd_Fonts.o.d ${OBJECTDIR}/src/Lcd_rgb.o.d ${OBJECTDIR}/src/W5100.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/Adc.o ${OBJECTDIR}/src/Boot.o ${OBJECTDIR}/src/Gps.o ${OBJECTDIR}/src/Gsm.o ${OBJECTDIR}/src/Main.o ${OBJECTDIR}/src/Memory.o ${OBJECTDIR}/src/Ports.o ${OBJECTDIR}/src/Spi_i2c.o ${OBJECTDIR}/src/Tcp.o ${OBJECTDIR}/src/Timers.o ${OBJECTDIR}/src/Uart1.o ${OBJECTDIR}/src/Uart2.o ${OBJECTDIR}/src/Uart3.o ${OBJECTDIR}/src/Uart4.o ${OBJECTDIR}/src/Wifi.o ${OBJECTDIR}/Usb/app_device_custom_hid.o ${OBJECTDIR}/Usb/app_led_usb_status.o ${OBJECTDIR}/Usb/system.o ${OBJECTDIR}/Usb/usb_descriptors.o ${OBJECTDIR}/Usb/src/usb_device.o ${OBJECTDIR}/Usb/src/usb_device_hid.o
+OBJECTFILES=${OBJECTDIR}/src/Adc.o ${OBJECTDIR}/src/Boot.o ${OBJECTDIR}/src/Gps.o ${OBJECTDIR}/src/Gsm.o ${OBJECTDIR}/src/Main.o ${OBJECTDIR}/src/Memory.o ${OBJECTDIR}/src/Ports.o ${OBJECTDIR}/src/Spi_i2c.o ${OBJECTDIR}/src/Tcp.o ${OBJECTDIR}/src/Timers.o ${OBJECTDIR}/src/Uart1.o ${OBJECTDIR}/src/Uart2.o ${OBJECTDIR}/src/Uart3.o ${OBJECTDIR}/src/Uart4.o ${OBJECTDIR}/src/Wifi.o ${OBJECTDIR}/Usb/app_device_custom_hid.o ${OBJECTDIR}/Usb/app_led_usb_status.o ${OBJECTDIR}/Usb/system.o ${OBJECTDIR}/Usb/usb_descriptors.o ${OBJECTDIR}/Usb/src/usb_device.o ${OBJECTDIR}/Usb/src/usb_device_hid.o ${OBJECTDIR}/src/Font_7x5.o ${OBJECTDIR}/src/Font_SansSerif_16.o ${OBJECTDIR}/src/Font_segoe_24.o ${OBJECTDIR}/src/Lcd.o ${OBJECTDIR}/src/Lcd_Fonts.o ${OBJECTDIR}/src/Lcd_rgb.o ${OBJECTDIR}/src/W5100.o
 
 # Source Files
-SOURCEFILES=src/Adc.c src/Boot.c src/Gps.c src/Gsm.c src/Main.c src/Memory.c src/Ports.c src/Spi_i2c.c src/Tcp.c src/Timers.c src/Uart1.c src/Uart2.c src/Uart3.c src/Uart4.c src/Wifi.c Usb/app_device_custom_hid.c Usb/app_led_usb_status.c Usb/system.c Usb/usb_descriptors.c Usb/src/usb_device.c Usb/src/usb_device_hid.c
+SOURCEFILES=src/Adc.c src/Boot.c src/Gps.c src/Gsm.c src/Main.c src/Memory.c src/Ports.c src/Spi_i2c.c src/Tcp.c src/Timers.c src/Uart1.c src/Uart2.c src/Uart3.c src/Uart4.c src/Wifi.c Usb/app_device_custom_hid.c Usb/app_led_usb_status.c Usb/system.c Usb/usb_descriptors.c Usb/src/usb_device.c Usb/src/usb_device_hid.c src/Font_7x5.c src/Font_SansSerif_16.c src/Font_segoe_24.c src/Lcd.c src/Lcd_Fonts.c src/Lcd_rgb.c src/W5100.c
 
 
 CFLAGS=
@@ -252,6 +252,55 @@ ${OBJECTDIR}/Usb/src/usb_device_hid.o: Usb/src/usb_device_hid.c  nbproject/Makef
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Usb/src/usb_device_hid.c  -o ${OBJECTDIR}/Usb/src/usb_device_hid.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Usb/src/usb_device_hid.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/Usb/src/usb_device_hid.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/src/Font_7x5.o: src/Font_7x5.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Font_7x5.o.d 
+	@${RM} ${OBJECTDIR}/src/Font_7x5.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Font_7x5.c  -o ${OBJECTDIR}/src/Font_7x5.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Font_7x5.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Font_7x5.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Font_SansSerif_16.o: src/Font_SansSerif_16.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Font_SansSerif_16.o.d 
+	@${RM} ${OBJECTDIR}/src/Font_SansSerif_16.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Font_SansSerif_16.c  -o ${OBJECTDIR}/src/Font_SansSerif_16.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Font_SansSerif_16.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Font_SansSerif_16.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Font_segoe_24.o: src/Font_segoe_24.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Font_segoe_24.o.d 
+	@${RM} ${OBJECTDIR}/src/Font_segoe_24.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Font_segoe_24.c  -o ${OBJECTDIR}/src/Font_segoe_24.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Font_segoe_24.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Font_segoe_24.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Lcd.o: src/Lcd.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Lcd.o.d 
+	@${RM} ${OBJECTDIR}/src/Lcd.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Lcd.c  -o ${OBJECTDIR}/src/Lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Lcd.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Lcd.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Lcd_Fonts.o: src/Lcd_Fonts.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Lcd_Fonts.o.d 
+	@${RM} ${OBJECTDIR}/src/Lcd_Fonts.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Lcd_Fonts.c  -o ${OBJECTDIR}/src/Lcd_Fonts.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Lcd_Fonts.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Lcd_Fonts.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Lcd_rgb.o: src/Lcd_rgb.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Lcd_rgb.o.d 
+	@${RM} ${OBJECTDIR}/src/Lcd_rgb.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Lcd_rgb.c  -o ${OBJECTDIR}/src/Lcd_rgb.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Lcd_rgb.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Lcd_rgb.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/W5100.o: src/W5100.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/W5100.o.d 
+	@${RM} ${OBJECTDIR}/src/W5100.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/W5100.c  -o ${OBJECTDIR}/src/W5100.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/W5100.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/W5100.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/src/Adc.o: src/Adc.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src" 
@@ -399,6 +448,55 @@ ${OBJECTDIR}/Usb/src/usb_device_hid.o: Usb/src/usb_device_hid.c  nbproject/Makef
 	@${RM} ${OBJECTDIR}/Usb/src/usb_device_hid.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Usb/src/usb_device_hid.c  -o ${OBJECTDIR}/Usb/src/usb_device_hid.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Usb/src/usb_device_hid.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/Usb/src/usb_device_hid.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Font_7x5.o: src/Font_7x5.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Font_7x5.o.d 
+	@${RM} ${OBJECTDIR}/src/Font_7x5.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Font_7x5.c  -o ${OBJECTDIR}/src/Font_7x5.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Font_7x5.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Font_7x5.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Font_SansSerif_16.o: src/Font_SansSerif_16.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Font_SansSerif_16.o.d 
+	@${RM} ${OBJECTDIR}/src/Font_SansSerif_16.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Font_SansSerif_16.c  -o ${OBJECTDIR}/src/Font_SansSerif_16.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Font_SansSerif_16.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Font_SansSerif_16.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Font_segoe_24.o: src/Font_segoe_24.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Font_segoe_24.o.d 
+	@${RM} ${OBJECTDIR}/src/Font_segoe_24.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Font_segoe_24.c  -o ${OBJECTDIR}/src/Font_segoe_24.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Font_segoe_24.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Font_segoe_24.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Lcd.o: src/Lcd.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Lcd.o.d 
+	@${RM} ${OBJECTDIR}/src/Lcd.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Lcd.c  -o ${OBJECTDIR}/src/Lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Lcd.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Lcd.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Lcd_Fonts.o: src/Lcd_Fonts.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Lcd_Fonts.o.d 
+	@${RM} ${OBJECTDIR}/src/Lcd_Fonts.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Lcd_Fonts.c  -o ${OBJECTDIR}/src/Lcd_Fonts.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Lcd_Fonts.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Lcd_Fonts.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/Lcd_rgb.o: src/Lcd_rgb.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Lcd_rgb.o.d 
+	@${RM} ${OBJECTDIR}/src/Lcd_rgb.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/Lcd_rgb.c  -o ${OBJECTDIR}/src/Lcd_rgb.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/Lcd_rgb.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/Lcd_rgb.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/W5100.o: src/W5100.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/W5100.o.d 
+	@${RM} ${OBJECTDIR}/src/W5100.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/W5100.c  -o ${OBJECTDIR}/src/W5100.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/W5100.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -I"Usb" -I"Usb/inc" -I"Usb/src" -O1 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/W5100.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

@@ -34,6 +34,10 @@
       <itemPath>Usb/system.h</itemPath>
       <itemPath>Usb/system_config.h</itemPath>
       <itemPath>Usb/usb_config.h</itemPath>
+      <itemPath>h/Lcd.h</itemPath>
+      <itemPath>h/Lcd_Fonts.h</itemPath>
+      <itemPath>h/W5100.h</itemPath>
+      <itemPath>h/W51_def.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -64,6 +68,13 @@
       <itemPath>Usb/usb_descriptors.c</itemPath>
       <itemPath>Usb/src/usb_device.c</itemPath>
       <itemPath>Usb/src/usb_device_hid.c</itemPath>
+      <itemPath>src/Font_7x5.c</itemPath>
+      <itemPath>src/Font_SansSerif_16.c</itemPath>
+      <itemPath>src/Font_segoe_24.c</itemPath>
+      <itemPath>src/Lcd.c</itemPath>
+      <itemPath>src/Lcd_Fonts.c</itemPath>
+      <itemPath>src/Lcd_rgb.c</itemPath>
+      <itemPath>src/W5100.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

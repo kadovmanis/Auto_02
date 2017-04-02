@@ -5,7 +5,7 @@ h/WifiDefines.h  \
 h/Define.h  \
 h/Ports.h  \
 h/Timers.h  \
-h/Ports_Auto01.h  \
+h/Ports_Home.h  \
 h/Uart4.h  \
  h/Wifi.h  \
 h/Tcp.h  \

@@ -15,7 +15,7 @@
 #define		HW_AUTO				1
 #define		HW_SEE				2
 #define		HW_HOME				3
-#define		HARDWARE			HW_AUTO
+#define		HARDWARE			HW_HOME
 #define		VERSION				"02"
 //#define		MAC_ADDRESS			{0xFF, 0xDD, 0xFF, 0xFF, 0xFF, 0xFF}
 //#define		MY_IP				{192, 168, 2, 50}

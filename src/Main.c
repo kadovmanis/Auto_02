@@ -87,6 +87,9 @@ int main (void)
 		#ifdef		USB_PORT
 			Usb_RegularFunctions();
 		#endif
+		#if (LCD == LCD_RGB)
+			LcdRgbTest();
+	#endif
 		#if	(TEST == TEST_WIFI)
 			Wifi_Test();
 		#endif
@@ -115,10 +118,6 @@ int main (void)
 			W51_Test();
 		#endif
 	#endif
-	#if (LCD == LCD_RGB)
-		LcdRgbTest();
-	#endif
-
 	}
 	return 0;
 }

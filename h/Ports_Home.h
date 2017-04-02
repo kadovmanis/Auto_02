@@ -126,7 +126,8 @@
 //#define NC			_RF6		//				O	0
 #define W51_INT			PPS_IN_F5	//				I	0
 #define MEM_SCK			PPS_OUT_F4	//				O___1______
-#define W51_CS			_LATF3		//				I	0	
+  #define W51_CS		_LATF3		//				I	0	
+  #define USB_ID			_RF3		//				I	0		GSM_ANALOG_IN	_RF3
 //#define NC			_RF2		//				O	0
 #define GSM_POWER		_TRISF1		//				I	0
 #define LED1			_LATF0		//				O___0______

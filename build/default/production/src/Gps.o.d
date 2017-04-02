@@ -6,7 +6,7 @@ h/Typedef.h  \
 h/GpsDefines.h  \
 h/Timers.h  \
 h/Ports.h  \
-h/Ports_Auto01.h  \
+h/Ports_Home.h  \
 h/Tcp.h  \
  h/Tcp_Type.h  \
 h/Uart1.h 
