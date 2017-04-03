@@ -21,9 +21,10 @@ typedef struct
 	U16	center;		// average	of measured values
 	U16	max;		// max		of measured values
 	U16	time;		// time		measured
+	S8	drift;		// 
 } ADC_INPUT;
 
-ADC_INPUT					Ext_1 = {0xFFFF, 0, 0, 100};
+ADC_INPUT					Ext_1 = {0, 0, 0, 0};
 
 volatile	POWER_STATE		PowerState = power_NoPower;
 //volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
@@ -309,13 +310,19 @@ inline	void ADC_ExternLevel	(void)
 {
 	static	 U16	valMax1, valMax2, valMax3;
 	
-	static	ADC_INPUT	ext_1 = {0xFFFF, 0, 0, 0};
+	static	ADC_INPUT	ext_1 = {0};
 
 	register U16	val = AN_EXT1;
 
 	if (val > ext_1.max)
 	{
-//		Ext_1.max = val;
+		ext_1.max = val;
+		if ((ext_1.drift < 3) && (++ext_1.drift >= 3))
+		{
+			Ext_1.min = ext_1.min;
+			ext_1.min = 0xFFFF;
+		}
+/*		
 		ext_1.max = val;
 		if ((val > ext_1.center) &&	(ext_1.min < ext_1.center)	)
 		{
@@ -338,11 +345,17 @@ inline	void ADC_ExternLevel	(void)
 			Ext_1.time -= (Ext_1.time >> 4);
 			ext_1.time	= GetTicsMs();
 		}
+*/
 	}
 	if (val < ext_1.min)
 	{
-//		Ext_1.min = val;
 		ext_1.min = val;
+		if ((ext_1.drift > -3) && (--ext_1.drift <= -3))
+		{
+			Ext_1.max = ext_1.max;
+			ext_1.max = 0;
+		}
+/*
 		if ((val < ext_1.center) &&
 			(ext_1.max > ext_1.center))
 		{
@@ -350,6 +363,7 @@ inline	void ADC_ExternLevel	(void)
 			Ext_1.max  -= (Ext_1.max >> 4);
 			ext_1.max	=  ext_1.min;
 		}
+*/
 	}
 
 
@@ -366,13 +380,13 @@ inline	void ADC_ExternLevel	(void)
 		valMax1	= 0;
 		valMax2	= 0;
 		valMax3	= 0;
-		if (!Ext_1.center)
-		{
-			ext_1.center = (ext_1.min + ext_1.max) >> 1;
-			ext_1.min = 0xFFFF;
-			ext_1.max = 0;
-			Ext_1.center = ext_1.center;
-		}
+//		if (!Ext_1.center)
+//		{
+//			ext_1.center = (ext_1.min + ext_1.max) >> 1;
+//			ext_1.min = 0xFFFF;
+//			ext_1.max = 0;
+//			Ext_1.center = ext_1.center;
+//		}
 	}
 }
 
