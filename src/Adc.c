@@ -309,10 +309,17 @@ inline	void ADC_ExternLevel	(void)
 {
 	static	 U16	valMax1, valMax2, valMax3;
 	
-	static	ADC_INPUT	ext_1 = {0xFFFF, 0, 0};
+	static	ADC_INPUT	ext_1 = {0};
 
 	register U16	val = AN_EXT1;
 
+	if (!ext_1.center)
+	{
+		ext_1.min		= val;
+		ext_1.center	= val;
+		ext_1.max		= val;
+		return;
+	}
 	if (val > ext_1.max)
 	{
 		ext_1.max = val;
