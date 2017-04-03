@@ -23,7 +23,7 @@ typedef struct
 	U16	time;		// time		measured
 } ADC_INPUT;
 
-ADC_INPUT					Ext_1 = {0xFFFF, 10, 0, 100};
+ADC_INPUT					Ext_1 = {0xFFFF, 0, 0, 100};
 
 volatile	POWER_STATE		PowerState = power_NoPower;
 //volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
