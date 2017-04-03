@@ -313,16 +313,6 @@ inline	void ADC_ExternLevel	(void)
 
 	register U16	val = AN_EXT1;
 
-	if (!ext_1.center)
-	{
-		if (val > ext_1.max)
-			ext_1.max = val;
-		if (val < ext_1.min)
-			ext_1.min = val;
-		if (++ext_1.time > 2000)
-			ext_1.center = (ext_1.min + ext_1.max) >> 1;
-		return;
-	}
 	if (val > ext_1.max)
 	{
 		Ext_1.max = val;
@@ -376,9 +366,10 @@ inline	void ADC_ExternLevel	(void)
 		valMax1	= 0;
 		valMax2	= 0;
 		valMax3	= 0;
-//		ext_1.min = 0xFFFF;
-//		ext_1.max = 0;
-//		ext_1.center = 10;
+		ext_1.center = (ext_1.min + ext_1.max) >> 1;
+		ext_1.min = 0xFFFF;
+		ext_1.max = 0;
+		Ext_1.center = ext_1.cente;
 	}
 }
 
