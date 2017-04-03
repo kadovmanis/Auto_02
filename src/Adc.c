@@ -23,7 +23,7 @@ typedef struct
 	U16	time;		// time		measured
 } ADC_INPUT;
 
-ADC_INPUT					Ext_1 = {0};
+ADC_INPUT					Ext_1 = {0xFFFF, 10, 0, 100};
 
 volatile	POWER_STATE		PowerState = power_NoPower;
 //volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
@@ -309,7 +309,7 @@ inline	void ADC_ExternLevel	(void)
 {
 	static	 U16	valMax1, valMax2, valMax3;
 	
-	static	ADC_INPUT	ext_1 = {0};
+	static	ADC_INPUT	ext_1 = {0xFFFF, 10, 0, 100};
 
 	register U16	val = AN_EXT1;
 
