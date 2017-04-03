@@ -21,7 +21,6 @@ typedef struct
 	U16	center;		// average	of measured values
 	U16	max;		// max		of measured values
 	U16	time;		// time		measured
-	S8	drift;		// 
 } ADC_INPUT;
 
 ADC_INPUT					Ext_1 = {0, 0, 0, 0};
@@ -310,7 +309,7 @@ inline	void ADC_ExternLevel	(void)
 {
 	static	 U16	valMax1, valMax2, valMax3;
 	
-	static	ADC_INPUT	ext_1 = {0xFFFF, 0, 0, 0, 0};
+	static	ADC_INPUT	ext_1 = {0xFFFF, 0, 0, 0};
 
 	register U16	val = AN_EXT1;
 
@@ -320,6 +319,12 @@ inline	void ADC_ExternLevel	(void)
 	if (val > ext_1.max)
 	{
 		ext_1.max = val;
+		if ((!ext_1.center) && (val > Ext_1.center))
+		{
+			ext_1.center = Ext_1.center;
+			Ext_1.time	= GetTimeSinceMs(ext_1.time);
+			ext_1.time	= GetTicsMs();
+		}
 /*		
 		ext_1.max = val;
 		if ((val > ext_1.center) &&	(ext_1.min < ext_1.center)	)
@@ -377,9 +382,9 @@ inline	void ADC_ExternLevel	(void)
 		Ext_1.min = ext_1.min;
 		Ext_1.max = ext_1.max;
 		Ext_1.center = (ext_1.min + ext_1.max) >> 1;
-		ext_1.center = Ext_1.center;
 		ext_1.min	= 0xFFFF;
 		ext_1.max	= 0;
+		ext_1.center = 0;
 		
 		//		if (!Ext_1.center)
 //		{
