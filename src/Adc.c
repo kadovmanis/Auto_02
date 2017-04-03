@@ -321,6 +321,7 @@ inline	void ADC_ExternLevel	(void)
 			ext_1.min = val;
 		if (++ext_1.time > 2000)
 			ext_1.center = (ext_1.min + ext_1.max) >> 1;
+		return;
 	}
 	if (val > ext_1.max)
 	{
