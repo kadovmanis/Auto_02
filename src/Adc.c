@@ -315,9 +315,9 @@ inline	void ADC_ExternLevel	(void)
 
 	if (!ext_1.center)
 	{
-		ext_1.min		= val;
+		ext_1.min		= 0xFFFF;
 		ext_1.center	= val;
-		ext_1.max		= val;
+		ext_1.max		= 0;
 		return;
 	}
 	if (val > ext_1.max)
@@ -486,10 +486,10 @@ int	Adc_TestVal2	(void)
 
 int	Adc_TestVal3	(void)
 {
-	return Ext2;
+	return Ext_1.center;
 }
 
 int	Adc_TestVal4	(void)
 {
-	return Ext3;
+	return Ext_1.time;
 }
