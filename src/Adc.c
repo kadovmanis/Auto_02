@@ -357,8 +357,7 @@ inline	void ADC_ExternLevel	(void)
 		{
 			if (!--ext_1.center)
 			{
-				Ext_1.max = ext_1.max;
-				ext_1.max	= 0;
+				
 			}
 //			Ext_1.max = ext_1.max;
 //			ext_1.max -= (ext_1.max - ext_1.center);
@@ -394,11 +393,11 @@ inline	void ADC_ExternLevel	(void)
 		valMax3	= 0;
 
 //		Ext_1.min = ext_1.min;
-//		Ext_1.max = ext_1.max;
+		Ext_1.max = ext_1.max;
 		Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
 //		ext_1.min	= 0xFFFF;
-//		ext_1.max	= 0;
-//		ext_1.center = 0;
+		ext_1.max	= 0;
+		ext_1.center = 0;
 		
 		//		if (!Ext_1.center)
 //		{
