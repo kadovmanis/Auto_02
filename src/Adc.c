@@ -369,7 +369,7 @@ inline	void ADC_ExternLevel	(void)
 		ext_1.center = (ext_1.min + ext_1.max) >> 1;
 		ext_1.min = 0xFFFF;
 		ext_1.max = 0;
-		Ext_1.center = ext_1.cente;
+		Ext_1.center = ext_1.center;
 	}
 }
 
