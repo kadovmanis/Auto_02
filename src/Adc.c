@@ -317,7 +317,7 @@ inline	void ADC_ExternLevel	(void)
 	if (val > ext_1.max)
 	{
 		ext_1.max = val;
-		if ((ext_1.drift < 3) && (++ext_1.drift >= 3))
+		if ((ext_1.drift < 5) && (++ext_1.drift >= 5))
 		{
 			Ext_1.min = ext_1.min;
 			ext_1.min = 0xFFFF;
@@ -350,7 +350,7 @@ inline	void ADC_ExternLevel	(void)
 	if (val < ext_1.min)
 	{
 		ext_1.min = val;
-		if ((ext_1.drift > -3) && (--ext_1.drift <= -3))
+		if ((ext_1.drift > -5) && (--ext_1.drift <= -5))
 		{
 			Ext_1.max = ext_1.max;
 			ext_1.max = 0;
