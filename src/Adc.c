@@ -477,10 +477,10 @@ int	Adc_TestVal2	(void)
 
 int	Adc_TestVal3	(void)
 {
-	return Ext_1.max;
+	return Ext2;
 }
 
 int	Adc_TestVal4	(void)
 {
-	return Ext_1.time;
+	return Ext3;
 }
