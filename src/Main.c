@@ -1,5 +1,5 @@
-#include	"Typedef.h"
-#include	"Config.h"
+#include		"Typedef.h"
+#include		"Config.h"
 
 #include		"Ports.h"
 #include		"Timers.h"
@@ -11,7 +11,7 @@
 //#include		"Input.h"
 
 #ifdef		ETH_W5100
-	#include		"W5100.h"
+	#include	"W5100.h"
 #endif
 #ifdef		USB_PORT
 	#include	"system.h"
@@ -26,19 +26,6 @@
 #include		<stdio.h>
 
 
-/*
-#ifdef		BOOT_LOADER
-	extern void BootLoader	(void);
-#else
-	#define		BootLoader();
-#endif
-*
-UNI32	testVal __attribute__ ((noload));		// for tests
-U8		testBuf[20] __attribute__ ((noload));	// for tests
-extern volatile	U8	SysHour, SysMin, SysSec;
-
-char	time[30];
-*/
 extern void Usb_SendText (char* str);
 
 int main (void)
@@ -107,10 +94,11 @@ int main (void)
 		{
 			lastSec = SysTime.sec;
 			char txt[48];
-			int val1 = Adc_TestVal();
-			int	val2 = Adc_TestVal1();
-			int	val3 = Adc_TestVal2();
-			sprintf(txt, "Adc_test: %d, %d, %d ", val1, val2, val3);
+			int val1 = Adc_TestVal1();
+			int	val2 = Adc_TestVal2();
+			int	val3 = Adc_TestVal3();
+			int	val4 = Adc_TestVal4();
+			sprintf(txt, "Adc_test: %d, %d, %d, %d ", val1, val2, val3, val4);
 			Usb_SendText(txt);
 		}
 	#endif

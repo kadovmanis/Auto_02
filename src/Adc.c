@@ -13,7 +13,17 @@
  #define	WIFI_EN		0
 #endif
 
-int test = 0, test1 = 0, test2 = 0;
+//int test = 0, test1 = 0, test2 = 0;
+
+typedef struct
+{
+	U16	min;		// min		of measured values
+	U16	center;		// average	of measured values
+	U16	max;		// max		of measured values
+	U16	time;		// time		measured
+} ADC_INPUT;
+
+ADC_INPUT					Ext_1 = {0};
 
 volatile	POWER_STATE		PowerState = power_NoPower;
 //volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
@@ -160,7 +170,7 @@ inline void ADC_Dc_Update(void)
 inline void ADC_BatteryLevel(void)
 {
 	static	 U16	prev;
-	static	 U16	valMax, valMin;
+	static	 U16	valMax = 0, valMin = 0xFFFF;
 	static	 S8		drift = 128;
 	register U16	val = AN_BAT;
 	
@@ -192,15 +202,14 @@ inline void ADC_BatteryLevel(void)
 		valMin	= 0xFFFF;
 	}
 /*
-//	static	U16 val_sum = 0;
-//	static  S16 cnt     = 0;
-//	register U16 val = AN_BAT;
+	static	U16 val_sum = 0;
+	register U16 val = AN_BAT;
 
-//	val_sum += (!val_sum)?	(val << 6) : val;
-//	val = val_sum >> 6;
-//	val_sum -= val;
-//
-//	Battery = (val < 82)?	0 : ((val - 81) << 3);
+	val_sum += (!val_sum)?	(val << 6) : val;
+	val = val_sum >> 6;
+	val_sum -= val;
+
+	Battery = (val < 82)?	0 : ((val - 81) << 3);
 */
 }
 
@@ -235,26 +244,6 @@ inline void ADC_BatteryLevel(void)
 // 120	 5	104		5.29	103	21	| 205
 // 99	 4	83						| 164
 */
-inline	void ADC_ExternLevel	(void)
-{
-	static	 U16	valMax1, valMax2, valMax3;
-	register U16	val = AN_EXT1;
-	if (valMax1 < val)		valMax1 = val;
-	val = AN_EXT2;
-	if (valMax2 < val)		valMax2 = val;
-	val = AN_EXT3;
-	if (valMax3 < val)		valMax3 = val;
-	if (!Cnt)
-	{
-		Ext1	= valMax1;
-		Ext2	= valMax2;
-		Ext3	= valMax3;
-		valMax1	= 0;
-		valMax2	= 0;
-		valMax3	= 0;
-	}
-}
-
 inline void ADC_PowerLevel (void)
 {
 	static	 U16	prev, valMax, valMin;
@@ -294,94 +283,6 @@ inline void ADC_PowerLevel (void)
 	}
 
 /*
-	static	 U16 val_sum = 0, cnt = 0;
-//	static	 S16 cnt = 0;
-	register U16 val = AN_POW;
-
-	val_sum += (!val_sum)?	(val << 6) : val;
-	val = val_sum >> 6;
-	val_sum -= val;
-
-	if (Power == val)
-		cnt = 0;
-	else if (++cnt & 0x1000)
-	{
-		Power = val;
-		cnt = 0;
-	}
-*
-*	if (val < Power)
-	{
-		if (cnt > 0)
-			cnt = 0;
-		else if (--cnt < -32000)
-		{
-			cnt = 0;
-			Power = val;
-		}
-	}
-	else if (val > Power)
-	{
-		if (cnt < 0)
-			cnt = 0;
-		else if (++cnt > 32000)
-		{
-			cnt = 0;
-			Power = val;
-		}
-	}
-*	
-	static U16 val_sum = 0, val_min = 0xFFFF, val_max = 0, cnt = 64, cnt1 = 64;
-	register U16 val = AN_POW;
-	if (val_min > val)
-		val_min = val;
-	if (val_max < val)
-		val_max = val;
-//	val_sum += val;
-
-	if (!--cnt1)
-	{
-		val_sum += (val_min + val_max) >> 1;
-		val_min = 0xFFFF;
-		val_max = 0;
-		cnt1 = 64;
-		if (!--cnt)
-		{
-			Power = (val_sum >> 6);
-			cnt = 64;
-			val_sum = 0;
-		}
-	}
-*
-	static U16 val_last = 0xFFFF, val_sum = 0, cnt = 0;
-	register U16 val = AN_POW;
-	if (val < val_last)
-	{
-		if (val_sum)
-		{
-			Power = val_sum / cnt;
-			val_sum = 0;
-		}
-		cnt = 0;
-	}
-	else
-	{
-		val_sum += val;
-		cnt++;
-	}
-	val_last = val;
-
-
-*
-	static U16 val_1 = 0, val_2 = 0;
-	val_1 += (!val_1)?	(AN_POW << 8) : AN_POW;
-	val_2 += (!val_2)?	val_1 : (val_1 >> 8);
-	Power = val_2 >> 8;
-	val_1 -= Power;
-	val_2 -= Power;
-*
-
-*	
 	static		U16 adcSum = 0, pow = 0;
 	register	U16	val		= AN_POW;				// value from ADC buff
 
@@ -404,15 +305,77 @@ inline void ADC_PowerLevel (void)
 */
 }
 
+inline	void ADC_ExternLevel	(void)
+{
+	static	 U16	valMax1, valMax2, valMax3;
+	
+	static	ADC_INPUT	ext_1 = {0xFFFF, 0, 0};
+
+	register U16	val = AN_EXT1;
+
+	if (val > ext_1.max)
+	{
+		ext_1.max = val;
+		if ((val > ext_1.center) &&	(ext_1.min < ext_1.center)	)
+		{
+			if (Ext_1.center)
+			{
+				Ext_1.center -= ext_1.center;
+				Ext_1.center += (ext_1.max + ext_1.min);
+			}
+			else
+				Ext_1.center  = ((ext_1.max + ext_1.min) << 3);
+			ext_1.center  = (Ext_1.center >> 4);
+			Ext_1.center -= ext_1.center;
+
+			Ext_1.min	= (Ext_1.min)?	(Ext_1.min + ext_1.min) : (ext_1.min << 4);
+			Ext_1.min  -= (Ext_1.min >> 4);
+			ext_1.min	=  ext_1.max;
+			
+			val = GetTimeSinceMs(ext_1.time);
+			Ext_1.time	= (Ext_1.time)?	(Ext_1.time + val) : (val << 4);
+			Ext_1.time -= (Ext_1.time >> 4);
+			ext_1.time	= GetTicsMs();
+		}
+	}
+	if (val < ext_1.min)
+	{
+		ext_1.min = val;
+		if ((val < ext_1.center) &&
+			(ext_1.max > ext_1.center))
+		{
+			Ext_1.max	= (Ext_1.max)?	(Ext_1.max + ext_1.max) : (ext_1.max << 4);
+			Ext_1.max  -= (Ext_1.max >> 4);
+			ext_1.max	=  ext_1.min;
+		}
+	}
+
+
+//	if (valMax1 < val)		valMax1 = val;
+	val = AN_EXT2;
+	if (valMax2 < val)		valMax2 = val;
+	val = AN_EXT3;
+	if (valMax3 < val)		valMax3 = val;
+	if (!Cnt)
+	{
+//		Ext1	= valMax1;
+		Ext2	= valMax2;
+		Ext3	= valMax3;
+		valMax1	= 0;
+		valMax2	= 0;
+		valMax3	= 0;
+	}
+}
+
 inline void ADC_PowerControll (void)
 {
 	register POWER_STATE	newState = power_NoPower;
 	static	U16				pow = 0, bat = 0;
 	
 	#if (TEST == TEST_ADC)
-		test	= Ext1;
-		test1	= Ext2;
-		test2	= Ext3;
+//		test	= Ext1;
+//		test1	= Ext2;
+//		test2	= Ext3;
 	#endif
 
 	register U16 diff = (Power > pow)?	(Power - pow)	: (pow - Power);
@@ -467,20 +430,6 @@ inline void ADC_PowerControll (void)
 			Wifi_Off();
 			GPS_POW_OFF();
 			break;						// TODO: Switch off device
-/*
-		case power_External:
-		case power_BatteryMiss:
-		case power_BatteryOk:
-//			if ((!GsmTimerEnabled) && (FLASH_FLAG_GSM))		Gsm_On();
-//			if (!GPS_POWER)									Gps_On();
-			break;
-		case power_BatteryLow:
-		case power_NoPower:
-		default:
-//			Gsm_Off();
-//			GPS_POW_OFF();
-			break;								// TODO: Switch off device
-*/
 		}
 	}
 }
@@ -516,19 +465,22 @@ void	Tcp_AdcPacket	(void)
 	FL_POWER_CHANGES = 0;
 }
 
-int	Adc_TestVal		(void)
-{
-	int ret = test;
-	test = 0;
-	return ret;
-}
-
 int	Adc_TestVal1	(void)
 {
-	return test1;
+	return Ext_1.min;
 }
 
 int	Adc_TestVal2	(void)
 {
-	return test2;
+	return Ext_1.center;
+}
+
+int	Adc_TestVal3	(void)
+{
+	return Ext_1.max;
+}
+
+int	Adc_TestVal4	(void)
+{
+	return Ext_1.time;
 }
