@@ -315,8 +315,6 @@ inline	void ADC_ExternLevel	(void)
 
 	if (!Cnt)
 	{
-		Ext_1.min = ext_1.min;
-		ext_1.min	= 0xFFFF;
 		Ext_1.max = ext_1.max;
 		ext_1.max	= 0;
 		Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
@@ -331,6 +329,9 @@ inline	void ADC_ExternLevel	(void)
 			ext_1.center = 10;
 			Ext_1.time	= GetTimeSinceMs(ext_1.time);
 			ext_1.time	= GetTicsMs();
+
+			Ext_1.min = ext_1.min;
+			ext_1.min	= 0xFFFF;
 		}
 /*		
 		ext_1.max = val;
