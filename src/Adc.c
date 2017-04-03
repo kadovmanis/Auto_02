@@ -358,6 +358,7 @@ inline	void ADC_ExternLevel	(void)
 //		Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
 		if ((ext_1.center) && (val < Ext_1.center))
 		{
+			Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
 			if (!--ext_1.center)
 			{
 				
