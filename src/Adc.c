@@ -366,7 +366,9 @@ inline	void ADC_ExternLevel	(void)
 		valMax1	= 0;
 		valMax2	= 0;
 		valMax3	= 0;
-		ext_1 = {0xFFFF, 10, 0, 100};
+		ext_1.min = 0xFFFF;
+		ext_1.max = 0;
+		ext_1.center = 10;
 	}
 }
 
