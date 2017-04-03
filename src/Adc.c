@@ -347,14 +347,15 @@ inline	void ADC_ExternLevel	(void)
 	}
 	if (val < ext_1.min)
 	{
-		ext_1.min = val;
-		if ((val < ext_1.center) &&
-			(ext_1.max > ext_1.center))
-		{
-			Ext_1.max	= (Ext_1.max)?	(Ext_1.max + ext_1.max) : (ext_1.max << 4);
-			Ext_1.max  -= (Ext_1.max >> 4);
-			ext_1.max	=  ext_1.min;
-		}
+		Ext_1.max = val;
+//		ext_1.min = val;
+//		if ((val < ext_1.center) &&
+//			(ext_1.max > ext_1.center))
+//		{
+//			Ext_1.max	= (Ext_1.max)?	(Ext_1.max + ext_1.max) : (ext_1.max << 4);
+//			Ext_1.max  -= (Ext_1.max >> 4);
+//			ext_1.max	=  ext_1.min;
+//		}
 	}
 
 
@@ -479,7 +480,7 @@ int	Adc_TestVal1	(void)
 
 int	Adc_TestVal2	(void)
 {
-	return Ext_1.center;
+	return Ext_1.max;
 }
 
 int	Adc_TestVal3	(void)
