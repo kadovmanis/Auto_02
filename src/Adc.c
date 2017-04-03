@@ -313,6 +313,16 @@ inline	void ADC_ExternLevel	(void)
 
 	register U16	val = AN_EXT1;
 
+	if (!Cnt)
+	{
+		Ext_1.min = ext_1.min;
+		ext_1.min	= 0xFFFF;
+		Ext_1.max = ext_1.max;
+		ext_1.max	= 0;
+		Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
+		ext_1.center = 0;
+	}
+
 	if (val > ext_1.max)
 	{
 		ext_1.max = val;
@@ -321,9 +331,6 @@ inline	void ADC_ExternLevel	(void)
 			ext_1.center = 10;
 			Ext_1.time	= GetTimeSinceMs(ext_1.time);
 			ext_1.time	= GetTicsMs();
-
-			Ext_1.min = ext_1.min;
-			ext_1.min	= 0xFFFF;
 		}
 /*		
 		ext_1.max = val;
@@ -353,29 +360,6 @@ inline	void ADC_ExternLevel	(void)
 	if (val < ext_1.min)
 	{
 		ext_1.min = val;
-//		Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
-		if ((ext_1.center) && (val < Ext_1.center))
-		{
-			if (!--ext_1.center)
-			{
-				
-			}
-//			Ext_1.max = ext_1.max;
-//			ext_1.max -= (ext_1.max - ext_1.center);
-
-//			Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
-//			ext_1.center = 0;
-			
-		}
-/*
-		if ((val < ext_1.center) &&
-			(ext_1.max > ext_1.center))
-		{
-			Ext_1.max	= (Ext_1.max)?	(Ext_1.max + ext_1.max) : (ext_1.max << 4);
-			Ext_1.max  -= (Ext_1.max >> 4);
-			ext_1.max	=  ext_1.min;
-		}
-*/
 	}
 
 
@@ -392,21 +376,6 @@ inline	void ADC_ExternLevel	(void)
 		valMax1	= 0;
 		valMax2	= 0;
 		valMax3	= 0;
-
-//		Ext_1.min = ext_1.min;
-		Ext_1.max = ext_1.max;
-		Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
-//		ext_1.min	= 0xFFFF;
-		ext_1.max	= 0;
-		ext_1.center = 0;
-		
-		//		if (!Ext_1.center)
-//		{
-//			ext_1.center = (ext_1.min + ext_1.max) >> 1;
-//			ext_1.min = 0xFFFF;
-//			ext_1.max = 0;
-//			Ext_1.center = ext_1.center;
-//		}
 	}
 }
 
