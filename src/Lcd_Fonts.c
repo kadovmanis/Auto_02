@@ -1,6 +1,6 @@
 #include <Lcd_Fonts.h>
 
-#if	(LCD > LCD_NO)
+#if	(LCD != LCD_NO)
 //#include	<string.h>
 //#include	<stdio.h>
 

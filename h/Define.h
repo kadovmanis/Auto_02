@@ -32,6 +32,8 @@
 #define		TEST_WIFI			6
 #define		TEST_ADC			7
 #define		TEST_W5100			10
+#define		INPUT_NO			0
+#define		INPUT_SEE			1
 
 #define		ON_LINE				0
 #define		OFF_LINE			1
@@ -76,6 +78,7 @@
 	#define		LCD							LCD_RGB
 //	#define		LCD_BLUE
 //	#define		LCD_REVERSE
+	#define		INPUT						INPUT_NO
 	#define		ETH_W5100
 	#define		BOOT_LOADER
 	#define		BOOT_UART					UART_3			// Define			Uart3 used for bootloader
@@ -90,6 +93,7 @@
 	#define		DEVICE_ID					0x0101
 	#define		LED_COUNT					4
 	#define		LCD							LCD_NO
+	#define		INPUT						INPUT_NO
 	#define		UART1_GPS
 	#define		UART4_WIFI
 	#define		WIFI_WAKE_UP_S				300				// check Wifi every 5min
@@ -108,6 +112,7 @@
 	#define		DEVICE_ID					0x1000
 	#define		LED_COUNT					2
 	#define		LCD							LCD_NO
+	#define		INPUT						INPUT_SEE
 	#define		GPRS						ON_LINE
 	#define		BOOT_LOADER
 	#define		BOOT_UART					UART_3			// Define			Uart3 used for bootloader

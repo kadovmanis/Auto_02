@@ -6,6 +6,7 @@
 #include	"Uart3.h"
 #include	<string.h>
 //#include	"Memory.h"
+#include	"Input.h"
 
 
 volatile	U16		LedStatus1 = LED_STATUS_OFF, LedStatus2 = LED_STATUS_OFF, LedStatus3 = LED_STATUS_OFF, LedStatus4 = LED_STATUS_OFF;

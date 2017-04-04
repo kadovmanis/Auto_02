@@ -8,20 +8,11 @@
 #include		"Gsm.h"
 #include		"Tcp.h"
 #include		"Adc.h"
-//#include		"Input.h"
-
-#ifdef		ETH_W5100
-	#include	"W5100.h"
-#endif
-#ifdef		USB_PORT
-	#include	"system.h"
-#endif
-#ifdef		UART4_WIFI
-	#include	"Wifi.h"
-#endif
-#if			(LCD != LCD_NO)
-	#include	"Lcd.h"
-#endif
+#include		"Input.h"
+#include		"W5100.h"
+#include		"system.h"
+#include		"Wifi.h"
+#include		"Lcd.h"
 
 #include		<stdio.h>
 

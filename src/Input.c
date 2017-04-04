@@ -3,6 +3,8 @@
 #include	"Gps.h"
 #include	"Gsm.h"
 
+#if (INPUT != INPUT_NO)
+
 #define	ACTIVE_TIME_100MS	6000						// 10min (600s)
 
 #define	CN1_PORTS	0b0000001000000000
@@ -221,7 +223,7 @@ inline void SwitchTimer (void)
 		{
 			GPS_POW_OFF();
 			GPS_IE = 0;
-			GPS_LED = LED_STATUS_OFF;
+			LED_GPS = LED_STATUS_OFF;
 		}
 	}
 
@@ -238,3 +240,5 @@ U16 ActiveTimeOut(void)
 {
 	return ActiveTime;
 }
+
+#endif

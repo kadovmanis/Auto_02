@@ -2,6 +2,7 @@
 /* 
 **  Font data for Segoe Print 12pt
 */
+#if	(LCD != LCD_NO)
 
 #define	SPC		2919
 /* Character bitmaps for Segoe Print 12pt */
@@ -3557,3 +3558,4 @@ const FONT_INFO Segoe_24_Info =
 	segoe_24_Bitmaps,		// Character bitmap array
 };
 
+#endif

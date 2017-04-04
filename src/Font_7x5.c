@@ -2,6 +2,7 @@
 /* 
 **  Font data for Microsoft Sans Serif 11pt
 */
+#if	(LCD != LCD_NO)
 
 #define	SPC		1378
 /* Character bitmaps for Microsoft Sans Serif 11pt */
@@ -294,4 +295,4 @@ const FONT_INFO Arial_7x5_Info =
 	Arial_7x5_Bitmaps, 		// Character bitmap array
 };
 
-
+#endif
