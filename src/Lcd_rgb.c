@@ -6,6 +6,7 @@
 #include	"Ports.h"
 #include	"Timers.h"
 #include	"Spi_i2c.h"
+#include	"Adc.h"
 #include	<string.h>
 #include	<stdio.h>
 
@@ -302,6 +303,14 @@ void LcdRgbTest	(void)
 	static U16		tic = 0;
 	static COLOR	color = BLACK, color1 = BLACK;
 	static U8		line  = 63, pos = 0;
+	static char		str[22] = "Battery";
+	static U16		bat_last = 0;
+	
+	if (bat_last != Battery)
+	{
+		bat_last = Battery;
+		sprintf(str, "Bat: %u,%03uV  ", Battery / 1000, Battery % 1000);
+	}
 //	LcdSetColor(GREY);
 	if (GetTimeSinceMs(tic) >= 25)
 	{
@@ -326,7 +335,7 @@ void LcdRgbTest	(void)
 			{
 			case 0:	color = RED;	color1	= BLACK;							break;
 			case 1:	color = YELLOW;	LcdString(5, 5, "En?elîts", font_Seg24);	break;
-			case 2:	color = PINK;	LcdString(0, 48, DEVICE, font_ss16);		break;
+			case 2:	color = PINK;	LcdString(0, 48, str, font_ss16);			break;
 			case 3:	color = WHITE;												break;
 			case 4:	color = CYAN;												break;
 			case 5:	color = GREEN;	LcdString(2, 0, "Mazais", font_Seg24);		break;
