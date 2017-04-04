@@ -480,20 +480,24 @@ void	Tcp_AdcPacket	(void)
 
 int	Adc_TestVal1	(void)
 {
-	return Ext_1.min;
+//	return Ext_1.min;
+	return Power;
 }
 
 int	Adc_TestVal2	(void)
 {
-	return Ext_1.center;
-}
+//	return Ext_1.center;
+	return Battery;
+}}
 
 int	Adc_TestVal3	(void)
 {
-	return Ext_1.max;
+//	return Ext_1.max;
+	return 0;
 }
 
 int	Adc_TestVal4	(void)
 {
-	return Ext_1.time;
+//	return Ext_1.time;
+	return 0;
 }
