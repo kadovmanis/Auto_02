@@ -560,42 +560,42 @@ void Mem_WriteStart			(void)
 void Mem_PageErase			(void)
 {
 	DebugPrint("Erase current sector");
-	Spi1Clear();
+	MEM_SPI_CLEAR();
 	Mem_WriteEnable();
 	MEM_CS_ON();
 	if (CurrentWriteAddress.u8hh)
 	{
-		SPI1BUF = MEM_CMD_4SE;
-		SPI1BUF = CurrentWriteAddress.u8hh;
+		MEM_SPI_BUF_REG = MEM_CMD_4SE;
+		MEM_SPI_BUF_REG = CurrentWriteAddress.u8hh;
 	}
 	else
-		SPI1BUF = MEM_CMD_SE;
-	SPI1BUF = CurrentWriteAddress.u8hl;
-	SPI1BUF = 0;
-	SPI1BUF = 0;
-	Spi1Clear();
+		MEM_SPI_BUF_REG = MEM_CMD_SE;
+	MEM_SPI_BUF_REG = CurrentWriteAddress.u8hl;
+	MEM_SPI_BUF_REG = 0;
+	MEM_SPI_BUF_REG = 0;
+	MEM_SPI_CLEAR();
 	MEM_CS_OFF();
 }
 
 //	--	Service Functions	------------------------------------------------------------
 U8	 Mem_ReadStatus		(U8 wait)
 {
-	Spi1Clear();
+	MEM_SPI_CLEAR();
 	MEM_CS_ON();
-	Spi1Byte(MEM_CMD_RDSR);
-	U8 status	= Spi1Byte(0);
+	MEM_SPI_BYTE(MEM_CMD_RDSR);
+	U8 status	= MEM_SPI_BYTE(0);
 	while(wait && (status & MEM_STATUS_WIP))
-		status	= Spi1Byte(0);
+		status	= MEM_SPI_BYTE(0);
 	MEM_CS_OFF();
 	return status;
 }
 
 void Mem_WriteStatus		(U8 status)
 {
-	Spi1Clear();
+	MEM_SPI_CLEAR();
 	MEM_CS_ON();
-	Spi1Byte(MEM_CMD_WRSR);
-	Spi1Byte(status);
+	MEM_SPI_BYTE(MEM_CMD_WRSR);
+	MEM_SPI_BYTE(status);
 	MEM_CS_OFF();
 }
 
@@ -603,7 +603,7 @@ void Mem_WriteEnable		(void)
 {
 	Mem_ReadStatus(1);
 	MEM_CS_ON();
-	Spi1Byte(MEM_CMD_WREN);
+	MEM_SPI_BYTE(MEM_CMD_WREN);
 	MEM_CS_OFF();
 	Mem_ReadStatus(1);
 }
@@ -612,7 +612,7 @@ void Mem_WriteDisable		(void)
 {
 	Mem_ReadStatus(1);
 	MEM_CS_ON();
-	Spi1Byte(MEM_CMD_WRDI);
+	MEM_SPI_BYTE(MEM_CMD_WRDI);
 	MEM_CS_OFF();
 	Mem_ReadStatus(1);
 }
