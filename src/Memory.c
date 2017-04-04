@@ -428,6 +428,7 @@ void Mem_WriteEnd			(void)
 void MemReadDeviceId		(void)
 {
 	register U8 Id, Type, Capacity;
+
 	MEM_SPI_CLEAR();
 	MEM_CS_ON();
 	MEM_SPI_BYTE(MEM_CMD_RDID);
@@ -445,7 +446,7 @@ void MemReadDeviceId		(void)
 			else if								(Capacity == 0x17)		MemType = MEM_SECTORS_MP25P64;
 		}
 		else if	(			(Type == 0xBA) &&	(Capacity == 0x16)	)	MemType = MEM_SECTORS_MP25P32;
-	}	
+	}
 	switch (MemType)
 	{
 		case MEM_SECTORS_MP25P32:		ServiceSector = (MEM_SECTORS_MP25P32	- 1);PageMask = 0x00FF;	SectorMask = 0x0000;	break;

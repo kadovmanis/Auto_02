@@ -82,8 +82,10 @@ void Spi2_Init(void)
 	SPI2CON2 = SPI2CON2_VAL;
 //	_SPI2IP		= 5;				// SPI1 Interrupt priority level=5
 	_SPI2IP		= 3;				// SPI1 Interrupt priority level=5
-	_SPI2IF		= 0;				// Clear SPI2 Interrupt Flag
-	_SPI2IE		= 1;				// Clear SPI2 Interrupt
+//	_SPI2IF		= 0;				// Clear SPI2 Interrupt Flag
+	_SPI2IF		= 1;				// Clear SPI2 Interrupt Flag
+//	_SPI2IE		= 1;				// Clear SPI2 Interrupt
+	_SPI2IE		= 0;				// Clear SPI2 Interrupt
 	SPI2STATbits.SPIEN	= 1;		// Enable SPI2
 }
 
@@ -137,18 +139,18 @@ void Spi1Clear (void)
 	SPI1STATbits.SPIROV = 0;	// Clear Receive Overflow Flag
 }
 
+void Spi2Clear (void)
+{
+	register U8 a;
+	while(SPI2_BUSY())		{a += SPI2BUF;}
+	SPI2STATbits.SPIROV = 0;	// Clear Receive Overflow Flag
+}
+
 void Spi3Clear (void)
 {
 	register U8 a;
 	while(SPI3_BUSY())		{a += SPI3BUF;}
 	SPI3STATbits.SPIROV = 0;	// Clear Receive Overflow Flag
-}
-
-void Spi2Clear (void)
-{
-	U8 a,i = 8;
-	while(i--)
-		a += SPI2BUF;			// to clear SPIRBF (Receive Buffer Full Status bit)
 }
 
 U8	Spi1Byte (U8 data)
@@ -164,7 +166,8 @@ U8	Spi2Byte (U8 data)
 {
 	U8 a = SPI2BUF;				// to clear SPIRBF (Receive Buffer Full Status bit)
 	SPI2BUF = data;
-	while (!SPI2STATbits.SPIRBF) a++;
+//	while (!SPI2STATbits.SPIRBF) a++;
+	while (SPI2STATbits.SRXMPT) a++;
 	a = SPI2BUF;
 	return a;
 }

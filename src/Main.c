@@ -47,9 +47,9 @@ int main (void)
 		LcdString(0, 48, DEVICE, font_ss16);
 	#endif
 
-	#if (LCD != LCD_RGB)
 	AdcInit();
 	MemInit();
+	#if (LCD != LCD_RGB)
 //	InputInit();
 	#endif
 	#ifdef		USB_PORT
