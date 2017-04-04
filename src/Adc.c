@@ -488,7 +488,7 @@ int	Adc_TestVal2	(void)
 {
 //	return Ext_1.center;
 	return Battery;
-}}
+}
 
 int	Adc_TestVal3	(void)
 {
