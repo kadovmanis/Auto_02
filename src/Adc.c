@@ -521,7 +521,7 @@ void	Adc_GetAllVal	(char* txt)
 //	register U16 ac = (( Ext[2].max - Ext[2].min) * 11) >> 5;
 	register U16 ac = (((Ext[2].max - Ext[2].min) * 11) + 16) >> 5;	// rounding
 	register U16 hz = 1000 / Ext[2].time;
-	sprintf(txt, "Ac: %u %uHz I:%u   ",
+	sprintf(txt, "Ac %uV %uHz I:%u   ",
 				  ac, hz, Ext[1].center);
 
 //	sprintf(txt, "Adc: %u %u %u %u %u %u\tt:  %u %u %u ",
