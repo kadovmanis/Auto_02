@@ -518,10 +518,16 @@ void	Tcp_AdcPacket	(void)
 
 void	Adc_GetAllVal	(char* txt)
 {
-	sprintf(txt, "Adc: %u %u %u %u %u %u\tt:  %u %u %u ",
-				Ext[0].min, Ext[0].max, Ext[1].min, Ext[1].max, Ext[2].min, Ext[2].max,
-				Ext[0].time, Ext[1].time, Ext[2].time);
-//	 177 181	524 528		197 853 
+	sprintf(txt, "Adc: I:%u\t%u %u %u\tt: %u ",
+				  Ext[1].center, Ext[2].min, Ext[2].center, Ext[2].max, (1000 / Ext[2].time));
+//	sprintf(txt, "Adc: %u %u %u %u %u %u\tt:  %u %u %u ",
+//				Ext[0].min, Ext[0].max, Ext[1].min, Ext[1].max, Ext[2].min, Ext[2].max,
+//				Ext[0].time, Ext[1].time, Ext[2].time);
+
+//	register U16 ac = Ext[2].max - Ext[2].min;
+	
+	
+	//	 Adc: 177 181 524 528 204 845	t:  20 1 20
 }
 
 int	Adc_TestVal1	(void)
