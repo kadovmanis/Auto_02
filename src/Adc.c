@@ -17,13 +17,16 @@
 
 typedef struct
 {
+	U16	mn;
+	U16	mx;
 	U16	min;		// min		of measured values
 	U16	center;		// average	of measured values
 	U16	max;		// max		of measured values
 	U16	time;		// time		measured
+	S8	upDwn;
 } ADC_INPUT;
 
-ADC_INPUT					Ext_1 = {0, 0, 0, 0};
+ADC_INPUT					Ext[3] = {{0}, {0}, {0}};
 
 volatile	POWER_STATE		PowerState = power_NoPower;
 //volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
@@ -307,6 +310,23 @@ inline void ADC_PowerLevel (void)
 
 inline	void ADC_ExternLevel	(void)
 {
+	register U16 i;
+	for (i = 0; i < 3; i++)
+	{
+		register U16	val = (!i)?	AN_EXT1 : ((i == 1)?	AN_EXT2 : AN_EXT3);
+		if (val < Ext[i].mn)	Ext[i].mn = val;
+		if (val > Ext[i].mx)	Ext[i].mx = val;
+		
+		if (!Cnt)
+		{
+			Ext[i].min	= Ext[i].mn;
+			Ext[i].max	= Ext[i].mx;
+			Ext[i].center = (Ext[i].mn + Ext[i].mx) >> 1;
+			Ext[i].mn	= 0xFFFF;
+			Ext[i].mx	= 0;
+		}
+	}
+/*
 	static	 U16	valMax1, valMax2, valMax3;
 	
 	static	ADC_INPUT	ext_1;
@@ -333,7 +353,7 @@ inline	void ADC_ExternLevel	(void)
 			Ext_1.min = ext_1.min;
 			ext_1.min	= 0xFFFF;
 		}
-/*		
+*		
 		ext_1.max = val;
 		if ((val > ext_1.center) &&	(ext_1.min < ext_1.center)	)
 		{
@@ -356,7 +376,7 @@ inline	void ADC_ExternLevel	(void)
 			Ext_1.time -= (Ext_1.time >> 4);
 			ext_1.time	= GetTicsMs();
 		}
-*/
+*
 	}
 	if (val < ext_1.min)
 	{
@@ -378,6 +398,7 @@ inline	void ADC_ExternLevel	(void)
 		valMax2	= 0;
 		valMax3	= 0;
 	}
+*/
 }
 
 inline void ADC_PowerControll (void)
@@ -476,6 +497,11 @@ void	Tcp_AdcPacket	(void)
 	sprintf(str, "Bat: %d, Pow: %d", Battery, Power);
 	Tcp_SendText(str);
 	FL_POWER_CHANGES = 0;
+}
+
+void	Adc_GetAllVal	(char* txt)
+{
+	sprintf(txt, "Adc: %d %d %d %d %d %d ", Ext[0].min, Ext[0].max, Ext[1].min, Ext[1].max, Ext[2].min, Ext[2].max);
 }
 
 int	Adc_TestVal1	(void)

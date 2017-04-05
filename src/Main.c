@@ -87,11 +87,12 @@ int main (void)
 			{
 				lastSec = SysTime.sec;
 				char txt[48];
-				int val1 = Adc_TestVal1();
-				int	val2 = Adc_TestVal2();
-				int	val3 = Adc_TestVal3();
-				int	val4 = Adc_TestVal4();
-				sprintf(txt, "Adc_test: %d, %d, %d, %d ", val1, val2, val3, val4);
+				Adc_GetAllVal(txt);
+//				int val1 = Adc_TestVal1();
+//				int	val2 = Adc_TestVal2();
+//				int	val3 = Adc_TestVal3();
+//				int	val4 = Adc_TestVal4();
+//				sprintf(txt, "Adc_test: %d, %d, %d, %d ", val1, val2, val3, val4);
 				Usb_SendText(txt);
 			}
 		}
