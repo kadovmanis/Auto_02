@@ -76,6 +76,7 @@
 	#define		DEVICE_ID					0x0001
 	#define		LED_COUNT					4
 	#define		LCD							LCD_RGB
+//	#define		LCD							LCD_GREEN
 //	#define		LCD_BLUE
 //	#define		LCD_REVERSE
 	#define		INPUT						INPUT_NO

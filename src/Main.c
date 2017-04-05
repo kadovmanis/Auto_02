@@ -35,13 +35,13 @@ int main (void)
 		LcdSetColor(GREY);
 	#endif
 	#if	(LCD > LCD_NO)
-//		LcdString(0, 48, DEVICE, font_ss16);
+		LcdString(0, 48, DEVICE, font_ss16);
 	#endif
 
 	AdcInit();
 	MemInit();
-	#if (LCD != LCD_RGB)
-//	InputInit();
+	#if (INPUT != INPUT_NO)
+		InputInit();
 	#endif
 	#ifdef		USB_PORT
 		Usb_Init();
@@ -69,7 +69,7 @@ int main (void)
 		#endif
 		#if (LCD == LCD_RGB)
 			LcdRgbTest();
-	#endif
+		#endif
 		#if	(TEST == TEST_WIFI)
 			Wifi_Test();
 		#endif
@@ -88,12 +88,10 @@ int main (void)
 				lastSec = SysTime.sec;
 				char txt[48];
 				Adc_GetAllVal(txt);
-//				int val1 = Adc_TestVal1();
-//				int	val2 = Adc_TestVal2();
-//				int	val3 = Adc_TestVal3();
-//				int	val4 = Adc_TestVal4();
-//				sprintf(txt, "Adc_test: %d, %d, %d, %d ", val1, val2, val3, val4);
 				Usb_SendText(txt);
+				#if ((LCD != LCD_NO) && (LCD != LCD_RGB))
+					LcdString(2, 0, txt, font_7x5);
+				#endif
 			}
 		}
 	#endif
