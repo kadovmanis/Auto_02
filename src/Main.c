@@ -35,7 +35,7 @@ int main (void)
 		LcdSetColor(GREY);
 	#endif
 	#if	(LCD > LCD_NO)
-		LcdString(0, 48, DEVICE, font_ss16);
+//		LcdString(0, 48, DEVICE, font_ss16);
 	#endif
 
 	AdcInit();

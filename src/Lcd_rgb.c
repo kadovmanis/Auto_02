@@ -335,7 +335,7 @@ void LcdRgbTest	(void)
 			{
 			case 0:	color = RED;	color1	= BLACK;							break;
 			case 1:	color = YELLOW;	LcdString(5, 5, "En?elîts", font_Seg24);	break;
-			case 2:	color = PINK;	LcdString(0, 48, str, font_ss16);			break;
+			case 2:	color = PINK;	LcdString(0, 0, str, font_ss16);			break;
 			case 3:	color = WHITE;												break;
 			case 4:	color = CYAN;												break;
 			case 5:	color = GREEN;	LcdString(2, 0, "Mazais", font_Seg24);		break;
