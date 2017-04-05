@@ -33,6 +33,8 @@ extern	volatile	U16				Power, Battery;
 void	AdcInit			(void);
 void	Tcp_AdcPacket	(void);
 
+void	Adc_GetAllVal	(char* txt);
+
 int		Adc_TestVal1	(void);
 int		Adc_TestVal2	(void);
 int		Adc_TestVal3	(void);

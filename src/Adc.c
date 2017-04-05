@@ -19,6 +19,7 @@ typedef struct
 {
 	U16	mn;
 	U16	mx;
+	U16	t;			// time		previous
 	U16	min;		// min		of measured values
 	U16	center;		// average	of measured values
 	U16	max;		// max		of measured values
@@ -317,13 +318,29 @@ inline	void ADC_ExternLevel	(void)
 		if (val < Ext[i].mn)	Ext[i].mn = val;
 		if (val > Ext[i].mx)	Ext[i].mx = val;
 		
+		if (val > Ext[i].center)
+		{
+//			if		(Ext[i].upDwn < 0)	Ext[i].upDwn = 0;
+//			else if (Ext[i].upDwn < 10)
+			if (Ext[i].upDwn < 10)
+			{
+				if (++Ext[i].upDwn == 10)
+				{
+					Ext[i].time	= GetTimeSinceMs(Ext[i].t);
+					Ext[i].t	= GetTicsMs();
+				}
+			}
+		}
+		else
+			Ext[i].upDwn = 0;
+		
 		if (!Cnt)
 		{
-			Ext[i].min	= Ext[i].mn;
-			Ext[i].max	= Ext[i].mx;
-			Ext[i].center = (Ext[i].mn + Ext[i].mx) >> 1;
-			Ext[i].mn	= 0xFFFF;
-			Ext[i].mx	= 0;
+			Ext[i].min		= Ext[i].mn;
+			Ext[i].max		= Ext[i].mx;
+			Ext[i].center	= (Ext[i].mn + Ext[i].mx) >> 1;
+			Ext[i].mn		= 0xFFFF;
+			Ext[i].mx		= 0;
 		}
 	}
 /*
@@ -501,7 +518,10 @@ void	Tcp_AdcPacket	(void)
 
 void	Adc_GetAllVal	(char* txt)
 {
-	sprintf(txt, "Adc: %d %d %d %d %d %d ", Ext[0].min, Ext[0].max, Ext[1].min, Ext[1].max, Ext[2].min, Ext[2].max);
+	sprintf(txt, "Adc: %u %u %u %u %u %u\tt:  %u %u %u ",
+				Ext[0].min, Ext[0].max, Ext[1].min, Ext[1].max, Ext[2].min, Ext[2].max,
+				Ext[0].time, Ext[1].time, Ext[2].time);
+//	 177 181	524 528		197 853 
 }
 
 int	Adc_TestVal1	(void)
