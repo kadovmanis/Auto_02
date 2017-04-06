@@ -4,6 +4,13 @@
 //#include	<string.h>
 //#include	<stdio.h>
 
+const FONT_INFO* Fonts[] = 
+{
+	&Arial_7x5_Info,
+	&SansSerif_16_Info,
+	&Segoe_24_Info
+};
+
 U8 SwitchCode(U8 ch)
 {
 //	U8 a = ch;

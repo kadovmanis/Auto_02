@@ -10,13 +10,6 @@
 #include	<stdio.h>
 
 //void LcdString_old(U8 line, U8 position, char* str);
-const FONT_INFO* Fonts[] = 
-{
-	&Arial_7x5_Info,
-	&SansSerif_16_Info,
-	&Segoe_24_Info
-};
-
 const char LcdLineStartAddr[] =
 {
 //	X_LAST,
@@ -242,6 +235,8 @@ void AsciiComand(U8* line, U8* offset, U8 ascii, const FONT_INFO* font)
 	case '\t':
 		break;
 	case '\b':
+		break;
+	default:
 		break;
 	}
 //	if (ch == '\b')

@@ -32,14 +32,6 @@ U16* const	LcdBuffEnd	= &LcdBuff.words[(LCD_BUFSIZE_WORDS - 1)];
 static	U16		ColorPrint, ColorBkGr;
 static	FLAGS	Lcd_Flags;
 
-const FONT_INFO* Fonts[] =
-{
-	&Arial_7x5_Info,
-	&SansSerif_16_Info,
-	&Segoe_24_Info
-};
-
-
 inline	S8	Lcd_NextDataLine (void)
 {
 	static	 U8	word = 0, bit = 0;

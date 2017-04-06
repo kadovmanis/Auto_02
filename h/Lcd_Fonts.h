@@ -109,6 +109,7 @@
 
 U8 SwitchCode(U8 ch);
 
+extern	const FONT_INFO* Fonts[];
 extern	const U8	LcdInitSequence[];
 //extern	const U8	LcdClearSequence[DISP_WITH_PIX];
 extern	const U8 font7x5[0x80][CHAR_7x5_WIDTH];
