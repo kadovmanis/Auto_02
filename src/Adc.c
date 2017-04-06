@@ -524,7 +524,7 @@ void	Adc_GetAllVal	(char* txt)
 				Ext[1].min, Ext[1].center, Ext[1].max,
 //				Ext[2].min, Ext[2].center, Ext[2].max,
 //				Ext[0].time, Ext[1].time, Ext[2].time);
-				Ext[1].time);
+				0);
 
 	//	 Adc: 177 181 524 528 204 845	t:  20 1 20
 }
