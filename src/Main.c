@@ -36,6 +36,8 @@ int main (void)
 	#endif
 	#if	(LCD > LCD_NO)
 		LcdString(0, 48, DEVICE, font_ss16);
+//		LcdString(5, 5, "En»elîtis", font_Seg24);
+//		LcdString(2, 0, "Mazais", font_Seg24);
 	#endif
 
 	AdcInit();

@@ -153,6 +153,7 @@ void UsbCommandService_5	(void);
 void UsbCommandService_6	(void);
 void UsbCommandService_7	(void);
 void UsbCommandService_8	(void);
+void UsbCommandService_9	(void);
 void UsbMemGetAddress		(void);		// Command 0x10
 void UsbMemSetAddress		(void);		// Command 0x11
 void UsbMemWrite			(void);		// Command 0x12
@@ -554,6 +555,7 @@ void UsbCommandService		(void)
 	case '6':	UsbCommandService_6();	break;
 	case '7':	UsbCommandService_7();	break;
 	case '8':	UsbCommandService_8();	break;
+	case '9':	UsbCommandService_9();	break;
 	default:	OUT_DATA_LEN	= 0;	break;
 	}
 	USB_SEND_PACKET();
@@ -664,6 +666,13 @@ void UsbCommandService_8	(void)
 	Gsm_OnLine();
 	OUT_DATA_LEN	= 1;
 	OUT_DATA[0]		= 'O';
+}
+
+void UsbCommandService_9	(void)
+{
+	EXT_OUT2 = !EXT_OUT2;
+	OUT_DATA_LEN	= 1;
+	OUT_DATA[0]		= (EXT_OUT2)?	'1': '0';
 }
 
 void UsbMemGetAddress		(void)
