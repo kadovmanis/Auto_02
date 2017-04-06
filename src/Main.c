@@ -93,8 +93,10 @@ int main (void)
 				Usb_SendText(txt);
 				#if ((LCD == LCD_GREEN) || (LCD == LCD_BLUE))
 					Adc_GetAcVal(txt);
+					Usb_SendText(txt);
 					LcdString(2, 0, txt, font_7x5);
 					Adc_GetPowBat(txt);	// 2 rows !!!
+					Usb_SendText(txt);
 					LcdString(3, 0, txt, font_7x5);
 				#endif
 			}
