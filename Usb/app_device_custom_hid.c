@@ -874,7 +874,15 @@ void UsbFunctEnableAdc		(void)
 {
 	SWITCH_OUT_BUF();
 	OUT_COMMAND		= USB_COM_TEXT;
+#if	(HARDWARE == HW_HOME)
+	EXT_OUT2 = !EXT_OUT2;
+	if (EXT_OUT2)
+		OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Relay ENabled");
+	else
+		OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Relay DISabled");
+#else
 	OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Command not implemented jet");
+#endif
 	USB_SEND_PACKET();
 }
 
