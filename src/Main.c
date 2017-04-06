@@ -82,7 +82,7 @@ int main (void)
 //		if (FL_POWER_CHANGES)	Tcp_AdcPacket();
 
 	#if	(TEST != TEST_NO)
-		if (GPS_IE)
+		if (!FL_BOOT_PROCESS)
 		{
 			static U8 lastSec = 0;
 			if (lastSec != SysTime.sec)

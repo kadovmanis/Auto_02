@@ -786,6 +786,7 @@ void UsbMemSetBootAddress	(void)
 	#ifdef GPS_IE			// if defined GPS interrupt
 		GPS_IE = 0;			// switch it off to avoid memory write
 	#endif
+	FL_BOOT_PROCESS = 1;
 		Mem_SetWriteAddress(0);
 //		Out->PageSize	= 0;
 //	#endif	//	BOOT_LOADER

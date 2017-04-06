@@ -54,6 +54,7 @@ extern	volatile FLAGS		SysFlags;
 #define	FL_TCP_RESEND		SysFlags.flag_10	// Resend of lost Tcp Packet requested
 #define	FL_POWER_CHANGES	SysFlags.flag_11	// ADC Power Changes
 #define	FL_POWER_OFF    	SysFlags.flag_12	// Device Power Off sequence
+#define	FL_BOOT_PROCESS		SysFlags.flag_13	// Boot Process started
 
 enum ppsConfig
 {
