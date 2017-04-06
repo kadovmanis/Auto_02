@@ -541,7 +541,7 @@ void	Adc_GetAcVal	(char* txt)
 
 void	Adc_GetPowBat	(char* txt)
 {
-	sprintf(txt, "Bat: %2u,%03uV  \nPow: %2u,%03uV  ",
+	sprintf(txt, "Bat: %2u,%03uV  \n\nPow: %2u,%03uV  ",
 		 Battery / 1000, Battery % 1000, Power / 1000, Power % 1000);
 }
 
