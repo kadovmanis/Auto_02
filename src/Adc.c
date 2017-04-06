@@ -518,11 +518,13 @@ void	Tcp_AdcPacket	(void)
 
 void	Adc_GetAllVal	(char* txt)
 {
-	sprintf(txt, "Adc: %u %u %u, %u %u %u, %u %u %u\tt: %u %u %u ",
-				Ext[0].min, Ext[0].center, Ext[0].max,
+	sprintf(txt, "Adc: %u %u %u\tt: %u ",
+//	sprintf(txt, "Adc: %u %u %u, %u %u %u, %u %u %u\tt: %u %u %u ",
+//				Ext[0].min, Ext[0].center, Ext[0].max,
 				Ext[1].min, Ext[1].center, Ext[1].max,
-				Ext[2].min, Ext[2].center, Ext[2].max,
-				Ext[0].time, Ext[1].time, Ext[2].time);
+//				Ext[2].min, Ext[2].center, Ext[2].max,
+//				Ext[0].time, Ext[1].time, Ext[2].time);
+				Ext[1].time);
 
 	//	 Adc: 177 181 524 528 204 845	t:  20 1 20
 }
