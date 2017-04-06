@@ -537,6 +537,12 @@ void	Adc_GetAcVal	(char* txt)
 				  ac, hz, Ext[1].center);
 }
 
+void	Adc_GetPowBat	(char* txt)
+{
+	sprintf(txt, "Bat: %2u,%03uV  \nPow: %2u,%03uV  ",
+		 Battery / 1000, Battery % 1000, Power / 1000, Power % 1000);
+}
+
 int	Adc_TestVal1	(void)
 {
 //	return Ext_1.min;

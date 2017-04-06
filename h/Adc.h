@@ -35,6 +35,7 @@ void	Tcp_AdcPacket	(void);
 
 void	Adc_GetAllVal	(char* txt);
 void	Adc_GetAcVal	(char* txt);
+void	Adc_GetPowBat	(char* txt);
 
 int		Adc_TestVal1	(void);
 int		Adc_TestVal2	(void);

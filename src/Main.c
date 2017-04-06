@@ -94,6 +94,8 @@ int main (void)
 				#if ((LCD == LCD_GREEN) || (LCD == LCD_BLUE))
 					Adc_GetAcVal(txt);
 					LcdString(2, 0, txt, font_7x5);
+					Adc_GetPowBat(txt);	// 2 rows !!!
+					LcdString(3, 0, txt, font_7x5);
 				#endif
 			}
 		}
