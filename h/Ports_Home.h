@@ -136,7 +136,7 @@
 #ifndef		USB_PORT				// RG2, RG3 = D+,D- by default -> disable if USB not used
 	#define InitPort_G()	LATG = 0x0000; TRISG = 0xFDFF; ODCG = 0x0000; ANSG = 0x0000; U1CNFG2bits.UTRDIS = 1
 #else
-	#define InitPort_G()	LATG = 0x0100; TRISG = 0xFCFF; ODCG = 0x0000; ANSG = 0x0000
+	#define InitPort_G()	LATG = 0x0000; TRISG = 0xFCFF; ODCG = 0x0000; ANSG = 0x0000
 #endif
 #define USB_D_PLUS		_LATG2		//				I	0
 #define USB_D_MINUS		_LATG3		//				I	0
