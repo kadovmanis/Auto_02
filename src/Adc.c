@@ -532,9 +532,18 @@ void	Adc_GetAllVal	(char* txt)
 #define	I_NULL_VAL	526
 void	Adc_GetAcVal	(char* txt)
 {
-	register S32 a	= Ext[1].center - I_NULL_VAL;
-//	register int amp = (a * 9375) >> 7;
-	register int amp = (a * 9375) / 128;
+	register int amp	= Ext[1].center;
+
+	if (amp > I_NULL_VAL)
+	{
+		register S32 a = amp - I_NULL_VAL;
+		amp = ((a * 9375) >> 7);
+	}
+	else
+	{
+		register S32 a = I_NULL_VAL - amp;
+		amp = 0 - ((a * 9375) >> 7);
+	}
 
 	//	register U16 ac = (( Ext[2].max - Ext[2].min) * 11) >> 5;
 //	register U16 ac = (((Ext[2].max - Ext[2].min) * 23) + 32) >> 6;	// rounding
