@@ -529,14 +529,18 @@ void	Adc_GetAllVal	(char* txt)
 	//	 Adc: 177 181 524 528 204 845	t:  20 1 20
 }
 
+#define	I_NULL_VAL	526
 void	Adc_GetAcVal	(char* txt)
 {
-//	register U16 ac = (( Ext[2].max - Ext[2].min) * 11) >> 5;
+	register S32 a	= Ext[1].center - I_NULL_VAL;
+	register int amp = (a * 9375) >> 7;
+
+	//	register U16 ac = (( Ext[2].max - Ext[2].min) * 11) >> 5;
 //	register U16 ac = (((Ext[2].max - Ext[2].min) * 23) + 32) >> 6;	// rounding
 	register U16 ac = (((Ext[2].max - Ext[2].min + 5) * 23)) >> 6;	// rounding
 	register U16 hz = 1000 / Ext[2].time;
-	sprintf(txt, "Ac %uV %uHz I:%u   ",
-				  ac, hz, Ext[1].center);
+	sprintf(txt, "Ac %uV %uHz %dmA (%u)   ",
+				  ac, hz, amp, Ext[1].center);
 }
 
 void	Adc_GetPowBat	(char* txt)
