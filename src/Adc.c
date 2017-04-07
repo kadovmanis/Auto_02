@@ -24,8 +24,8 @@ typedef struct
 	U16	center;		// average	of measured values
 	U16	max;		// max		of measured values
 	U16	time;		// time		measured
+	S16	drift;
 	S8	upDwn;
-	S8	drift;
 } ADC_INPUT;
 
 ADC_INPUT					Ext[3] = {{0}, {0}, {0}};
@@ -337,25 +337,27 @@ inline	void ADC_ExternLevel	(void)
 		
 		if (!Cnt)
 		{
-			U16 a = (Ext[i].mn + Ext[i].mx) >> 1;
-			if		(a > Ext[i].center)
-				Ext[i].drift++;
-			else if (a < Ext[i].center)
-				Ext[i].drift--;
-			else
+			U16 a = ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
+			S16 d = a - Ext[i].center;
+			if		(d == 0)
 				Ext[i].drift = 0;
-			if		(Ext[i].drift > 10)
+			else if (d > 0)
 			{
-				Ext[i].center = a;
-				Ext[i].drift -= 5;
+				if ((d > 1) || (++Ext[i].drift > 25))
+				{
+					Ext[i].drift /= 2;
+					Ext[i].center = a;
+				}
 			}
-			else if	(Ext[i].drift < 10)
+			else if	(d < 0)
 			{
-				Ext[i].center = a;
-				Ext[i].drift += 5;
+				if ((d < 1) || (--Ext[i].drift < -25))
+				{
+					Ext[i].drift /= 2;
+					Ext[i].center = a;
+				}
 			}
-//			else
-//				Ext[i].center	= (Ext[i].mn + Ext[i].mx) >> 1;
+//			Ext[i].center	= (Ext[i].mn + Ext[i].mx) >> 1;
 			Ext[i].min		= Ext[i].mn;
 			Ext[i].max		= Ext[i].mx;
 			Ext[i].mn		= 0xFFFF;
