@@ -353,8 +353,8 @@ inline	void ADC_ExternLevel	(void)
 				else
 				{
 					cntr = (a << 6);
-					Ext[i].center = a;
 				}
+				Ext[i].center = a;
 				
 				
 /*
