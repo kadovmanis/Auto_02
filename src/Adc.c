@@ -310,7 +310,7 @@ inline void ADC_PowerLevel (void)
 */
 }
 
-#define	ADC_DRIFT	3
+#define	ADC_DRIFT	2
 
 inline	void ADC_ExternLevel	(void)
 {
@@ -353,8 +353,8 @@ inline	void ADC_ExternLevel	(void)
 				else
 				{
 					cntr = (a << 6);
+					Ext[i].center = a;
 				}
-				Ext[i].center = a;
 				
 				
 /*
