@@ -89,11 +89,11 @@ int main (void)
 			{
 				lastSec = SysTime.sec;
 				char txt[48];
-				Adc_GetAllVal(txt);
-				Usb_SendText(txt);
+//				Adc_GetAllVal(txt);
+//				Usb_SendText(txt);
 				#if ((LCD == LCD_GREEN) || (LCD == LCD_BLUE))
 					Adc_GetAcVal(txt);
-//					Usb_SendText(txt);
+					Usb_SendText(txt);
 					LcdString(2, 0, txt, font_7x5);
 					Adc_GetPowBat(txt);	// 2 rows !!!
 //					Usb_SendText(txt);
