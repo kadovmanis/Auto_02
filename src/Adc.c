@@ -343,7 +343,7 @@ inline	void ADC_ExternLevel	(void)
 				Ext[i].drift = 0;
 			else if (d > 0)
 			{
-				if ((d > 1) || (++Ext[i].drift > 25))
+				if ((d > 1) || (++Ext[i].drift > 50))
 				{
 					Ext[i].drift /= 2;
 					Ext[i].center = a;
@@ -351,7 +351,7 @@ inline	void ADC_ExternLevel	(void)
 			}
 			else if	(d < 0)
 			{
-				if ((d < 1) || (--Ext[i].drift < -25))
+				if ((d < 1) || (--Ext[i].drift < -50))
 				{
 					Ext[i].drift /= 2;
 					Ext[i].center = a;
