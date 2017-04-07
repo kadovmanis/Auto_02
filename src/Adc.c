@@ -339,7 +339,7 @@ inline	void ADC_ExternLevel	(void)
 		{
 			if (i == 1)
 			{
-				U16 a = ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
+				U16 a = ((Ext[i].mn + Ext[i].mx + (Ext[i].center << 1)) + 2) >> 2;
 				S16 d = a - Ext[i].center;
 				if		(d == 0)
 					Ext[i].drift = 0;
