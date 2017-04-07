@@ -310,6 +310,8 @@ inline void ADC_PowerLevel (void)
 */
 }
 
+#define	ADC_DRIFT	3
+
 inline	void ADC_ExternLevel	(void)
 {
 	register U16 i;
@@ -339,8 +341,33 @@ inline	void ADC_ExternLevel	(void)
 		{
 			if (i == 1)
 			{
+				static	 U16 cntr = 0;
+				register U16 a = ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
+//				register U16 d = (a > Ext[i].center)?	(a - Ext[i].center) : (Ext[i].center - a);
+//				if (d < ADC_DRIFT)
+//				{
+					cntr += (!cntr)?	(a << 6) : a;
+					a = cntr >> 6;
+					cntr -= a;
+//				}
+				Ext[i].center = a;
+				
+				
+/*
 				U16 a = ((Ext[i].mn + Ext[i].mx + (Ext[i].center << 1)) + 2) >> 2;
 				S16 d = a - Ext[i].center;
+				switch (d)
+				{
+				case 0:
+					Ext[i].drift	= 0;
+					break;
+					
+				default:
+					Ext[i].drift	= 0;
+					Ext[i].center	= a;
+					break;
+				}
+				
 				if		(d == 0)
 					Ext[i].drift = 0;
 				else if (d > 0)
@@ -359,9 +386,10 @@ inline	void ADC_ExternLevel	(void)
 						Ext[i].center = a;
 					}
 				}
+*/
 			}
 			else
-			Ext[i].center	= (Ext[i].mn + Ext[i].mx) >> 1;
+				Ext[i].center	= ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
 			Ext[i].min		= Ext[i].mn;
 			Ext[i].max		= Ext[i].mx;
 			Ext[i].mn		= 0xFFFF;
