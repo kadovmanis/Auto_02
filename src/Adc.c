@@ -337,27 +337,31 @@ inline	void ADC_ExternLevel	(void)
 		
 		if (!Cnt)
 		{
-			U16 a = ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
-			S16 d = a - Ext[i].center;
-			if		(d == 0)
-				Ext[i].drift = 0;
-			else if (d > 0)
+			if (i == 1)
 			{
-				if ((d > 1) || (++Ext[i].drift > 50))
+				U16 a = ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
+				S16 d = a - Ext[i].center;
+				if		(d == 0)
+					Ext[i].drift = 0;
+				else if (d > 0)
 				{
-					Ext[i].drift /= 2;
-					Ext[i].center = a;
+					if ((d > 1) || (++Ext[i].drift > 50))
+					{
+						Ext[i].drift /= 2;
+						Ext[i].center = a;
+					}
+				}
+				else if	(d < 0)
+				{
+					if ((d < 1) || (--Ext[i].drift < -50))
+					{
+						Ext[i].drift /= 2;
+						Ext[i].center = a;
+					}
 				}
 			}
-			else if	(d < 0)
-			{
-				if ((d < 1) || (--Ext[i].drift < -50))
-				{
-					Ext[i].drift /= 2;
-					Ext[i].center = a;
-				}
-			}
-//			Ext[i].center	= (Ext[i].mn + Ext[i].mx) >> 1;
+			else
+			Ext[i].center	= (Ext[i].mn + Ext[i].mx) >> 1;
 			Ext[i].min		= Ext[i].mn;
 			Ext[i].max		= Ext[i].mx;
 			Ext[i].mn		= 0xFFFF;
