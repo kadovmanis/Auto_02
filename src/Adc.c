@@ -343,14 +343,18 @@ inline	void ADC_ExternLevel	(void)
 			{
 				static	 U16 cntr = 0;
 				register U16 a = ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
-//				register U16 d = (a > Ext[i].center)?	(a - Ext[i].center) : (Ext[i].center - a);
-//				if (d < ADC_DRIFT)
-//				{
-					cntr += (!cntr)?	(a << 6) : a;
+				register U16 d = (a > Ext[i].center)?	(a - Ext[i].center) : (Ext[i].center - a);
+				if ((d < ADC_DRIFT) && (cntr))
+				{
+					cntr += a;
 					a = cntr >> 6;
 					cntr -= a;
-//				}
-				Ext[i].center = a;
+				}
+				else
+				{
+					cntr = (a << 6);
+					Ext[i].center = a;
+				}
 				
 				
 /*
@@ -589,13 +593,13 @@ void	Adc_GetAcVal	(char* txt)
 
 	if (amp > I_NULL_VAL)
 	{
-		register S32 a = amp - I_NULL_VAL;
-		amp = (((a * 9375) + 64) >> 7);
+		register S32 a = (amp - I_NULL_VAL) * 9375;
+		amp = ((a + 64) >> 7);
 	}
 	else
 	{
-		register S32 a = I_NULL_VAL - amp;
-		amp = 0 - (((a * 9375) + 64) >> 7);
+		register S32 a = (I_NULL_VAL - amp) * 9375;
+		amp = 0 - ((a + 64) >> 7);
 	}
 
 	//	register U16 ac = (( Ext[2].max - Ext[2].min) * 11) >> 5;
