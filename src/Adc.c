@@ -25,6 +25,7 @@ typedef struct
 	U16	max;		// max		of measured values
 	U16	time;		// time		measured
 	S8	upDwn;
+	S8	drift;
 } ADC_INPUT;
 
 ADC_INPUT					Ext[3] = {{0}, {0}, {0}};
@@ -336,9 +337,27 @@ inline	void ADC_ExternLevel	(void)
 		
 		if (!Cnt)
 		{
+			U16 a = (Ext[i].mn + Ext[i].mx) >> 1;
+			if		(a > Ext[i].center)
+				Ext[i].drift++;
+			else if (a < Ext[i].center)
+				Ext[i].drift--;
+			else
+				Ext[i].drift = 0;
+			if		(Ext[i].drift > 10)
+			{
+				Ext[i].center = a;
+				Ext[i].drift -= 5;
+			}
+			else if	(Ext[i].drift < 10)
+			{
+				Ext[i].center = a;
+				Ext[i].drift += 5;
+			}
+//			else
+//				Ext[i].center	= (Ext[i].mn + Ext[i].mx) >> 1;
 			Ext[i].min		= Ext[i].mn;
 			Ext[i].max		= Ext[i].mx;
-			Ext[i].center	= (Ext[i].mn + Ext[i].mx) >> 1;
 			Ext[i].mn		= 0xFFFF;
 			Ext[i].mx		= 0;
 		}
@@ -537,12 +556,12 @@ void	Adc_GetAcVal	(char* txt)
 	if (amp > I_NULL_VAL)
 	{
 		register S32 a = amp - I_NULL_VAL;
-		amp = ((a * 9375) >> 7);
+		amp = (((a * 9375) + 64) >> 7);
 	}
 	else
 	{
 		register S32 a = I_NULL_VAL - amp;
-		amp = 0 - ((a * 9375) >> 7);
+		amp = 0 - (((a * 9375) + 64) >> 7);
 	}
 
 	//	register U16 ac = (( Ext[2].max - Ext[2].min) * 11) >> 5;
