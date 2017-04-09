@@ -89,8 +89,8 @@ int main (void)
 			{
 				lastSec = SysTime.sec;
 				char txt[48];
-//				Adc_GetAcVal(txt);
-				Adc_GetAllVal(txt);
+				Adc_GetAcVal(txt);
+//				Adc_GetAllVal(txt);
 				Usb_SendText(txt);
 				#if ((LCD == LCD_GREEN) || (LCD == LCD_BLUE))
 					Adc_GetAcVal(txt);
