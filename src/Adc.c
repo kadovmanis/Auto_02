@@ -581,7 +581,6 @@ void	Adc_GetAllVal	(char* txt)
 	//	 Adc: 177 181 524 528 204 845	t:  20 1 20
 }
 
-#define	I_NULL_VAL	526
 /*
  * 1A	0.066V		ASC712
  * 1A	0.044V		ADC input (10k / 20k)
@@ -592,20 +591,26 @@ void	Adc_GetAllVal	(char* txt)
  * 71,022727273 * 128 = 9090.9
  * (1adc * 9091) / 128 = 71.0234375
 
-
+ * 117	2.610
+ * 118	2.644
+ * 119	2.645
 	23.261261261
 	4
  */
-
 // 2.582 A		114
-
-#define	ADC_DRIFT	5
+#define	I_NULL_VAL	526
+#define	ADC_DRIFT		5
+#define	ADC_DRIFT_OFF	3
+#define	MA_ROUND		2
+#define	MA_MUL			92
+#define	MA_MAX_VAL		(((65536 - MA_ROUND) / MA_MUL) + ADC_DRIFT_OFF)
+#define	ADC_TO_MA(X)	((((X - ADC_DRIFT_OFF) * MA_MUL) + MA_ROUND) >> 2)
 void	Adc_GetAcVal	(char* txt)
 {
 	register U16 amp	= (Ext[1].max - Ext[1].min);
-	if		(amp <= ADC_DRIFT)	amp = 0;							// less than drift
-	else if	(amp > 707)			amp = 20000;						// more than 16.3A (not fit in U16)
-	else						amp = (((amp - 3) * 93) + 2) >> 2;	// mA = adcDiff * 23.261.. (* 93 / 4)
+	if		(amp <= ADC_DRIFT)	amp = 0;				// less than drift
+	else if	(amp > MA_MAX_VAL)	amp = 20000;			// more than 16.3A (not fit in U16)
+	else						amp = ADC_TO_MA(amp);	// mA = adcDiff * 23.261.. (* 93 / 4)
 /*	
 	register U16 amp, diff	= (Ext[1].max - Ext[1].min);
 	if (diff < ADC_DRIFT)
@@ -619,25 +624,9 @@ void	Adc_GetAcVal	(char* txt)
 		amp = ((a + 1) >> 2);
 	}
 */
-/*
-	register int amp	= Ext[1].center;
-
-	if (amp > I_NULL_VAL)
-	{
-		register S32 a = (amp - I_NULL_VAL) * 9375;
-		amp = ((a + 64) >> 7);
-	}
-	else
-	{
-		register S32 a = (I_NULL_VAL - amp) * 9375;
-		amp = 0 - ((a + 64) >> 7);
-	}
-*/
-	//	register U16 ac = (( Ext[2].max - Ext[2].min) * 11) >> 5;
-//	register U16 ac = (((Ext[2].max - Ext[2].min) * 23) + 32) >> 6;	// rounding
 	register U16 ac = (((Ext[2].max - Ext[2].min + 5) * 23)) >> 6;	// rounding
 	register U16 hz = 1000 / Ext[2].time;
-	sprintf(txt, "Ac %uV %uHz %dmA (%u)   ",
+	sprintf(txt, "Ac %uV %uHz  \r\n  %5dmA   (%u)   ",
 				  ac, hz, amp, (Ext[1].max - Ext[1].min));
 }
 

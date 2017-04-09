@@ -61,7 +61,7 @@ int main (void)
 	#endif
 
 	#ifdef		USB_PORT
-		Usb_SendText("Start");
+//		Usb_SendText("Start");
 	#endif
 
 	while(true)
@@ -89,16 +89,18 @@ int main (void)
 			{
 				lastSec = SysTime.sec;
 				char txt[48];
+				sprintf(txt, "Rel %s ", (EXT_OUT2)? "On " : "Off");
+				LcdString(0, 0, txt, font_7x5);
 				Adc_GetAcVal(txt);
 //				Adc_GetAllVal(txt);
 				Usb_SendText(txt);
 				#if ((LCD == LCD_GREEN) || (LCD == LCD_BLUE))
-					Adc_GetAcVal(txt);
+					Adc_GetAcVal(txt);	// 2 rows !!!
 //					Usb_SendText(txt);
 					LcdString(2, 0, txt, font_7x5);
 					Adc_GetPowBat(txt);	// 2 rows !!!
 //					Usb_SendText(txt);
-					LcdString(3, 0, txt, font_7x5);
+					LcdString(4, 0, txt, font_7x5);
 				#endif
 			}
 		}
