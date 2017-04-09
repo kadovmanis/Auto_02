@@ -310,7 +310,7 @@ inline void ADC_PowerLevel (void)
 */
 }
 
-#define	ADC_DRIFT	2
+#define	ADC_DRIFT_1	2
 
 inline	void ADC_ExternLevel	(void)
 {
@@ -323,15 +323,10 @@ inline	void ADC_ExternLevel	(void)
 		
 		if (val > Ext[i].center)
 		{
-//			if		(Ext[i].upDwn < 0)	Ext[i].upDwn = 0;
-//			else if (Ext[i].upDwn < 10)
-			if (Ext[i].upDwn < 10)
+			if ((Ext[i].upDwn < 10) && (++Ext[i].upDwn == 10))
 			{
-				if (++Ext[i].upDwn == 10)
-				{
-					Ext[i].time	= GetTimeSinceMs(Ext[i].t);
-					Ext[i].t	= GetTicsMs();
-				}
+				Ext[i].time	= GetTimeSinceMs(Ext[i].t);
+				Ext[i].t	= GetTicsMs();
 			}
 		}
 		else
@@ -344,7 +339,7 @@ inline	void ADC_ExternLevel	(void)
 				static	 U16 cntr = 0;
 				register U16 a = ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
 				register U16 d = (a > Ext[i].center)?	(a - Ext[i].center) : (Ext[i].center - a);
-				if ((d < ADC_DRIFT) && (cntr))
+				if ((d < ADC_DRIFT_1) && (cntr))
 				{
 					cntr += a;
 					a = cntr >> 6;
@@ -575,20 +570,42 @@ void	Tcp_AdcPacket	(void)
 
 void	Adc_GetAllVal	(char* txt)
 {
-	sprintf(txt, "Adc: %u %u %u\tt: %u ",
+	sprintf(txt, "Adc: %u %u %u\tdiff: %u\tt: %u ",
 //	sprintf(txt, "Adc: %u %u %u, %u %u %u, %u %u %u\tt: %u %u %u ",
 //				Ext[0].min, Ext[0].center, Ext[0].max,
-				Ext[1].min, Ext[1].center, Ext[1].max,
+				Ext[1].min, Ext[1].center, Ext[1].max, (Ext[1].max - Ext[1].min), Ext[1].time);
 //				Ext[2].min, Ext[2].center, Ext[2].max,
 //				Ext[0].time, Ext[1].time, Ext[2].time);
-				0);
+//				0);
 
 	//	 Adc: 177 181 524 528 204 845	t:  20 1 20
 }
 
 #define	I_NULL_VAL	526
+/*
+ * 1A	0.066V		ASC712
+ * 1A	0.044V		ADC input (10k / 20k)
+ * 
+ * 1adc	~0,003125V
+ * 1A	~14.08adc
+ * 1adc	~71,022727273mA
+ 
+ */
+
+// 2.582 A		114
+
+#define	ADC_DRIFT	5
 void	Adc_GetAcVal	(char* txt)
 {
+	register U16 amp, diff	= (Ext[1].max - Ext[1].min);
+	if (diff < ADC_DRIFT)
+		amp = 0;
+	else
+	{
+		register U32 a = (diff - 3) * 9375;
+		amp = ((a + 128) >> 8);
+	}
+/*
 	register int amp	= Ext[1].center;
 
 	if (amp > I_NULL_VAL)
@@ -601,18 +618,18 @@ void	Adc_GetAcVal	(char* txt)
 		register S32 a = (I_NULL_VAL - amp) * 9375;
 		amp = 0 - ((a + 64) >> 7);
 	}
-
+*/
 	//	register U16 ac = (( Ext[2].max - Ext[2].min) * 11) >> 5;
 //	register U16 ac = (((Ext[2].max - Ext[2].min) * 23) + 32) >> 6;	// rounding
 	register U16 ac = (((Ext[2].max - Ext[2].min + 5) * 23)) >> 6;	// rounding
 	register U16 hz = 1000 / Ext[2].time;
 	sprintf(txt, "Ac %uV %uHz %dmA (%u)   ",
-				  ac, hz, amp, Ext[1].center);
+				  ac, hz, amp, diff);
 }
 
 void	Adc_GetPowBat	(char* txt)
 {
-	sprintf(txt, "Bat: %2u,%03uV  \n\nPow: %2u,%03uV  ",
+	sprintf(txt, "Bat: %2u,%03uV \n\rPow: %2u,%03uV  ",
 		 Battery / 1000, Battery % 1000, Power / 1000, Power % 1000);
 }
 
