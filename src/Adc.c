@@ -638,7 +638,7 @@ void	Adc_GetAcVal	(char* txt)
 	register U16 ac = (((Ext[2].max - Ext[2].min + 5) * 23)) >> 6;	// rounding
 	register U16 hz = 1000 / Ext[2].time;
 	sprintf(txt, "Ac %uV %uHz %dmA (%u)   ",
-				  ac, hz, amp, diff);
+				  ac, hz, amp, (Ext[1].max - Ext[1].min));
 }
 
 void	Adc_GetPowBat	(char* txt)
