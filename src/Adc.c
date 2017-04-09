@@ -589,7 +589,12 @@ void	Adc_GetAllVal	(char* txt)
  * 1adc	~0,003125V
  * 1A	~14.08adc
  * 1adc	~71,022727273mA
- 
+ * 71,022727273 * 128 = 9090.9
+ * (1adc * 9091) / 128 = 71.0234375
+
+
+	23.261261261
+	4
  */
 
 // 2.582 A		114
@@ -597,14 +602,23 @@ void	Adc_GetAllVal	(char* txt)
 #define	ADC_DRIFT	5
 void	Adc_GetAcVal	(char* txt)
 {
+	register U16 amp	= (Ext[1].max - Ext[1].min);
+	if (amp < ADC_DRIFT)	amp = 0;							// less than drift
+	else if (diff > 707)	amp = 20000;						// more than 16.3A (not fit in U16)
+	else					amp = (((amp - 3) * 93) + 1) >> 2;	// mA = adcDiff * 23.261.. (* 93 / 4)
+/*	
 	register U16 amp, diff	= (Ext[1].max - Ext[1].min);
 	if (diff < ADC_DRIFT)
 		amp = 0;
 	else
 	{
-		register U32 a = (diff - 3) * 9375;
-		amp = ((a + 128) >> 8);
+//		register U32 a = (diff - 3) * 9091;		// vajadzetu but...
+//		register U32 a = (diff - 3) * 9375;
+//		amp = ((a + 128) >> 8);
+		register U32 a = (diff - 3) * 93;
+		amp = ((a + 1) >> 2);
 	}
+*/
 /*
 	register int amp	= Ext[1].center;
 
