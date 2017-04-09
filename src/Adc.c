@@ -603,7 +603,7 @@ void	Adc_GetAllVal	(char* txt)
 void	Adc_GetAcVal	(char* txt)
 {
 	register U16 amp	= (Ext[1].max - Ext[1].min);
-	if		(amp < ADC_DRIFT)	amp = 0;							// less than drift
+	if		(amp <= ADC_DRIFT)	amp = 0;							// less than drift
 	else if	(amp > 707)			amp = 20000;						// more than 16.3A (not fit in U16)
 	else						amp = (((amp - 3) * 93) + 1) >> 2;	// mA = adcDiff * 23.261.. (* 93 / 4)
 /*	
