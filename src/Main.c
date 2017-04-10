@@ -77,8 +77,8 @@ int main (void)
 		#endif
 
 //		if (FL_BOOT_TCP)	{	Tcp_BootLoaderProcess();	continue;	}
-//		if (FL_TCP_RESEND)		Tcp_PacketResend();
-//        if (FL_POWER_OFF)       PowerOff();
+		if (FL_TCP_RESEND)		Tcp_PacketResend();
+        if (FL_POWER_OFF)       PowerOff();
 //		if (FL_POWER_CHANGES)	Tcp_AdcPacket();
 
 	#if	(TEST != TEST_NO)
