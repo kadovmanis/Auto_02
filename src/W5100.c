@@ -491,7 +491,7 @@ U16		W51_DataReceived (S8 socket, U16 l)
 
 //	if (len)
 		Sockets[socket].delayStartMs =  GetTicsMs();
-//	W51_RecDataSort(buf, len, socket);
+	W51_RecDataSort(buf, len, socket);
 
 	return len;
 }
@@ -500,21 +500,21 @@ void	W51_RecDataSort	(U8* ptr, U16 len, S8 socket)
 {
 	char str[48];
 	sprintf (str, "Received%4d in %d soc", len, socket);
-	LcdString (1, 0, str, font_7x5);
+//	LcdString (1, 0, str, font_7x5);
 	if (len > 40)
 		len = 40;
 	if (Sockets[socket].protocol == S_MODE_UDP)
 	{
 		UDP_HEADER* pH = (UDP_HEADER*)ptr;
-		sprintf (str, "%u.%u.%u.%u:%u", pH->ip.u8[0], pH->ip.u8[1], pH->ip.u8[2], pH->ip.u8[3],pH->port);
-		LcdString (2, 0, str, font_7x5);
-		LcdData	(3, 0, (char*)&ptr[sizeof(UDP_HEADER)], (len - sizeof(UDP_HEADER)));
+//		sprintf (str, "%u.%u.%u.%u:%u", pH->ip.u8[0], pH->ip.u8[1], pH->ip.u8[2], pH->ip.u8[3],pH->port);
+//		LcdString (2, 0, str, font_7x5);
+//		LcdData	(3, 0, (char*)&ptr[sizeof(UDP_HEADER)], (len - sizeof(UDP_HEADER)));
 		W51_SendUdp(&ptr[sizeof(UDP_HEADER)], pH);
 	}
 	else
 	{
         U8 rec[48] = {'\n', 'R', 'E', ':', ' '};
-		LcdData	(2, 0, (char*)ptr, len);
+//		LcdData	(2, 0, (char*)ptr, len);
         memcpy(&rec[5], ptr, len);
 		W51_SendTcp(rec, len + 5, socket);
 	}
