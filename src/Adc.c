@@ -29,6 +29,7 @@ typedef struct
 } ADC_INPUT;
 
 ADC_INPUT					Ext[3] = {{0}, {0}, {0}};
+static		U16				CurrLimit	= 212;
 
 volatile	POWER_STATE		PowerState = power_NoPower;
 //volatile	BATTERY_LEVEL	AdcPower, AdcBattery;
@@ -605,29 +606,21 @@ void	Adc_GetAllVal	(char* txt)
 #define	MA_MUL			92
 #define	MA_MAX_VAL		(((65536 - MA_ROUND) / MA_MUL) + ADC_DRIFT_OFF)
 #define	ADC_TO_MA(X)	((((X - ADC_DRIFT_OFF) * MA_MUL) + MA_ROUND) >> 2)
-void	Adc_GetAcVal	(char* txt)
+void	Adc_GetVolt	(char* txt)
 {
-	register U16 amp	= (Ext[1].max - Ext[1].min);
-	if		(amp <= ADC_DRIFT)	amp = 0;				// less than drift
-	else if	(amp > MA_MAX_VAL)	amp = 20000;			// more than 16.3A (not fit in U16)
-	else						amp = ADC_TO_MA(amp);	// mA = adcDiff * 23.261.. (* 93 / 4)
-/*	
-	register U16 amp, diff	= (Ext[1].max - Ext[1].min);
-	if (diff < ADC_DRIFT)
-		amp = 0;
-	else
-	{
-//		register U32 a = (diff - 3) * 9091;		// vajadzetu but...
-//		register U32 a = (diff - 3) * 9375;
-//		amp = ((a + 128) >> 8);
-		register U32 a = (diff - 3) * 93;
-		amp = ((a + 1) >> 2);
-	}
-*/
 	register U16 ac = (((Ext[2].max - Ext[2].min + 5) * 23)) >> 6;	// rounding
 	register U16 hz = 1000 / Ext[2].time;
-	sprintf(txt, "Ac %uV %uHz  \r\n  %5dmA   (%u)   ",
-				  ac, hz, amp, (Ext[1].max - Ext[1].min));
+	sprintf(txt, "Ac %uV %uHz ", ac, hz);
+}
+
+void	Adc_GetAmper	(char* txt)
+{
+	register U16 amp, diff	= (Ext[1].max - Ext[1].min);
+	if		(diff <= ADC_DRIFT)	amp = 0;				// less than drift
+	else if	(diff > MA_MAX_VAL)	amp = 20000;			// more than 16.3A (not fit in U16)
+	else						amp = ADC_TO_MA(diff);	// mA = adcDiff * 23.261.. (* 93 / 4)
+
+	sprintf(txt, "%5dmA (%u) ", amp, diff);
 }
 
 void	Adc_GetPowBat	(char* txt)

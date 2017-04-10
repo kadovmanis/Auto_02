@@ -34,7 +34,8 @@ void	AdcInit			(void);
 void	Tcp_AdcPacket	(void);
 
 void	Adc_GetAllVal	(char* txt);
-void	Adc_GetAcVal	(char* txt);
+void	Adc_GetVolt		(char* txt);
+void	Adc_GetAmper	(char* txt);
 void	Adc_GetPowBat	(char* txt);
 
 int		Adc_TestVal1	(void);

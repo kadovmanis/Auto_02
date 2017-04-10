@@ -92,15 +92,20 @@ int main (void)
 				char txt[48];
 				sprintf(txt, "Rel %s ", (EXT_OUT2)? "On " : "Off");
 				LcdString(0, 0, txt, font_7x5);
-				sprintf (txt, "S: %u, ", W51_GetEthDeviceState());
-				W51_GetSocketStatus(&txt[6]);
-//				Adc_GetAcVal(&txt[6]);
+				Adc_GetVolt(&txt[6]);
+				register U16 l = 0;
+				while (txt[l])	l++;
+				Adc_GetAmper(&txt[l]);
+//				sprintf (txt, "S: %u, ", W51_GetEthDeviceState());
+//				W51_GetSocketStatus(&txt[6]);
+//				Adc_GetVolt(&txt[6]);
 //				Adc_GetAllVal(txt);
 				Usb_SendText(txt);
 				#if ((LCD == LCD_GREEN) || (LCD == LCD_BLUE))
-					Adc_GetAcVal(txt);	// 2 rows !!!
-//					Usb_SendText(txt);
+					Adc_GetVolt(txt);	// 2 rows !!!
 					LcdString(2, 0, txt, font_7x5);
+					Adc_GetAmper(txt);
+					LcdString(3, 0, txt, font_7x5);
 					Adc_GetPowBat(txt);	// 2 rows !!!
 //					Usb_SendText(txt);
 					LcdString(4, 0, txt, font_7x5);
