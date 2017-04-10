@@ -620,7 +620,13 @@ void	Adc_GetAmper	(char* txt)
 	else if	(diff > MA_MAX_VAL)	amp = 20000;			// more than 16.3A (not fit in U16)
 	else						amp = ADC_TO_MA(diff);	// mA = adcDiff * 23.261.. (* 93 / 4)
 
-	sprintf(txt, "%5dmA (%u) ", amp, diff);
+	if (diff > CurrLimit)
+	{
+		sprintf(txt, "%5dmA (%u) OwerCurrent!!! ", amp, diff);
+		EXT_OUT2 = 0;
+	}
+	else
+		sprintf(txt, "%5dmA (%u) ", amp, diff);
 }
 
 void	Adc_GetPowBat	(char* txt)
