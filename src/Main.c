@@ -92,7 +92,8 @@ int main (void)
 				char txt[48];
 				sprintf(txt, "Rel %s ", (EXT_OUT2)? "On " : "Off");
 				LcdString(0, 0, txt, font_7x5);
-				Adc_GetAcVal(txt);
+				sprintf (txt, "S: %u, ", W51_GetEthDeviceState());
+				Adc_GetAcVal(&txt[6]);
 //				Adc_GetAllVal(txt);
 				Usb_SendText(txt);
 				#if ((LCD == LCD_GREEN) || (LCD == LCD_BLUE))
