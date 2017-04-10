@@ -18,4 +18,6 @@ void	W51_Run			(void);
 	void W51_Test		(void);
 #endif
 
+void	W51_GetSocketStatus			(char* txt);
+
 #endif  // _w5100_h_
