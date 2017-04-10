@@ -308,9 +308,9 @@ void	W51_Run		(void)
 		#endif
 		if (Sockets[socket].state == SOCKET_NOT_ALLOCATED)
 		{
-			if (socket <= SOCKET_TCP_SERVER_2)	// Socket 0 - always must be allocated as TCP Server
-				W51_AllocateSocket();			// Socket 1 - always must be allocated as UDP Server
-			continue;
+//			if (socket <= SOCKET_TCP_SERVER_2)	// Socket 0 - always must be allocated as TCP Server
+//				W51_AllocateSocket();			// Socket 1 - always must be allocated as UDP Server
+//			continue;
 		}
 
 		register U16 reclen = W51_ReadWord (Sn_RX_RSR(socket));
