@@ -297,8 +297,7 @@ void	W51_SocketAbort	(S8 socket)
 void	W51_Run		(void)
 {
 	if		(W5100State  < W5100_ACTIVE)		return	W51_InitDevice();
-//	else if	(W5100State  > W5100_ACTIVE)		return	Reset();	// W5100_ERROR
-	else if	(W5100State  > W5100_ACTIVE)		return;	// W5100_ERROR
+	else if	(W5100State  > W5100_ACTIVE)		return	Reset();	// W5100_ERROR
 
 	register S8 socket;
 	for (socket = 0; socket < SOCKET_COUNT; socket++)
@@ -310,10 +309,10 @@ void	W51_Run		(void)
 		{
 			if (socket <= SOCKET_TCP_SERVER_2)	// Socket 0 - always must be allocated as TCP Server
 				W51_AllocateSocket();			// Socket 1 - always must be allocated as UDP Server
-			return;
-//			continue;
+			continue;
 		}
 
+		continue;
 		register U16 reclen = W51_ReadWord (Sn_RX_RSR(socket));
 		if (reclen)
 			W51_DataReceived(socket, reclen);
