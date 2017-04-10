@@ -629,6 +629,15 @@ void	Adc_GetPowBat	(char* txt)
 		 Battery / 1000, Battery % 1000, Power / 1000, Power % 1000);
 }
 
+void	Adc_GetLimit	(char* txt)
+{
+	sprintf(txt, "limit: %dmA (%u) ", ADC_TO_MA(CurrLimit), CurrLimit);
+}
+void	Adc_SetLimit	(U16 limit)
+{
+	CurrLimit = limit;
+}
+
 int	Adc_TestVal1	(void)
 {
 //	return Ext_1.min;

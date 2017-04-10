@@ -97,6 +97,8 @@ int main (void)
 				Adc_GetVolt(&txt[l]);
 				while (txt[l])	l++;
 				Adc_GetAmper(&txt[l]);
+				while (txt[l])	l++;
+				Adc_GetLimit(&txt[l]);
 //				sprintf (txt, "S: %u, ", W51_GetEthDeviceState());
 //				W51_GetSocketStatus(&txt[6]);
 //				Adc_GetAllVal(txt);

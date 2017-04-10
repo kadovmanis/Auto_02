@@ -37,6 +37,8 @@ void	Adc_GetAllVal	(char* txt);
 void	Adc_GetVolt		(char* txt);
 void	Adc_GetAmper	(char* txt);
 void	Adc_GetPowBat	(char* txt);
+void	Adc_GetLimit	(char* txt);
+void	Adc_SetLimit	(U16 limit);
 
 int		Adc_TestVal1	(void);
 int		Adc_TestVal2	(void);
