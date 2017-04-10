@@ -82,7 +82,7 @@ int main (void)
 //		if (FL_POWER_CHANGES)	Tcp_AdcPacket();
 
 	#if	(TEST != TEST_NO)
-		if (!FL_BOOT_PROCESS)
+//		if (!FL_BOOT_PROCESS)
 		{
 			static U8 lastSec = 0;
 			if (lastSec != SysTime.sec)
@@ -106,7 +106,7 @@ int main (void)
 		}
 	#endif
 	#ifdef	ETH_W5100
-//		W51_Run();
+		W51_Run();
 		#if (TEST == TEST_W5100)
 			W51_Test();
 		#endif
