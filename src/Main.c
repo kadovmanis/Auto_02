@@ -70,7 +70,7 @@ int main (void)
 			Usb_RegularFunctions();
 		#endif
 		#ifdef	ETH_W5100
-//			W51_Run();
+			W51_Run();
 			#if (TEST == TEST_W5100)
 				W51_Test();
 			#endif

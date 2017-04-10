@@ -297,7 +297,8 @@ void	W51_SocketAbort	(S8 socket)
 void	W51_Run		(void)
 {
 	if		(W5100State  < W5100_ACTIVE)		return	W51_InitDevice();
-	else if	(W5100State  > W5100_ACTIVE)		return	Reset();	// W5100_ERROR
+//	else if	(W5100State  > W5100_ACTIVE)		return	Reset();	// W5100_ERROR
+	else if	(W5100State  > W5100_ACTIVE)		return;	// W5100_ERROR
 
 	register S8 socket;
 	for (socket = 0; socket < SOCKET_COUNT; socket++)
