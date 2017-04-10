@@ -31,7 +31,7 @@
 #define	SPI2CON1_VAL			0b0000000001111111	// SPI2CON1 Register
 #define	SPI2CON1_VAL_CLK_HI		0b0000100001011111	// SPI2CON1 Register if SCK Idle state - high level
 #define	SPI2CON1_VAL_CLK_LO		0b0000100000011111	// SPI2CON1 Register if SCK Idle state - low level
-#define	SPI3CON1_VAL			0b0000000001111111;	// SPI3CON1 Register
+#define	SPI3CON1_VAL			0b0000000000111011;	// SPI3CON1 Register
 							//	  ||||||||||||||++	-- PPRE<1:0>: Primary Prescale bits (Master mode)	(1:1)
 							//	  |||||||||||+++--	-- SPRE<2:0>: Secondary Prescale bits (Master mode)	(1:2)
 							//	  ||||||||||+-----	-- MSTEN: Master Mode Enable
