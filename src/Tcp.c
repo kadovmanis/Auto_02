@@ -343,7 +343,12 @@ void Tcp_BootLoaderProcess	(void)
     static U16 waitCon = 0;
 
 	if ((!Wifi_Connected()) &&	(!GprsConnected()))
+	{
+		#if (HARDWARE == HW_HOME)
+			FL_BOOT_TCP = 0;
+		#endif
 		return;
+	}
 
 //	DebugSprintf(tmp,"BootLoaderProcess -TcpBootState = %d", TcpBootState);
 //	DebugPrint(tmp);

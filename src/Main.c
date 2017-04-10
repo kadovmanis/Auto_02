@@ -69,18 +69,18 @@ int main (void)
 		#ifdef		USB_PORT
 			Usb_RegularFunctions();
 		#endif
+		#ifdef	ETH_W5100
+			W51_Run();
+			#if (TEST == TEST_W5100)
+				W51_Test();
+			#endif
+		#endif
 		#if (LCD == LCD_RGB)
 			LcdRgbTest();
 		#endif
 		#if	(TEST == TEST_WIFI)
 			Wifi_Test();
 		#endif
-
-//		if (FL_BOOT_TCP)	{	Tcp_BootLoaderProcess();	continue;	}
-		if (FL_TCP_RESEND)		Tcp_PacketResend();
-        if (FL_POWER_OFF)       PowerOff();
-//		if (FL_POWER_CHANGES)	Tcp_AdcPacket();
-
 	#if	(TEST != TEST_NO)
 		if (!FL_BOOT_PROCESS)
 		{
@@ -88,6 +88,7 @@ int main (void)
 			if (lastSec != SysTime.sec)
 			{
 				lastSec = SysTime.sec;
+		#if (HARDWARE == HW_HOME)
 				char txt[48];
 				sprintf(txt, "Rel %s ", (EXT_OUT2)? "On " : "Off");
 				LcdString(0, 0, txt, font_7x5);
@@ -102,15 +103,15 @@ int main (void)
 //					Usb_SendText(txt);
 					LcdString(4, 0, txt, font_7x5);
 				#endif
+		#endif
 			}
 		}
 	#endif
-	#ifdef	ETH_W5100
-		W51_Run();
-		#if (TEST == TEST_W5100)
-			W51_Test();
-		#endif
-	#endif
+
+        if (FL_POWER_OFF)       PowerOff();
+		if (FL_BOOT_TCP)	{	Tcp_BootLoaderProcess();	continue;	}
+		if (FL_TCP_RESEND)		Tcp_PacketResend();
+//		if (FL_POWER_CHANGES)	Tcp_AdcPacket();
 	}
 	return 0;
 }
