@@ -312,7 +312,6 @@ void	W51_Run		(void)
 			continue;
 		}
 
-		continue;
 		register U16 reclen = W51_ReadWord (Sn_RX_RSR(socket));
 		if (reclen)
 			W51_DataReceived(socket, reclen);
@@ -492,7 +491,7 @@ U16		W51_DataReceived (S8 socket, U16 l)
 
 //	if (len)
 		Sockets[socket].delayStartMs =  GetTicsMs();
-	W51_RecDataSort(buf, len, socket);
+//	W51_RecDataSort(buf, len, socket);
 
 	return len;
 }
