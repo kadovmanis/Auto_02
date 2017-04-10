@@ -628,4 +628,11 @@ S16		W51_SendUdp	(const U8* buf, UDP_HEADER* header)
 	while (W51_ReadByte(Sn_CR(SOCKET_UDP_SERVER)));
 	return 0;
 }
+
+void	W51_GetSocketStatus	(char* txt)
+{
+	sprintf(txt, "s0_%u, s1_%u, s2_%u, s3_%u ",
+				  Sockets[0].state, Sockets[1].state, Sockets[2].state, Sockets[3].state);
+}
+
 #endif
