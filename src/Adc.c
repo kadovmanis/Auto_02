@@ -622,8 +622,10 @@ void	Adc_GetAmper	(char* txt)
 
 	if (diff > CurrLimit)
 	{
-		sprintf(txt, "%5dmA (%u) OwerCurrent!!! ", amp, diff);
-		EXT_OUT2 = 0;
+		sprintf(txt, "OwerCurrent!!! ");
+		#ifdef	EXT_OUT2
+			EXT_OUT2 = 0;
+		#endif
 	}
 	else
 		sprintf(txt, "%5dmA (%u) ", amp, diff);
