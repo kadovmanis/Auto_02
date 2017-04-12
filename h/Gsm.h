@@ -21,5 +21,9 @@ U8	 GprsConnected	(void);
 void Gsm_Setup		(void);
 void TcpPacket		(U8 type);
 
+U8	 Gsm_GetCsq		(void);
+U16	 Gsm_GetFlags	(void);
+U16	 Gsm_GetState	(void);
+
 #endif	//	_gsm_h_
 

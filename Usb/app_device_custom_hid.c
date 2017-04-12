@@ -35,6 +35,7 @@ extern U8	BootFlashNew	(void);
 #define	USB_COM_MEM_STATUS		0x1F
 
 #define	USB_COM_GET_ADC			0xA0
+#define	USB_COM_GET_GSM_CSQ		0xA4
 
 #define	USB_COM_ENABLE_GSM		0xE0
 #define	USB_COM_ENABLE_GPS		0xE1
@@ -170,6 +171,7 @@ void UsbMemSetBootAddress	(void);		// Command 0x1A
 void UsbMemFeel				(void);		// Command 0x1E
 void UsbMemStatus			(void);		// Command 0x1F
 void UsbGetAdc				(void);		// Command 0xA0
+void UsbGetGsmStatus		(void);		// Command 0xA4
 void UsbFunctEnableGsm		(void);		// Command 0xE0
 void UsbFunctEnableGps		(void);		// Command 0xE1
 void UsbFunctEnablePwm		(void);		// Command 0xE2
@@ -348,7 +350,7 @@ void (*UsbFunct[256])(void) =
 	UsbFunctNone,			// 0xA1
 	UsbFunctNone,			// 0xA2
 	UsbFunctNone,			// 0xA3
-	UsbFunctNone,			// 0xA4
+	UsbGetGsmStatus,		// 0xA4
 	UsbFunctNone,			// 0xA5
 	UsbFunctNone,			// 0xA6
 	UsbFunctNone,			// 0xA7
@@ -847,6 +849,16 @@ void UsbGetAdc			(void)
 	USB_SEND_PACKET();
 }
 
+void UsbGetGsmStatus	(void)
+{
+	SWITCH_OUT_BUF();
+	OUT_COMMAND		= USB_COM_GET_GSM_CSQ;
+	OUT_DATA_LEN	= 0;
+	OUT_COM			= Gsm_GetCsq();
+	OUT_DATA_16[0]	= Gsm_GetState();
+	OUT_DATA_16[1]	= Gsm_GetFlags();
+	USB_SEND_PACKET();
+}
 
 void UsbFunctEnableGsm		(void)
 {

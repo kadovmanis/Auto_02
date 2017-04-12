@@ -1089,3 +1089,17 @@ inline void SmsFunction_Help	(char* ptr)
 	Tcp_SendText(ptr);
 }
 
+U8	Gsm_GetCsq		(void)
+{
+	return Csq;
+}
+
+U16	Gsm_GetFlags	(void)
+{
+	return Flags.word;
+}
+
+U16	Gsm_GetState	(void)
+{
+	return (U16)GsmState;
+}
