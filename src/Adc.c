@@ -436,6 +436,31 @@ void	Tcp_AdcPacket	(void)
 	FL_POWER_CHANGES = 0;
 }
 
+U16		Adc_GetPowerState	(void)
+{
+	return (U16)PowerState;
+}
+
+U16		Adc_GetPower		(void)
+{
+	return Power;
+}
+
+U16		Adc_GetBattery		(void)
+{
+	return Battery;
+}
+
+U16		Adc_GetCoreV		(void)
+{
+	return AN_V18;
+}
+
+U16		Adc_GetDcDc			(void)
+{
+	return AN_DC_DC;
+}
+
 void	Adc_GetAllVal	(char* txt)
 {
 	sprintf(txt, "Adc: %u %u %u\tdiff: %u\tt: %u ",

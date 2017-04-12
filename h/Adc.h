@@ -34,6 +34,12 @@ extern	volatile	U16				Power, Battery;
 void	AdcInit			(void);
 void	Tcp_AdcPacket	(void);
 
+U16		Adc_GetPowerState(void);
+U16		Adc_GetPower	(void);
+U16		Adc_GetBattery	(void);
+U16		Adc_GetCoreV	(void);
+U16		Adc_GetDcDc		(void);
+
 void	Adc_GetAllVal	(char* txt);
 void	Adc_GetVolt		(char* txt);
 void	Adc_GetAmper	(char* txt);

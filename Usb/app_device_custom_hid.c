@@ -4,6 +4,7 @@
 #include	"Ports.h"
 #include	"Timers.h"
 #include	"Memory.h"
+#include	"Adc.h"
 #include	"Gsm.h"
 #include	"Gps.h"
 #include	"Wifi.h"
@@ -33,6 +34,8 @@ extern U8	BootFlashNew	(void);
 #define	USB_COM_MEM_FEEL		0x1E
 #define	USB_COM_MEM_STATUS		0x1F
 
+#define	USB_COM_GET_ADC			0xA0
+
 #define	USB_COM_ENABLE_GSM		0xE0
 #define	USB_COM_ENABLE_GPS		0xE1
 #define	USB_COM_ENABLE_PWM		0xE2
@@ -55,6 +58,7 @@ extern U8	BootFlashNew	(void);
 #define	OUT_COMMAND				Out->UsbCommand
 #define	OUT_COM					Out->READwrite
 #define	OUT_DATA				Out->Data
+#define	OUT_DATA_16				Out->D_16
 #define	OUT_DATA_LEN			Out->PackedDateLen
 #define	OUT_ADDRESS				Out->Address
 #define	OUT_READ_LEN			Out->PageSize
@@ -75,6 +79,7 @@ typedef union	//      1                2               3-64
 		union
 		{
 			U8		Data[62];			// data buffer for read/write bytes
+			U16		D_16[31];			// data buffer for read/write bytes (16bit)
 			struct
 			{
 				U32	Address;			// Address / size of data etc
@@ -164,6 +169,7 @@ void UsbMemBulkErase		(void);		// Command 0x16
 void UsbMemSetBootAddress	(void);		// Command 0x1A
 void UsbMemFeel				(void);		// Command 0x1E
 void UsbMemStatus			(void);		// Command 0x1F
+void UsbGetAdc				(void);		// Command 0xA0
 void UsbFunctEnableGsm		(void);		// Command 0xE0
 void UsbFunctEnableGps		(void);		// Command 0xE1
 void UsbFunctEnablePwm		(void);		// Command 0xE2
@@ -338,7 +344,7 @@ void (*UsbFunct[256])(void) =
 	UsbFunctNone,			// 0x9D
 	UsbFunctNone,			// 0x9E
 	UsbFunctNone,			// 0x9F
-	UsbFunctNone,			// 0xA0
+	UsbGetAdc,				// 0xA0
 	UsbFunctNone,			// 0xA1
 	UsbFunctNone,			// 0xA2
 	UsbFunctNone,			// 0xA3
@@ -825,6 +831,22 @@ void UsbMemStatus			(void)
 	OUT_COM				= MemStatus();
 	USB_SEND_PACKET();
 }
+
+void UsbGetAdc			(void)
+{
+	SWITCH_OUT_BUF();
+	OUT_COMMAND		= USB_COM_GET_ADC;
+
+	OUT_DATA_LEN	= 10;					// 16bit x 5
+	OUT_DATA_16[0]	= Adc_GetPowerState();
+	OUT_DATA_16[1]	= Adc_GetPower();
+	OUT_DATA_16[2]	= Adc_GetBattery();
+	OUT_DATA_16[3]	= Adc_GetCoreV();
+	OUT_DATA_16[4]	= Adc_GetDcDc();
+
+	USB_SEND_PACKET();
+}
+
 
 void UsbFunctEnableGsm		(void)
 {
