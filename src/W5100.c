@@ -568,7 +568,7 @@ S16		W51_SendUdp	(const U8* buf, UDP_HEADER* header)
 	{
 		char str[40];
 		sprintf(str, "Udp server status: %02X", Sn_SR(SOCKET_UDP_SERVER));
-		LcdString(4, 0, str, font_7x5);
+		LcdString(7, 0, str, font_7x5);
 		return -1;
 	}
 
@@ -580,7 +580,7 @@ S16		W51_SendUdp	(const U8* buf, UDP_HEADER* header)
 		{
 			char str[40];
 			sprintf(str, "Sn_TX_FSR error: %d", W51_ReadWord(Sn_TX_FSR(SOCKET_UDP_SERVER)));
-			LcdString(4, 0, str, font_7x5);
+			LcdString(7, 0, str, font_7x5);
 			return -1;
 		}
 
@@ -590,7 +590,7 @@ S16		W51_SendUdp	(const U8* buf, UDP_HEADER* header)
 	{
 		char str[40];
 		sprintf(str, "tx:%d len:%d", txFreeSize, len);
-		LcdString(4, 0, str, font_7x5);
+		LcdString(7, 0, str, font_7x5);
 		return -1;
 	}
 
@@ -622,7 +622,7 @@ S16		W51_SendUdp	(const U8* buf, UDP_HEADER* header)
 		char str[40];
 //		sprintf(str, "Error in line %d", __LINE__);
 		sprintf (str, "%u.%u.%u.%u:%u", header->ip.u8[0], header->ip.u8[1], header->ip.u8[2], header->ip.u8[3],header->port);
-		LcdString (4, 0, str, font_7x5);
+		LcdString (7, 0, str, font_7x5);
 	}
 	W51_WriteByte(Sn_CR(SOCKET_UDP_SERVER), CMD_SEND);
 	while (W51_ReadByte(Sn_CR(SOCKET_UDP_SERVER)));

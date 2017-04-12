@@ -670,9 +670,14 @@ void UsbCommandService_8	(void)
 
 void UsbCommandService_9	(void)
 {
-	EXT_OUT2 = !EXT_OUT2;
-	OUT_DATA_LEN	= 1;
-	OUT_DATA[0]		= (EXT_OUT2)?	'1': '0';
+	#ifdef	EXT_OUT2
+		EXT_OUT2 = !EXT_OUT2;
+		OUT_DATA_LEN	= 1;
+		OUT_DATA[0]		= (EXT_OUT2)?	'1': '0';
+	#else
+		Usb_SendText("Command for this device not implemented");
+		OUT_DATA_LEN	= 0;
+	#endif
 }
 
 void UsbMemGetAddress		(void)
