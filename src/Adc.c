@@ -207,16 +207,6 @@ inline void ADC_BatteryLevel(void)
 		valMax	= 0;
 		valMin	= 0xFFFF;
 	}
-/*
-	static	U16 val_sum = 0;
-	register U16 val = AN_BAT;
-
-	val_sum += (!val_sum)?	(val << 6) : val;
-	val = val_sum >> 6;
-	val_sum -= val;
-
-	Battery = (val < 82)?	0 : ((val - 81) << 3);
-*/
 }
 
 /* Power
@@ -287,28 +277,6 @@ inline void ADC_PowerLevel (void)
 		valMax	= 0;
 		valMin	= 0xFFFF;
 	}
-
-/*
-	static		U16 adcSum = 0, pow = 0;
-	register	U16	val		= AN_POW;				// value from ADC buff
-
-	if (adcSum)		adcSum += val;					// equalize 64 times (rounding / remove shaking)
-	else			adcSum  = val		<< 6;		// x64
-	val						= adcSum	>> 6;		// /64
-	adcSum -=  (val);								// 
-
-//	if (pow != (val >> 8))
-	{
-		pow = (val >> 8);
-		Power			= ((val * POWER_MULTIPLIER) + POWER_ADD_VAL);
-		val				= ((val * POWER_MULTIPLIER) + POWER_ADD_VAL);
-		AdcPower.V		=  val >> POWER_DIVIDE_SHIFT;
-		val			   &=  POWER_DIVIDE_REMAINDER;
-		val				= (val > POWER_MW_CUT)? (val - POWER_MW_CUT): 0;
-		AdcPower.mV		=  val;
-		AdcPower.level	= (AdcPower.V * 10) + ((val * 10) >> POWER_DIVIDE_SHIFT);
-	}
-*/
 }
 
 #define	ADC_DRIFT_1	2
@@ -351,42 +319,6 @@ inline	void ADC_ExternLevel	(void)
 					cntr = (a << 6);
 					Ext[i].center = a;
 				}
-				
-				
-/*
-				U16 a = ((Ext[i].mn + Ext[i].mx + (Ext[i].center << 1)) + 2) >> 2;
-				S16 d = a - Ext[i].center;
-				switch (d)
-				{
-				case 0:
-					Ext[i].drift	= 0;
-					break;
-					
-				default:
-					Ext[i].drift	= 0;
-					Ext[i].center	= a;
-					break;
-				}
-				
-				if		(d == 0)
-					Ext[i].drift = 0;
-				else if (d > 0)
-				{
-					if ((d > 1) || (++Ext[i].drift > 50))
-					{
-						Ext[i].drift /= 2;
-						Ext[i].center = a;
-					}
-				}
-				else if	(d < 0)
-				{
-					if ((d < 1) || (--Ext[i].drift < -50))
-					{
-						Ext[i].drift /= 2;
-						Ext[i].center = a;
-					}
-				}
-*/
 			}
 			else
 				Ext[i].center	= ((Ext[i].mn + Ext[i].mx) + 1) >> 1;
@@ -396,79 +328,6 @@ inline	void ADC_ExternLevel	(void)
 			Ext[i].mx		= 0;
 		}
 	}
-/*
-	static	 U16	valMax1, valMax2, valMax3;
-	
-	static	ADC_INPUT	ext_1;
-
-	register U16	val = AN_EXT1;
-
-	if (!Cnt)
-	{
-		Ext_1.max = ext_1.max;
-		ext_1.max	= 0;
-		Ext_1.center = (Ext_1.min + Ext_1.max) >> 1;
-		ext_1.center = 0;
-	}
-
-	if (val > ext_1.max)
-	{
-		ext_1.max = val;
-		if ((!ext_1.center) && (val > Ext_1.center))
-		{
-			ext_1.center = 10;
-			Ext_1.time	= GetTimeSinceMs(ext_1.time);
-			ext_1.time	= GetTicsMs();
-
-			Ext_1.min = ext_1.min;
-			ext_1.min	= 0xFFFF;
-		}
-*		
-		ext_1.max = val;
-		if ((val > ext_1.center) &&	(ext_1.min < ext_1.center)	)
-		{
-			if (Ext_1.center)
-			{
-				Ext_1.center -= ext_1.center;
-				Ext_1.center += (ext_1.max + ext_1.min);
-			}
-			else
-				Ext_1.center  = ((ext_1.max + ext_1.min) << 3);
-			ext_1.center  = (Ext_1.center >> 4);
-			Ext_1.center -= ext_1.center;
-
-			Ext_1.min	= (Ext_1.min)?	(Ext_1.min + ext_1.min) : (ext_1.min << 4);
-			Ext_1.min  -= (Ext_1.min >> 4);
-			ext_1.min	=  ext_1.max;
-			
-			val = GetTimeSinceMs(ext_1.time);
-			Ext_1.time	= (Ext_1.time)?	(Ext_1.time + val) : (val << 4);
-			Ext_1.time -= (Ext_1.time >> 4);
-			ext_1.time	= GetTicsMs();
-		}
-*
-	}
-	if (val < ext_1.min)
-	{
-		ext_1.min = val;
-	}
-
-
-//	if (valMax1 < val)		valMax1 = val;
-	val = AN_EXT2;
-	if (valMax2 < val)		valMax2 = val;
-	val = AN_EXT3;
-	if (valMax3 < val)		valMax3 = val;
-	if (!Cnt)
-	{
-//		Ext1	= valMax1;
-		Ext2	= valMax2;
-		Ext3	= valMax3;
-		valMax1	= 0;
-		valMax2	= 0;
-		valMax3	= 0;
-	}
-*/
 }
 
 inline void ADC_PowerControll (void)
@@ -501,11 +360,13 @@ inline void ADC_PowerControll (void)
 		}
 	}
 
+
 	if		(Power		>  4800)		newState = power_External;
 	else								newState = power_BatteryOk;
-	if		(Battery	>  4200)		newState++;
-	else if	(Battery	<  2900)		newState = power_NoPower;
-	else if	(Battery	<  3400)		newState--;
+
+	if		(Battery	>  4200)		newState++;		// inadequate battery level !!!
+	else if	(Battery	<  2900)		newState -= 2;	// battery too low - switch off or charge
+	else if	(Battery	<  3400)		newState--;		// battery too low - don't use gsm
 
 	if	(PowerState != newState)				// Power situation changed
 	{
@@ -513,9 +374,12 @@ inline void ADC_PowerControll (void)
 		switch (newState)
 		{
 		case power_BatteryLow:
+		case power_BatteryCharge:
+			// TODO - send battery low alarm and switch off GSM
+			break;
 		case power_ExternalCharge:
-		#if	(HARDWARE != HW_HOME)
 			if (GSM_IE)							Gsm_Off();
+		#if	(HARDWARE == HW_AUTO)
 			if (!GPS_POWER)						Gps_On();
 			if (WIFI_EN)						Wifi_Off();
 		#endif
@@ -524,15 +388,18 @@ inline void ADC_PowerControll (void)
 		case power_BatteryError:
 		case power_External:
 		case power_BatteryMiss:
+		#if	(HARDWARE == HW_AUTO)
+			if (!GPS_POWER)						Gps_On();
 //			if ((!GSM_IE) && (FLASH_FLAG_GSM))	Gsm_On();
 			if (!GSM_IE)						Gsm_On();
-			if (!GPS_POWER)						Gps_On();
+		#endif
 			break;
 		case power_NoPower:
 		default:
 			Gsm_Off();
 			Wifi_Off();
 			GPS_POW_OFF();
+			Reset();
 			break;						// TODO: Switch off device
 		}
 	}

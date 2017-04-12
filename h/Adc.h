@@ -18,6 +18,7 @@ typedef enum
 	power_BatteryLow,		// Battery power < 3.3V don't run gsm module
 	power_BatteryOk,		// Run on Battery
 	power_BatteryError,		// Battery power < inadequate > (too hight)
+	power_BatteryCharge,	// Ext Power presented, Battery power too small
 	power_ExternalCharge,	// Ext Power presented, Battery power too small
 	power_External,			// Ext Power presented, Battery Ok
 	power_BatteryMiss		// Ext Power presented, Battery power < inadequate > (too hight)
