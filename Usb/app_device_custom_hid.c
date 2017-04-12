@@ -35,7 +35,7 @@ extern U8	BootFlashNew	(void);
 #define	USB_COM_MEM_STATUS		0x1F
 
 #define	USB_COM_GET_ADC			0xA0
-#define	USB_COM_GET_GSM_CSQ		0xA4
+#define	USB_COM_GET_GSM_STATUS	0xA4
 
 #define	USB_COM_ENABLE_GSM		0xE0
 #define	USB_COM_ENABLE_GPS		0xE1
@@ -852,11 +852,11 @@ void UsbGetAdc			(void)
 void UsbGetGsmStatus	(void)
 {
 	SWITCH_OUT_BUF();
-	OUT_COMMAND		= USB_COM_GET_GSM_CSQ;
-	OUT_DATA_LEN	= 0;
-	OUT_COM			= Gsm_GetCsq();
+	OUT_COMMAND		= USB_COM_GET_GSM_STATUS;
+	OUT_DATA_LEN	= 6;					// 16bit x3
 	OUT_DATA_16[0]	= Gsm_GetState();
-	OUT_DATA_16[1]	= Gsm_GetFlags();
+	OUT_DATA_16[1]	= Gsm_GetCsq();
+	OUT_DATA_16[2]	= Gsm_GetFlags();
 	USB_SEND_PACKET();
 }
 
