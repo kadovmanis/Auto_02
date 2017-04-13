@@ -148,7 +148,7 @@ void WIFI_INTERRUPT(void)
 	{
 		if (!--PackRecTimeout)
 		{
-			FL_WIFI_REC	= 0;
+			FL_TCP_REC_WIFI	= 0;
 			DebugPrint("Error: Tcp Packet Receive Timeout !!!");
 		}
 		return;
@@ -423,11 +423,11 @@ inline	void	WifiPacketReceive	(U8 data)
 	static U16			idx = 0;
 	static UNI16		recLen;
 
-	if (!FL_WIFI_REC)
+	if (!FL_TCP_REC_WIFI)
 	{
 		if (!Flags.conected)
 			return;
-		FL_WIFI_REC	= 1;				// Set flag to receive WIFI packet
+		FL_TCP_REC_WIFI	= 1;			// Set flag to receive WIFI packet
 		PackRecTimeout = TCP_PACKET_TIMEOUT;
 		currentPacket ^= 1;				// change to ather packet buffer
 		inPacket	= &PacketIn[currentPacket];	// Recive pointer to free buffer
@@ -441,7 +441,7 @@ inline	void	WifiPacketReceive	(U8 data)
 		crc ^= data;					// calculate crc
 		if (idx >= recLen.u16)		// if packet len bytes received		LEN_CHANGES
 		{
-			FL_WIFI_REC		= 0;		// turn off tcp packet receive
+			FL_TCP_REC_WIFI	= 0;		// turn off tcp packet receive
 			PackRecTimeout	= 0;
 			if (crc == inPacket->crc)	// if crc ok
 			{

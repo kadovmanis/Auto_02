@@ -74,7 +74,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt( void )
 	{
 		register U8	rxData = U2RXREG;	// read from uart1 Rx buffer
 		_U2RXIF		= 0;				// Clear the Recieve Interrupt Flag
-		if ((FL_GPRS_REC) || (rxData == STX))
+		if ((FL_TCP_REC_GPRS) || (rxData == STX))
 			GprsPacketReceive(rxData);	// GPRS packet receive in progress
 		else
 		{

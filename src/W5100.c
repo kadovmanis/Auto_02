@@ -3,6 +3,7 @@
 #include	"W5100.h"
 #include	"Spi_i2c.h"
 #include	"Timers.h"
+#include	"Tcp.h"
 #include	<string.h>
 
 #include		"Lcd.h"

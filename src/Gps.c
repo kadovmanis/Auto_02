@@ -194,12 +194,12 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt( void )
 		if (GpsFlags.ubx_rec)				// UBX MSG Started
 		{
 			*pRx++ = rxData;
-			if (++ubxIdx == 1)
+			if (!ubxIdx)
 			{
 				if (rxData != UBX_SYNC_CHAR_2)
 					GpsFlags.ubx_rec = 0;
 			}
-			else if (ubxIdx < ubxLen)
+			else if (++ubxIdx < ubxLen)
 			{
 				ck_a += rxData;				// Checksum
 				ck_b += ck_a;

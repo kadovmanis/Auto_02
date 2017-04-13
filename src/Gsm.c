@@ -260,7 +260,7 @@ void GSM_INTERRUPT(void)
 	{
 		if (!--PackRecTimeout)
 		{
-			FL_GPRS_REC	= 0;
+			FL_TCP_REC_GPRS	= 0;
 			DebugPrint("Error: Tcp Packet Receive Timeout !!!");
 			Tcp_SendText("Error: Tcp Packet Receive Timeout !!!");		// for debug
 		}
@@ -617,7 +617,7 @@ void GSM_INTERRUPT(void)
 		GSM_PK_ON();
 		GsmUart_Init(BaudRate_38400);
 		GsmFlags		= 0;
-		FL_GPRS_REC		= 0;
+		FL_TCP_REC_GPRS	= 0;
 		PackRecTimeout	= 0;
 		ledStatus		= LED_STATUS_1;
 		DebugPrint("Gsm Power Key On 1.0 sec");
@@ -866,9 +866,9 @@ inline	void	GprsPacketReceive	(U8 data)
 	static U16			idx = 0;
 	static UNI16		recLen;
 
-	if (!FL_GPRS_REC)
+	if (!FL_TCP_REC_GPRS)
 	{
-		FL_GPRS_REC	= 1;				// Set flag to receive GPRS packet
+		FL_TCP_REC_GPRS	= 1;			// Set flag to receive GPRS packet
 		PackRecTimeout = TCP_PACKET_TIMEOUT;
 		currentPacket ^= 1;				// change to ather packet buffer
 		inPacket	= &PacketIn[currentPacket];	// Recive pointer to free buffer
@@ -883,7 +883,7 @@ inline	void	GprsPacketReceive	(U8 data)
 		crc ^= data;					// calculate crc
 		if (idx >= recLen.u16)			// if packet len bytes received	LEN_CHANGES
 		{
-			FL_GPRS_REC		= 0;		// turn off gprs packet receive
+			FL_TCP_REC_GPRS	= 0;		// turn off gprs packet receive
 			PackRecTimeout	= 0;
 			if (crc == inPacket->crc)	// if crc ok
 			{

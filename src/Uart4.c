@@ -76,7 +76,7 @@ void __attribute__((interrupt, no_auto_psv)) _U4RXInterrupt( void )
 	{
 		register U8	rxData = U4RXREG;	// read from uart1 Rx buffer
 		_U4RXIF		= 0;				// Clear the Recieve Interrupt Flag
-		if ((FL_WIFI_REC) || (rxData == STX))
+		if ((FL_TCP_REC_WIFI) || (rxData == STX))
 			WifiPacketReceive(rxData);	// GPRS packet receive in progress
 		else
 		{

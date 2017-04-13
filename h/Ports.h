@@ -43,18 +43,19 @@ extern	volatile FLAGS		SysFlags;
 #define	SYSTEM_FLAGS		SysFlags.word
 #define	FL_GSM_SEC			SysFlags.flag_0		// Seconds 1Hz flag for GSM
 #define	FL_TEST_MANUAL		SysFlags.flag_1		// Switch off gsm stateMachine (for debug)
-#define	FL_GPRS_REC			SysFlags.flag_2		// GPRS packet START received
-#define	FL_GPRS_OFFLINE		SysFlags.flag_3		// Offline run for tests
-#define	FL_TCP_READY		SysFlags.flag_4		// At least 1 Tcp packet ready to send
-#define	FL_WEB_ONLINE		SysFlags.flag_5		// While website online, send gps coordinates regularly
-#define	FL_WIFI_REC			SysFlags.flag_6		// WIFI packet START received
-#define	FL_WIFI_OFFLINE		SysFlags.flag_7		// WIFI packet START received
-#define	FL_BOOT				SysFlags.flag_8		// Boot Process started
-#define	FL_BOOT_TCP			SysFlags.flag_9		// Boot via TCP Process started
-#define	FL_TCP_RESEND		SysFlags.flag_10	// Resend of lost Tcp Packet requested
-#define	FL_POWER_CHANGES	SysFlags.flag_11	// ADC Power Changes
-#define	FL_POWER_OFF    	SysFlags.flag_12	// Device Power Off sequence
-#define	FL_BOOT_PROCESS		SysFlags.flag_13	// Boot Process started
+#define	FL_GPRS_OFFLINE		SysFlags.flag_2		// Offline run for tests
+#define	FL_TCP_READY		SysFlags.flag_3		// At least 1 Tcp packet ready to send
+#define	FL_WEB_ONLINE		SysFlags.flag_4		// While website online, send gps coordinates regularly
+#define	FL_WIFI_OFFLINE		SysFlags.flag_5		// WIFI packet START received
+#define	FL_BOOT				SysFlags.flag_6		// Boot Process started
+#define	FL_BOOT_TCP			SysFlags.flag_7		// Boot via TCP Process started
+#define	FL_TCP_RESEND		SysFlags.flag_8		// Resend of lost Tcp Packet requested
+#define	FL_POWER_CHANGES	SysFlags.flag_9		// ADC Power Changes
+#define	FL_POWER_OFF    	SysFlags.flag_10	// Device Power Off sequence
+#define	FL_BOOT_PROCESS		SysFlags.flag_11	// Boot Process started
+#define	FL_TCP_REC_GPRS		SysFlags.flag_12	// GPRS packet START received
+#define	FL_TCP_REC_WIFI		SysFlags.flag_13	// WIFI packet START received
+//#define	FL_TCP_REC_ETH		SysFlags.flag_14	// W5100 packet START received
 
 enum ppsConfig
 {
