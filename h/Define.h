@@ -15,7 +15,7 @@
 #define		HW_AUTO				1
 #define		HW_SEE				2
 #define		HW_HOME				3
-#define		HARDWARE			HW_AUTO
+#define		HARDWARE			HW_SEE
 #define		VERSION				"02"
 //#define		MAC_ADDRESS			{0xFF, 0xDD, 0xFF, 0xFF, 0xFF, 0xFF}
 //#define		MY_IP				{192, 168, 2, 50}
@@ -126,7 +126,7 @@
 	#define		ROM_DATA_SIZE				(_FLASH_PAGE*2)	// (_FLASH_PAGE*2)
 #endif
 
-#define		TEST							TEST_ADC 		// Send USB debug strings to test specific software modules
+#define		TEST							TEST_NO 		// Send USB debug strings to test specific software modules
 #define		DEVICE_NAME						DEVICE
 
 #define		USB_DESCRIPTOR_MANUFACTURER			MICROCHIP_STRING
