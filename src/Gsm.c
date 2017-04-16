@@ -568,7 +568,7 @@ void GSM_INTERRUPT(void)
 //			OkSeconds = 0;
 			OkSeconds = GPRS_OK_TIMEOUT_S;				// Temporary
 			DebugPrint("Connect command Ok -> wait connection 90sec");
-			TimeOut = 12000;				// Timeout 90.0sec
+			TimeOut = 9000;				// Timeout 90.0sec
 		}
 		else if (stateTimeout > 200)
 		{
