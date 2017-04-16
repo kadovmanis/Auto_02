@@ -560,6 +560,9 @@ void GSM_INTERRUPT(void)
 			GsmUart_SendText(PORT);
 			GsmUart_SendText("\"\r\n");
 //			DebugPrint("Gsm Connect Command");
+			DebugSprintf(gsmBuff, "AT+CIPSTART=\"tcp\",\"%s\",\"%s\"\r\n", SERVER, PORT);
+			DebugPrint(gsmBuff);
+
 		}
 		else if (Flags.ackOk)
 		{
