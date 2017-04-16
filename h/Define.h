@@ -67,8 +67,7 @@
 #define		APN					"internet.lmt.lv"
 #define		DNS_1				"159.148.60.20"
 #define		DNS_2				"195.2.96.2"
-//#define		SERVER				"peles.linkpc.net"
-#define		SERVER				"pelites.linkpc.net"
+#define		SERVER				"peles.linkpc.net"
 #define		PORT				"10123"
 
 // _____________________________________ DEFINE _________________________________

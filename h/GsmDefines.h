@@ -325,7 +325,7 @@ const GSM_RESPONSE GsmResponses [] =
 	{"+CMGL: ",				(sizeof("+CMGL:")			-1),	GsmState_sms_read,		0,		0b000000000000000	},
 	{"RING",				(sizeof("RING")				-1),	GsmState_Reset,			0,		0b000000000000000	},	// temporary - reset system
 	
-	{"STATE: IP STATUS",	(sizeof("STATE: IP STATUS")	-1),	0,						9000,	0b000000000000000	},
+//	{"STATE: IP STATUS",	(sizeof("STATE: IP STATUS")	-1),	0,						9000,	0b000000000000000	},
 //	{"",					0,									0,						0,		0b0000000000000000	},	// bit data
 /*
 	UNDER-VOLTAGE WARNNING
