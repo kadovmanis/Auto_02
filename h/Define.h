@@ -69,7 +69,7 @@
 #define		DNS_2				"195.2.96.2"
 //#define		SERVER				"peles.linkpc.net"
 #define		SERVER				"pelites.linkpc.net"
-#define		PORT#define		PORT				"10123"
+#define		PORT				"10123"
 
 // _____________________________________ DEFINE _________________________________
 #if		(HARDWARE == HW_HOME)
