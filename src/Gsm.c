@@ -73,11 +73,15 @@ void Gsm_Off	(void)
 
 void Gsm_PwrOn	(void)
 {
+#ifndef GSM_POWER
+	DebugPrint("Device hasn't disablable POWER");
+#else
 	GSM_POWER = !GSM_POWER;
 	#if	(TEST == TEST_GSM)
 		if (GSM_POWER)		DebugPrint("GSM Power Off");
 		else				DebugPrint("GSM Power On");
 	#endif
+#endif
 }
 
 void Gsm_PwrKey	(void)
@@ -610,9 +614,10 @@ void GSM_INTERRUPT(void)
 		break;					}
 
 	case GsmState_PowerOn:		{
-		GSM_POWER	= !GSM_POWER;			// 0 - On; 1 - Off
 		ledStatus	= LED_STATUS_OFF;
 		GSM_DTR_OFF();
+	#ifdef GSM_POWER
+		GSM_POWER	= !GSM_POWER;			// 0 - On; 1 - Off
 		if (GSM_POWER)					// if already powered, restart
 		{
 			TimeOut = 2000;				// Timeout 20.0sec
@@ -620,8 +625,9 @@ void GSM_INTERRUPT(void)
 			return;
 		}
 		DebugPrint("Gsm Power On 1.0 sec");
-		GsmState++;
 		TimeOut = 100;					// Timeout 1 sec
+	#endif
+		GsmState++;
 		break;					}
 	case GsmState_PowerKeyOn:	{
 		GSM_RTS_OFF();
@@ -636,6 +642,9 @@ void GSM_INTERRUPT(void)
 		TimeOut = 150;					// Timeout 1.5 sec
 		break;					}
 	case GsmState_PowerKeyOff:	{
+	#ifdef GSM_POWER
+	#endif
+
 		if (GSM_STATUS)
 		{
 			GSM_PK_OFF();
@@ -667,7 +676,10 @@ void GSM_INTERRUPT(void)
 //			GsmState = GsmState_Idle;			// temporary
 			DebugPrint("Gsm CPIN Error");
 			LED_GSM		= LED_STATUS_ERROR;		// Indicate ERROR
+	#ifdef GSM_POWER
 			GSM_POWER	= 1;					// Module Power Off
+	#else
+	#endif
 			GSM_IE		= 0;					// Gsm Irq Off
 			GsmFlags	= 0;					// Gsm flags = 0
 			return;
@@ -736,12 +748,14 @@ void GSM_INTERRUPT(void)
 			if (InitBaudRate == BaudRate_none)
 			{										// All baudrates already tested
 				LED_GSM		= LED_STATUS_ERROR;		// Indicate ERROR
+	#ifdef GSM_POWER
 				GSM_POWER	= 1;					// Module Power Off
+				TimeOut		= 12000;					// Timeout 120.0sec
+	#endif
 //				GSM_IE		= 0;					// Gsm Irq Off
 				GsmFlags	= 0;					// Gsm flags = 0
 				InitBaudRate	= BaudRate_9600;
 				GsmState	= GsmState_PowerOn;
-				TimeOut		= 12000;					// Timeout 120.0sec
 				return;
 			}
 			GsmUart_SetBaudrate(InitBaudRate++);
