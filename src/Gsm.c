@@ -554,15 +554,15 @@ void GSM_INTERRUPT(void)
 		if (!stateTimeout)
 		{
 			Flags.Ack = 0;
-//			GsmUart_SendText("AT+CIPSTART=\"tcp\",\"");
-//			GsmUart_SendText(SERVER);
-//			GsmUart_SendText("\",\"");
-//			GsmUart_SendText(PORT);
-//			GsmUart_SendText("\"\r\n");
+			GsmUart_SendText("AT+CIPSTART=\"tcp\",\"");
+			GsmUart_SendText(SERVER);
+			GsmUart_SendText("\",\"");
+			GsmUart_SendText(PORT);
+			GsmUart_SendText("\"\r\n");
 
 //			DebugPrint("Gsm Connect Command");
 			DebugSprintf(gsmBuff, "AT+CIPSTART=\"tcp\",\"%s\",\"%s\"\r\n", SERVER, PORT);
-			GsmUart_SendText(gsmBuff);
+//			GsmUart_SendText(gsmBuff);
 			DebugPrint(gsmBuff);
 
 		}
@@ -580,7 +580,7 @@ void GSM_INTERRUPT(void)
 			DebugSprintf(gsmBuff, "AT+CFUN=1,1\r\n", SERVER, PORT);
 			GsmUart_SendText(gsmBuff);
 			DebugPrint(gsmBuff);
-			GsmState = GsmState_PowerOn;
+			GsmState = GsmState_PowerKeyOn;
 
 //			GsmUart_SendText("AT+CIPCLOSE\r\n");
 //			GsmState = GsmState_DisConnected;
