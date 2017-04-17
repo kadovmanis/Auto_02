@@ -6,6 +6,7 @@
 #include		<stdio.h>
 #include		<stdlib.h>
 
+#define	SHOW_AT_RESPONSE
 #if	(TEST == TEST_GSM)
   #include		"Debug.h"
   static char	tmp[80];
