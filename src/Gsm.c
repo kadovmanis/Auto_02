@@ -1252,3 +1252,9 @@ void GsmTest		(void)
 		DebugPrint(irqBuf);
 	}
 }
+
+void Gsm_SendToModule	(const char* data)
+{
+	GsmUart_SendText(data);
+	GsmUart_SendEnter();
+}

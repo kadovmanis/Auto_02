@@ -27,6 +27,7 @@ U16	 Gsm_GetState	(void);
 
 U8	 GsmTestOnOff	(void);
 void GsmTest		(void);
+void Gsm_SendToModule(const char* data);
 
 #endif	//	_gsm_h_
 
