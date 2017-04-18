@@ -1223,7 +1223,32 @@ U16	Gsm_GetState	(void)
 	return (U16)GsmState;
 }
 
-U8	 GsmTest		(void)
+U8	 GsmTestOnOff	(void)
 {
-	return 0;
+	GsmIrq_Off();
+	GPS_POW_OFF();
+	GSM_PK_OFF();
+	GSM_RTS_ON();
+	GsmUart_Init(BaudRate_38400);
+	if (!Flags.test)
+	{
+		GsmFlags	= 0;
+		Flags.test	= 1;
+	}
+	else
+		GsmFlags	= 0;
+
+	return (Flags.test == 1);
+}
+
+void GsmTest		(void)
+{
+
+	if (!Flags.test)
+		return;
+	while (GsmStringReceived())
+	{
+		GsmUart_GetString((P_U8)irqBuf);
+		DebugPrint(irqBuf);
+	}
 }

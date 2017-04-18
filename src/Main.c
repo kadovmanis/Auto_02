@@ -115,6 +115,7 @@ int main (void)
 		#endif
 			}
 		}
+		GsmTest();
 	#endif
 
         if (FL_POWER_OFF)       PowerOff();

@@ -25,7 +25,8 @@ U8	 Gsm_GetCsq		(void);
 U16	 Gsm_GetFlags	(void);
 U16	 Gsm_GetState	(void);
 
-U8	 GsmTest		(void);
+U8	 GsmTestOnOff	(void);
+void GsmTest		(void);
 
 #endif	//	_gsm_h_
 
