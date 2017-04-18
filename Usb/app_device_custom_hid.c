@@ -877,6 +877,11 @@ void UsbFunctEnableGsm		(void)
 		OUT_COMMAND		= USB_COM_TEXT;
 		OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Gsm Test");
 	}
+	else
+	{
+		OUT_COMMAND		= USB_COM_TEXT;
+		OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Gsm WHAT? (Enable, Disable, Test)");
+	}
 	USB_SEND_PACKET();
 }
 
