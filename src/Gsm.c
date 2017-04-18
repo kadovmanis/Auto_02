@@ -582,7 +582,7 @@ void GSM_INTERRUPT(void)
 		}
 		else if (stateTimeout > 200)
 		{
-			DebugSprintf(gsmBuff, "AT+CFUN=1,1\r\n", SERVER, PORT);
+			DebugSprintf(gsmBuff, "AT+CFUN=1,1\r\n");
 			GsmUart_SendText(gsmBuff);
 			DebugPrint(gsmBuff);
 			GsmState = GsmState_PowerKeyOn;
@@ -614,37 +614,129 @@ void GSM_INTERRUPT(void)
 		break;					}
 
 	case GsmState_PowerOn:		{
+		GSM_RTS_OFF();
+		GSM_DTR_OFF();
+		GSM_POWER	= !GSM_POWER;		// 0 - On; 1 - Off
+		if (!GSM_POWER)					// it is not restart
+		{
+			GsmFlags	= 0;
+			TimeOut		= 100;			// Timeout 1 sec
+			GsmState++;
+			break;
+		}
+	#ifdef GSM_POWER
+		TimeOut	= 2000;				// Timeout 20.0sec
+		DebugPrint("Gsm Power Restart 20 sec");
+		return;
+	#else
+		GsmState++;
+	#endif
+								}
+/*
 		ledStatus	= LED_STATUS_OFF;
 		GSM_DTR_OFF();
-	#ifdef GSM_POWER
 		GSM_POWER	= !GSM_POWER;			// 0 - On; 1 - Off
+		GsmState++;
+	#ifdef GSM_POWER
+		DebugPrint("Gsm Power On 1.0 sec");
 		if (GSM_POWER)					// if already powered, restart
 		{
 			TimeOut = 2000;				// Timeout 20.0sec
 			DebugPrint("Gsm Power Restart 2.0 sec");
 			return;
 		}
-		DebugPrint("Gsm Power On 1.0 sec");
 		TimeOut = 100;					// Timeout 1 sec
+		break;
 	#endif
-		GsmState++;
-		break;					}
+								}
+*/
 	case GsmState_PowerKeyOn:	{
 		GSM_RTS_OFF();
 		GSM_PK_ON();
 		GsmUart_Init(BaudRate_38400);
-		GsmFlags		= 0;
+//		GsmFlags		= 0;
 		FL_TCP_REC_GPRS	= 0;
 		PackRecTimeout	= 0;
-		ledStatus		= LED_STATUS_1;
+//		ledStatus		= LED_STATUS_1;
 		DebugPrint("Gsm Power Key On 1.0 sec");
 		GsmState++;
 		TimeOut = 150;					// Timeout 1.5 sec
 		break;					}
 	case GsmState_PowerKeyOff:	{
-	#ifdef GSM_POWER
+		if (Flags.pwr)					// restart?
+		{
+			if ((!GSM_STATUS) || (stateTimeout > 100))
+			{
+				GSM_PK_OFF();
+				DebugPrint("Gsm Power Key Off");
+				GsmState = GsmState_PowerOn;
+	#ifndef GSM_POWER
+				TimeOut	= 2000;				// Timeout 20.0sec
+				DebugPrint("Gsm Power Restart 20 sec");
 	#endif
-
+				return;
+			}
+		}
+		else if (GSM_STATUS)
+		{
+			GSM_PK_OFF();
+			GSM_RTS_ON();
+			GsmFlags	= 0;
+			Flags.pwr	= 1;
+//			GSM_DTR_OFF();
+			DebugPrint("Gsm Status Ok");
+			GsmState++;
+			TimeOut		= 50;				// Timeout 0.5 sec
+		}
+		else if ((!GSM_P_KEY) && (stateTimeout > 150))		// Turn off Power key after 3 sec
+		{
+			GSM_PK_OFF();
+//			GSM_RTS_ON();
+			DebugPrint("Gsm Power Key Off (3 sec timeout)");
+		}
+		else if (stateTimeout > 250)
+		{
+			GsmState = GsmState_PowerOn;
+			DebugPrint("Gsm Power Key ERROR !!!");
+	#ifndef GSM_POWER
+			TimeOut	= 2000;				// Timeout 20.0sec
+			DebugPrint("Gsm Power Restart 20 sec");
+	#endif
+		}
+/*
+	#ifndef GSM_POWER
+		if (GSM_POWER)
+		{
+			if (GSM_STATUS)
+			{
+				GSM_PK_OFF();
+				GSM_RTS_ON();
+//				GSM_DTR_OFF();
+				DebugPrint("Gsm Status Ok");
+				GsmState++;
+				TimeOut = 50;					// Timeout 0.5 sec
+			}
+			else if (stateTimeout > 100))	// Turn off Power key after 2.5 sec
+			{
+				GSM_PK_OFF();
+				GSM_RTS_ON();
+				DebugPrint("Gsm Power Key Off (2 sec timeout)");
+			}
+			
+		}
+		else
+		{
+			if ((!GSM_STATUS) || (stateTimeout > 100))
+			{
+				GSM_PK_OFF();
+				TimeOut = 2000;				// Timeout 20.0sec
+				DebugPrint("Gsm Power Key Off - Restart after 2.0 sec");
+				GsmState = GsmState_PowerKeyOn;
+				ledStatus	= LED_STATUS_4_S;
+				return;
+			}
+		}
+	#else
 		if (GSM_STATUS)
 		{
 			GSM_PK_OFF();
@@ -662,6 +754,8 @@ void GSM_INTERRUPT(void)
 		}
 		else if (stateTimeout > 250)
 			GsmState = GsmState_PowerOn;
+	#endif
+*/
 		break;					}
 	case GsmState_waitRDY:		{
 		if (stateTimeout > 200)				// RDY not received

@@ -136,7 +136,8 @@ void __attribute__((interrupt, no_auto_psv)) _ADC1Interrupt(void)	//	*
 
 inline void ADC_Dc_Update(void)
 {
-	if (Battery > 3800)
+	if ((Battery > 3800)				||
+		((!GSM_IE) && (Battery > 3300))	)	// Don't run DcUp if gsm disabled
 		OC1R = 0;
 	else
 	{

@@ -844,7 +844,8 @@ void UsbGetAdc			(void)
 	OUT_DATA_16[1]	= Adc_GetPower();
 	OUT_DATA_16[2]	= Adc_GetBattery();
 	OUT_DATA_16[3]	= Adc_GetCoreV();
-	OUT_DATA_16[4]	= Adc_GetDcDc();
+//	OUT_DATA_16[4]	= Adc_GetDcDc();
+	OUT_DATA_16[4]	= OC1R;
 
 	USB_SEND_PACKET();
 }
