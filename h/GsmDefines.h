@@ -172,7 +172,7 @@ typedef union
 		U16 rec			:1;		// serial data received
 		U16 sms			:1;		// SMS mesaage receive
 		U16 knownCaller	:1;
-		U16 flag_6		:1;
+		U16 test		:1;
 		U16 flag_7		:1;
 		U16 flag_8		:1;
 		U16 setup		:1;

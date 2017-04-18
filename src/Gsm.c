@@ -1222,3 +1222,8 @@ U16	Gsm_GetState	(void)
 {
 	return (U16)GsmState;
 }
+
+U8	 GsmTest		(void)
+{
+	return 0;
+}
