@@ -863,6 +863,11 @@ void UsbGetGsmStatus	(void)
 
 void UsbFunctEnableGsm		(void)
 {
+	if (In.com == 16)
+	{
+		Gsm_SendToModule(In.Data);
+		return;
+	}
 	SWITCH_OUT_BUF();
 	if (In.com < 2)
 	{
@@ -878,8 +883,6 @@ void UsbFunctEnableGsm		(void)
 		OUT_COM			= GsmTestOnOff();
 //		OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Gsm Test %s", (OUT_COM)?	"Started" : "Stopped");
 	}
-	else if (In.com == 16)
-		Gsm_SendToModule(In.Data);
 	else
 	{
 		OUT_COMMAND		= USB_COM_TEXT;
