@@ -844,8 +844,8 @@ void GSM_INTERRUPT(void)
 				LED_GSM		= LED_STATUS_ERROR;		// Indicate ERROR
 	#ifdef GSM_POWER
 				GSM_POWER	= 1;					// Module Power Off
-				TimeOut		= 12000;					// Timeout 120.0sec
 	#endif
+				TimeOut		= 12000;				// Timeout 120.0sec
 //				GSM_IE		= 0;					// Gsm Irq Off
 				GsmFlags	= 0;					// Gsm flags = 0
 				InitBaudRate	= BaudRate_9600;

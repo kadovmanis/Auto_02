@@ -863,15 +863,20 @@ void UsbGetGsmStatus	(void)
 
 void UsbFunctEnableGsm		(void)
 {
+	SWITCH_OUT_BUF();
 	if (In.com < 2)
 	{
 		if (In.com)		Gsm_On();
 		else			Gsm_Off();
-	}
 
-	SWITCH_OUT_BUF();
-	OUT_COMMAND		= USB_COM_TEXT;
-	OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Gsm %s", (GSM_IE)?	"Enabled" : "Disabled");
+		OUT_COMMAND		= USB_COM_TEXT;
+		OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Gsm %s", (GSM_IE)?	"Enabled" : "Disabled");
+	}
+	else if (In.com == 10)
+	{
+		OUT_COMMAND		= USB_COM_TEXT;
+		OUT_DATA_LEN	= sprintf((char*)OUT_DATA, "Gsm Test");
+	}
 	USB_SEND_PACKET();
 }
 
