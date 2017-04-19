@@ -84,6 +84,11 @@ DebSendString("\r\nState - DNS");
 GsmSendString("AT+CDNSCFG=\"159.148.60.20\",\"195.2.96.2\";+CDNSORIP=1\r\n");
 AT+CDNSCFG="159.148.60.20","195.2.96.2";+CDNSORIP=1;+CIPMODE=0
 
+AT+CDNSCFG="212.93.96.2","212.93.96.4"
+
+gsm2.lmt.lv (212.93.96.2)
+ns.apollo.lv (195.122.1.59)
+gsm4.lmt.lv (212.93.96.4)
 ____________________________________________________________________________________
 	DebSendString("\r\nState - Connect: ");
 	GsmSendString("AT+CIPSTART=\"tcp\",\"peles.linkpc.net\",\"10123\"\r\n");
@@ -135,6 +140,8 @@ AT+CDNSORIP=1;+CIPSPRT=1;+CIPHEAD=0;+CIPFLP=0;+CIPSRIP=0;+CIPCSGP=1,"internet.lm
 
 AT+CIPSTART="tcp","peles.linkpc.net","10123"
 
+AT+CIPSTART="tcp","159.148.172.208","10123"
+
 
 AT+CIPSTATUS
 	OK
@@ -145,6 +152,7 @@ CLOSE OK
 STATE: IP CLOSE
 CONNECT FAIL
 
+AT+CDNSGIP		Query the IP address of given domain name 
 =========================================================================
 				A-GPS download
 AT+CDNSORIP=1;+CDNSCFG="159.148.60.20","195.2.96.2";+CIPSTART="tcp","agps.u-blox.com","46434"
@@ -159,6 +167,42 @@ cmd=full;user=k256@inbox.lv;pwd=Cxcvir;latency=0.5;pacc=5000;lat=56.9974;lon=24.
 	data.......
 
 	CLOSED
+=========================================================================
+ *				ENGineering MODE
+AT+CENG		- Switch On or Off Engineering Mode 
+	+CENG:<mode>
+	+CENG: <cell>,?<arfcn>,<rxl>,<rxq>,<mcc>,<mnc>,<bsic>,<cellid>,< rla>,< txp >?<CR><LF>
+	+CENG: <cell>,?<arfcn>,<rxl>,<bsic>?
+	...
+
+<mode>	0	switch off engineering mode
+		1	switch on engineering mode
+		2	switch on engineering mode, and activate the
+unsolicited reporting of network information.
+	<cell>	0	the serving cell
+			1-6	the index of the neighbouring cell.
+	<arfcn>		absolute radio frequency channel number.
+	<rxl>		receive level.
+	<rxq>		receive quality.
+	<mcc>		mobile country code.
+	<mnc>		mobile network code.
+	<bsic>		base station identity code.
+	<cellid>	cell id.
+	<rla>		receive level access minimum.
+	<txp>		transmit power maximum CCCH.
+ 
+    Debug:    +CENG: 1,0
+    Debug:    
+    Debug:    +CENG: 0,"0002,18,0,247,01,23,03cc,06,05"
+    Debug:    +CENG: 1,"0058,09,43"
+    Debug:    +CENG: 2,"0041,04,??"
+    Debug:    +CENG: 3,"0039,03,00"
+    Debug:    +CENG: 4,"0017,01,23"
+    Debug:    +CENG: 5,"0032,00,00"
+    Debug:    +CENG: 6,"0000,00,00"
+    Debug:    
+    Debug:    OK
+
 =========================================================================
 */
 typedef union
@@ -790,7 +834,7 @@ AT^SISS=0,address,"socktcp://159.148.235.103:22220"
 
 
 ------------------------------------------------------------------------
-AT+CGDCONT=1,“IP”,“INTERNET.LMT.LV”
+AT+CGDCONT=1,"IP","INTERNET.LMT.LV"
 	OK
 at+cgact=1,1;+cgact?
 	+CGACT: 1,1

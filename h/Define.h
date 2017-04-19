@@ -1,7 +1,7 @@
 #ifndef		__DEFINE__
 #define		__DEFINE__
 
-//	Vecomamma	67394376	M√¢jas t√¢lrunis PAMATA
+//	Vecomamma	67394376	M‡jas t‡lrunis PAMATA
 //	Audi		28637972	M2M 1
 //	Bmw Leo		26141841	M2M 1
 //	Blue_1		25747292	M2M 1
