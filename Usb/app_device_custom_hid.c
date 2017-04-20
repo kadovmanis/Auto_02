@@ -80,6 +80,7 @@ typedef union	//      1                2               3-64
 		union
 		{
 			U8		Data[62];			// data buffer for read/write bytes
+			char	Str[62];			// data buffer for text string
 			U16		D_16[31];			// data buffer for read/write bytes (16bit)
 			struct
 			{
@@ -865,7 +866,7 @@ void UsbFunctEnableGsm		(void)
 {
 	if (In.com == 16)
 	{
-		Gsm_SendToModule(In.Data);
+		Gsm_SendToModule(In.Str);
 		return;
 	}
 	SWITCH_OUT_BUF();

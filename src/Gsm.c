@@ -582,14 +582,16 @@ void GSM_INTERRUPT(void)
 		}
 		else if (stateTimeout > 200)
 		{
-			DebugSprintf(gsmBuff, "AT+CFUN=1,1\r\n");
-			GsmUart_SendText(gsmBuff);
-			DebugPrint(gsmBuff);
-			GsmState = GsmState_PowerKeyOn;
+//			DebugSprintf(gsmBuff, "AT+CFUN=1,1\r\n");
+//			GsmUart_SendText(gsmBuff);
+//			DebugPrint(gsmBuff);
+//			GsmState = GsmState_PowerKeyOn;
 
 //			GsmUart_SendText("AT+CIPCLOSE\r\n");
-//			GsmState = GsmState_DisConnected;
-//			DebugPrint("Connection Timeout !!!");
+			GsmUart_SendText("AT+CIPSHUT\r\n");
+			DebugPrint("AT+CIPSHUT");
+			GsmState = GsmState_DisConnected;
+			DebugPrint("Connection Timeout !!!");
 			TimeOut = 1000;				// Timeout 10.0sec
 		}
 		break;					}
