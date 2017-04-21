@@ -785,11 +785,17 @@ void GSM_INTERRUPT(void)
 		if (!stateTimeout)
 		{
 			Flags.Ack = 0;
-			GsmUart_SendText("AT+CDNSCFG=\"");
+			GsmUart_SendText("AT+CBAND=\"PGSM_MODE\";+CREG=1;+CIPMODE=1;");
+			GsmUart_SendText("+CDNSCFG=\"");
 			GsmUart_SendText(DNS_1);
 			GsmUart_SendText("\",\"");
 			GsmUart_SendText(DNS_2);
-			GsmUart_SendText("\";+CDNSORIP=1;+CIPMODE=1;+CREG=1\r\n");	// Domain On; Transparent On; Network registration On
+			GsmUart_SendText("\"\r\n");
+//			GsmUart_SendText("AT+CDNSCFG=\"");
+//			GsmUart_SendText(DNS_1);
+//			GsmUart_SendText("\",\"");
+//			GsmUart_SendText(DNS_2);
+//			GsmUart_SendText("\";+CDNSORIP=1;+CIPMODE=1;+CREG=1\r\n");	// Domain On; Transparent On; Network registration On
 			DebugPrint("Gsm set DNS");
 		}
 		else if (Flags.ackOk)

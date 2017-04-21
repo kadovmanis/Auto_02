@@ -65,8 +65,11 @@
 #define		HOME_SIZE			8
 
 #define		APN					"internet.lmt.lv"
-#define		DNS_1				"159.148.60.20"
-#define		DNS_2				"195.2.96.2"
+//#define	DNS_1				"159.148.60.20"
+#define		DNS_1				"212.93.96.2"
+//#define	DNS_2				"195.2.96.2"
+#define		DNS_2				"212.93.96.4"
+
 #define		SERVER				"peles.linkpc.net"
 #define		PORT				"10123"
 

@@ -84,7 +84,13 @@ DebSendString("\r\nState - DNS");
 GsmSendString("AT+CDNSCFG=\"159.148.60.20\",\"195.2.96.2\";+CDNSORIP=1\r\n");
 AT+CDNSCFG="159.148.60.20","195.2.96.2";+CDNSORIP=1;+CIPMODE=0
 
+
++CDNSORIP=1;+CIPMODE=1;+CREG=1
+
+AT+CBAND="PGSM_MODE";+CREG=1;+CIPMODE=1
+		AT+CIPMODE=1;+CREG=1
 AT+CDNSCFG="212.93.96.2","212.93.96.4"
+AT+CIPSTART="TCP","pelites.linkpc.net","10123"
 
 gsm2.lmt.lv (212.93.96.2)
 ns.apollo.lv (195.122.1.59)
@@ -92,10 +98,10 @@ gsm4.lmt.lv (212.93.96.4)
 ____________________________________________________________________________________
 	DebSendString("\r\nState - Connect: ");
 	GsmSendString("AT+CIPSTART=\"tcp\",\"peles.linkpc.net\",\"10123\"\r\n");
-AT+CIPSTART="tcp","peles.linkpc.net","10123"
-AT+CIPSTART="tcp","pelites.linkpc.net","10123"
+AT+CIPSTART="TCP","peles.linkpc.net","10123"
+AT+CIPSTART="TCP","pelites.linkpc.net","10123"
 
-AT+CIPSTART="tcp","77.38.197.83","10123"
+AT+CIPSTART="TCP","77.38.197.83","10123"
  
 	OK
 	CONNECT OK
