@@ -93,7 +93,10 @@ ________________________________________________________________________________
 	DebSendString("\r\nState - Connect: ");
 	GsmSendString("AT+CIPSTART=\"tcp\",\"peles.linkpc.net\",\"10123\"\r\n");
 AT+CIPSTART="tcp","peles.linkpc.net","10123"
+AT+CIPSTART="tcp","pelites.linkpc.net","10123"
 
+AT+CIPSTART="tcp","77.38.197.83","10123"
+ 
 	OK
 	CONNECT OK
 	ato
