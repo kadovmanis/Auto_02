@@ -868,8 +868,9 @@ void UsbGetStatus		(void)
 {
 	SWITCH_OUT_BUF();
 	OUT_COMMAND		= USB_COM_GET_STATUS;
-	OUT_DATA[0]		= GSM_RTS & GSM_STATUS;
-	OUT_DATA[1]		= GPS_IE;
+	OUT_DATA_16[0]	= TEST;
+	OUT_DATA_16[1]	= Gsm_GetFlags();
+	OUT_DATA_16[2]	= GPS_IE;
 
 	OUT_DATA_LEN	= 2;					// 8bit x2
 	USB_SEND_PACKET();
