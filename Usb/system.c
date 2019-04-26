@@ -4,8 +4,13 @@
 #include	"app_device_custom_hid.h"
 
 #ifdef LED_TIM
+  #if (LED_COUNT == 2)
+	#define	LED_USB_ON	LED_STATUS_SLOW
+	#define	LED_USB_OFF	LED_STATUS_OFF
+  #else
 	#define	LED_USB_ON	LED_STATUS_1_I
 	#define	LED_USB_OFF	LED_STATUS_1
+  #endif
 #else
 	#define	LED_USB_ON	LED_STATUS_ON
 	#define	LED_USB_OFF	LED_STATUS_OFF
